@@ -5,10 +5,15 @@ const App = () => {
   const [title, setTitle] = useState("")
   const [detais, setDetais] = useState("")
 
+  const [task, setTask] = useState([])
+
   const formSubmitHandler = (e) =>{
     e.preventDefault();
-    console.log(title);
-    console.log(detais);
+  
+    const copyTask = [...task]
+
+    copyTask.push({title,detais})
+    setTask(copyTask)
 
     setTitle("");
     setDetais("");
@@ -40,14 +45,18 @@ const App = () => {
             }}
           />
 
-          <button className="bg-white w-full text-black font-medium outline-none px-5 py-2 rounded">Add Notes</button>
+          <button className="bg-white w-full text-black active:bg-gray-400 font-medium outline-none px-5 py-2 rounded">Add Notes</button>
       </form>
       <div className="lg:w-1/2 lg:border-l-2 p-10 ">
         <h1 className="text-3xl font-bold text-white">Recent Notes</h1>
         <div className="flex flex-wrap gap-5 h-full overflow-auto my-5">
-          <div className="h-52 w-40 rounded-2xl bg-white"></div>
-          <div className="h-52 w-40 rounded-2xl bg-white"></div>
-          <div className="h-52 w-40 rounded-2xl bg-white"></div>
+          {task.map((elem,idx)=>{
+
+            return <div id="notes" key={idx} className="h-52 w-52 overflow-y-auto rounded-2xl text-black p-4 bg-white">
+              <h3 className="leading-tight text-xl font-bold">{elem.title}</h3>
+              <p className="mt-4 leading-tight font-medium text-gray-500">{elem.detais}</p>
+            </div>
+          })}
         </div>
       </div>
     </div>
