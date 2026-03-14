@@ -9,7 +9,7 @@ function App() {
 
   const passwordRef = useRef(null);
 
-  const passwordGenerator = useCallback( () =>{
+  const passwordGenerator = useCallback(() =>{
     let pass = "";
     let str = "ABCDEFGHIJKLMNPOQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 

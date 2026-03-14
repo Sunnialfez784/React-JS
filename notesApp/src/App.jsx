@@ -42,6 +42,7 @@ const App = () => {
           onChange={(e) => {
             setTitle(e.target.value);
           }}
+          required
         />
 
         <textarea
@@ -52,6 +53,7 @@ const App = () => {
           onChange={(e) => {
             setDetais(e.target.value);
           }}
+          required
         />
 
         <button className="bg-white w-full text-black active:bg-gray-400 font-medium outline-none px-5 py-2 rounded">Add Notes</button>
@@ -61,10 +63,10 @@ const App = () => {
         <div id="notes" className="flex flex-wrap gap-5 overflow-y-auto max-h-full my-5">
           {task.map((elem, idx) => {
             return (
-              <div id="notes2" key={idx} className="flex items-start justify-between flex-col relative h-64 w-52 bg-cover overflow-y-auto rounded-2xl text-black px-4 py-6 bg-[url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSf3bUzcfjXEgpNynCGXAL2naN49al7QDepIQ&s')]">
+              <div id="notes2" key={idx} className="flex items-start justify-between flex-col relative h-64 w-60 bg-cover overflow-y-auto rounded-2xl text-black px-4 py-6 bg-[url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSf3bUzcfjXEgpNynCGXAL2naN49al7QDepIQ&s')]">
                 <div>
                   <h3 className="leading-tight text-xl font-bold">{elem.title}</h3>
-                  <p className="mt-4 leading-tight font-medium text-gray-500">{elem.detais}</p>
+                  <p className="mt-4 leading-tight ml-3 font-medium text-gray-500">{elem.detais}</p>
                 </div>
                 <button onClick={(idx)=>{
                   deleteTask(idx)
