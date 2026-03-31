@@ -1,0 +1,28 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+.light {
+  background-color: lightseagreen;
+  display: flex;
+  padding: 12px 20px;
+  align-items: center;
+  justify-content: space-between;
+  font-weight: 600;
+}
+
+.dark {
+  background-color: darkslategrey;
+  display: flex;
+  padding: 12px 20px;
+  align-items: center;
+  justify-content: space-between;
+  font-weight: 600;
+}
+
+h2 {
+  font-size: 18px;
+  font-weight: 700;
+  text-decoration: underline;
+}
