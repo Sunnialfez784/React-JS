@@ -1,0 +1,49 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  height: 100%;
+  width: 100%;
+  background-color: black;
+  color: white;
+}
+
+
+h1{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  font-size: 100px;
+  text-decoration: underline;
+  transform: translate(-50%,-50%);
+  white-space: noWrap;
+}
+
+.nav{
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 50px;
+  background-color: rgb(20, 149, 149);
+  align-items: center;
+}
+
+h3{
+  font-size: 40px;
+}
+
+.nav div {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  font-size: 20px;
+  text-decoration: none;
+  color: white;
+}
