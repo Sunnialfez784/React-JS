@@ -5,10 +5,8 @@ const ContextProvider = ({children}) => {
   const [todos, setTodos] = useState([]);
 
   const addTodo = (todo) => {
-    console.log(todo, "todo inside");
     setTodos((prev) => [{id: Date.now(), ...todo}, ...prev]);
   };
-  console.log(todos);
 
   const updateTodo = (id, todo) => {
     setTodos((prev) => prev.map((prevTodo) => (prevTodo.id === id ? todo : prevTodo)));
