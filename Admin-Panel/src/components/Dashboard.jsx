@@ -1,13 +1,15 @@
 import React from "react";
 import AddUser from "./AddUser";
-import { useState } from "react";
-import AllUsers from "./AllUsers";
+import AllUsers from "./ShowUsers";
 
 const Dashboard = () => {
 
-  const [first, setfirst] = useState('')  
   return (
-    <div className="bg-gray-100 h-screen w-full">
+    <div>
+      <div className="text-black py-4 px-10 items-center w-full flex justify-between h-16 bg-gray-300">
+        <h1 className="text-2xl font-bold">Admin-Dashboard</h1>
+        <button className="h-8 w-16 bg-red-500">Logout</button>
+      </div>
       <AddUser />
       <AllUsers />
     </div>

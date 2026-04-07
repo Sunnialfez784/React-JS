@@ -1,13 +1,14 @@
 import React, { useState } from 'react'
-import { userData } from '../context/UserDataContext'
+import { usersData } from '../context/UserDataContext'
 
 const AddUser = () => {
   
   const [formData, setFormData] = useState({
-      fullName: "",
+      id: Date.now(),
+      name: "",
       email: "",
       password: "",
-      confirmPassword: "",
+      number: "",
     });
   
     const [errors, setErrors] = useState({});
@@ -24,8 +25,8 @@ const AddUser = () => {
     const validate = () => {
       let newErrors = {};
   
-      if (!formData.fullName) {
-        newErrors.fullName = "Full name is required";
+      if (!formData.name) {
+        newErrors.name = "Full name is required";
       }
   
       if (!formData.email) {
@@ -40,17 +41,17 @@ const AddUser = () => {
         newErrors.password = "Password must be at least 8 characters";
       }
   
-      if (!formData.confirmPassword) {
-        newErrors.confirmPassword = "Confirm your password";
-      } else if (formData.password !== formData.confirmPassword) {
-        newErrors.confirmPassword = "Passwords do not match";
+      if (!formData.number) {
+        newErrors.number = "Number is required";
+      } else if (formData.password.length > 9 && formData.password.length < 11) {
+        newErrors.number = "Invalid Number format";
       }
   
       setErrors(newErrors);
       return Object.keys(newErrors).length === 0;
     };
   
-    const {addData} = userData()
+    const {addData} = usersData()
     const add = (e) => {
     e.preventDefault();
 
@@ -61,11 +62,11 @@ const AddUser = () => {
   }
 };
 
-    
+
   return (
-    <div className="flex justify-center p-6 bg-slate-300 mb-20">
-        <button commandfor="demo-dialog-form" command="show-modal" className="bg-black font-semibold text-2xl p-3">
-          Open form dialog
+    <div className="flex justify-center p-6 mt-6 mb-6">
+        <button commandfor="demo-dialog-form" command="show-modal" className="bg-black font-semibold h-9 text-xl p-3">
+          Add User
         </button>
         <dialog id="demo-dialog-form">
           <form method="dialog" onSubmit={add} className="bg-gray-400 rounded-xl shadow-lg w-full">
@@ -78,17 +79,17 @@ const AddUser = () => {
               data-field 
               className="block mb-1 font-medium"
             >
-            Full Name
+            Name
             <input 
               type="text" 
-              name='fullName'
-              value={formData.fullName} 
+              name='name'
+              value={formData.name} 
               onChange={handleChange} 
               className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400" 
               placeholder="Enter your Fullname" 
             />    
           </label>
-          {errors.fullName && <p className="text-red-500 text-sm mt-1">{errors.fullName}</p>}
+          {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name}</p>}
         </div>
 
         <div className="mb-4">
@@ -133,17 +134,17 @@ const AddUser = () => {
             data-field 
             className="block mb-1 font-medium"
           >
-          Confirm Password
+          Number
           <input 
-            type="password"
-            name='confirmPassword'
-            value={formData.confirmPassword} 
+            type="text"
+            name='number'
+            value={formData.number} 
             onChange={handleChange} 
             className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400" 
-            placeholder="Confirm Password" 
+            placeholder="Number" 
           />
           </label>
-          {errors.confirmPassword && <p className="text-red-500 text-sm mt-1">{errors.confirmPassword}</p>}
+          {errors.number && <p className="text-red-500 text-sm mt-1">{errors.number}</p>}
         </div>
 
         <button

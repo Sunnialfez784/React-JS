@@ -3,10 +3,11 @@ import { createContext,useContext } from "react";
 export const UserDataContext = createContext({
   data : [
     {
-      Fullname : "alfez",
+      id: Date.now(),
+      name : "alfez",
       Email : "alfez@gmail.com",
       Password : "1234",
-      ConfirmPassword : "1234"
+      Numbers : ""
   }
   ],
   addData : () => {},
@@ -14,7 +15,7 @@ export const UserDataContext = createContext({
   deleteData : () => {}
 })  
 
-export const userData = () =>{
+export const usersData = () =>{
   return useContext(UserDataContext)
 }
 

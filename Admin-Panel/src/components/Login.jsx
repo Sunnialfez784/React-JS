@@ -20,7 +20,7 @@ const Login = () => {
     e.preventDefault();
 
     if(admin) {
-      navigate('/dashboard')
+      navigate('/dashboard')  
     }else{
       setShowError(true);  
     }
