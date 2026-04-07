@@ -1,78 +1,9 @@
-import React, { useState } from 'react'
-import { usersData } from '../context/UserDataContext'
+import React from 'react'
 
-const AddUser = () => {
-  
-  const [formData, setFormData] = useState({
-      name: "",
-      email: "",
-      password: "",
-      number: "",
-    });
-  
-    const [errors, setErrors] = useState({});
-  
-    const handleChange = (e) => {
-      setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-      });
-    };
-    
-    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[A-Za-z]{2,}$/;
-
-      const validate = () => {
-        let newErrors = {};
-    
-        if (!formData.name) {
-          newErrors.name = "Full name is required";
-        }
-    
-        if (!formData.email) {
-          newErrors.email = "Email is required";
-        } else if (!emailRegex.test(formData.email)) {
-          newErrors.email = "Invalid email format";
-        }
-
-        if (!formData.password) {
-          newErrors.password = "Password is required";
-        } else if (formData.password.length < 8) {
-          newErrors.password = "Password must be at least 8 characters";
-        }
-    
-        if (!formData.number) {
-          newErrors.number = "Number is required";
-        } else if (formData.password.length > 9 && formData.password.length < 11) {
-          newErrors.number = "Invalid Number format";
-        }
-    
-        setErrors(newErrors);
-        return Object.keys(newErrors).length === 0;
-      };
-      
-      const {addData} = usersData()
-      const add = (e) => {
-      e.preventDefault();
-
-    if (validate()) {
-      addData(formData);   
-      alert("Form submitted successfully");
-      console.log(formData);
-    }
-  };
-
+const Inputs = () => {
   return (
-    <div className="flex justify-center p-6 mt-6 mb-6">
-        <button commandfor="demo-dialog-form" command="show-modal" className="bg-black font-semibold h-9 text-xl p-3">
-          Add User
-        </button>
-        <dialog id="demo-dialog-form">
-          <form method="dialog" onSubmit={add} className="bg-gray-400 rounded-xl shadow-lg w-full">
-            <header>
-              <h3 className='font-semibold text-2xl'>Add User</h3>
-            </header>
-            <div className="vstack">
-          <div>
+    <>
+      <div>
             <label 
                 data-field 
                 className="block mb-1 font-medium"
@@ -151,16 +82,8 @@ const AddUser = () => {
           >
           Add User
           </button>
-        </div>
-        <footer>
-          <button type="button" commandfor="demo-dialog-form" command="close" className="outline px-2 py-1 font-semibold">
-            Cancel
-          </button>
-        </footer>
-      </form>
-      </dialog>      
-  </div>
+    </>
   )
 }
 
-export default AddUser
+export default Inputs

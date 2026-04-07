@@ -13,8 +13,8 @@ const Login = () => {
   const admin = email === "alfez@gmail.com" && password === "1234"
 
   const errors = (<div role="alert" data-variant="error">
-  <strong>Error!</strong> Please Enter the Right email or Password.
-</div>);
+    <strong>Error!</strong> Please Enter the Right email or Password.
+    </div>);
 
   const add = (e) => {
     e.preventDefault();

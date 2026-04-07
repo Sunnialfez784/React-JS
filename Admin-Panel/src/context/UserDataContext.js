@@ -3,7 +3,6 @@ import { createContext,useContext } from "react";
 export const UserDataContext = createContext({
   data : [
     {
-      id: Date.now(),
       name : "alfez",
       Email : "alfez@gmail.com",
       Password : "1234",

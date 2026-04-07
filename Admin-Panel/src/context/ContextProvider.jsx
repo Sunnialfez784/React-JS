@@ -14,10 +14,10 @@ const ContextProvider = ({children}) => {
   }
 
   const deleteData = (id) => {
-    setUserData((prev) => {
-      return prev.filter((prevData) => prevData.id === id)
-    })
-  }
+  setUserData((prev) => {
+    return prev.filter((prevData) => prevData.id !== id)
+  })
+}
 
   useEffect(() => {
     const userData = JSON.parse(localStorage.getItem('userData'))

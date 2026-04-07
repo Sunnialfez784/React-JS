@@ -1,7 +1,20 @@
+import { useState } from "react";
 import { usersData } from "../context/UserDataContext";
 
 const ShowUsers = () => {
-  const { userData, updateData, deleteData } = usersData();
+  const {userData, updateData, deleteData } = usersData();
+  const [form, setForm] = useState({
+    id : null,
+    name : "",
+    email : "",
+    password : "",
+    number : ""
+  })
+
+  const handleUpdateData = (user) =>{
+    setForm(user)
+    document.getElementById("demo-dialog-form").showModal();
+  }
 
   return (
     <div className="pl-28">
@@ -25,7 +38,7 @@ const ShowUsers = () => {
                 <td>{user.number}</td>
                 <td>
                   <button
-                    onClick={() => updateData(user.id)}
+                    onClick={() => handleUpdateData(user)}
                     className="bg-green-700 mr-1 p-2 font-semibold text-base"
                   >
                     Edit
