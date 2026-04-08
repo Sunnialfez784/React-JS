@@ -1,4 +1,3 @@
-import React from 'react'
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -10,11 +9,13 @@ const Login = () => {
   const [password, setPassword] = useState('')
   const [showError, setShowError] = useState(false);
   
-  const admin = email === "alfez@gmail.com" && password === "1234"
+  const admin = email === "sunnialfez@gmail.com" && password === "1234"
 
-  const errors = (<div role="alert" data-variant="error">
-    <strong>Error!</strong> Please Enter the Right email or Password.
-    </div>);
+  const errors = (
+    <div role="alert" data-variant="error">
+      <strong>Error!</strong> Please Enter the Right email or Password.
+    </div>
+  );
 
   const add = (e) => {
     e.preventDefault();
@@ -70,7 +71,6 @@ const Login = () => {
 
         <button 
           type="submit" 
-          onClick={add}
           className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition"
         >
         Submit

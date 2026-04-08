@@ -3,16 +3,14 @@ import { DataProvider } from './UserDataContext'
 
 const ContextProvider = ({children}) => {
 
-  const [userData, setUserData] = useState(() => (
-    JSON.parse(localStorage.getItem('userData')) || []
-  ))
+  const [userData, setUserData] = useState([])
 
   const addData = (data) =>{
     setUserData((prev) => [{id : Date.now(), ...data}, ...prev])
   }
 
   const updateData = (id , data) => {
-    setUserData((prev) => prev.map((prevData) => (prevData.id === id ? data : prevData)))
+    setUserData((prev) => prev.map((prevData) => (prevData.id === id ? {...prevData, ...data} : prevData)))
   }
 
   const deleteData = (id) => {

@@ -56,9 +56,15 @@ const AddUser = ({isEditMode = false, form, setIsOpen}) => {
 
     if (validate()) {
       if (isEditMode) {
-        updateData(form.id, formData);
+        updateData(form.id ,{
+          ...formData,
+          id : form.id
+        });
       } else {
-        addData(formData);
+        addData({
+          ...formData,
+          id: Date.now()
+        });
       }
       setIsOpen(false); 
     }
