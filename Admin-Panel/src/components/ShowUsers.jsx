@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { usersData } from "../context/UserDataContext";
+import AddUser from "./AddUser";
 
 const ShowUsers = () => {
-  const {userData, updateData, deleteData } = usersData();
+  const {userData, deleteData } = usersData();
+  const [isEditMode,setIsEditMode] = useState(false)
   const [form, setForm] = useState({
     id : null,
     name : "",
@@ -13,10 +15,11 @@ const ShowUsers = () => {
 
   const handleUpdateData = (user) =>{
     setForm(user)
-    document.getElementById("demo-dialog-form").showModal();
+    setIsEditMode(true)
   }
 
   return (
+    <>
     <div className="pl-28">
       <div className="table">
         <table className="text-black">
@@ -57,6 +60,8 @@ const ShowUsers = () => {
         </table>
       </div>
     </div>
+    {isEditMode&&<AddUser form={form} setIsOpen={setIsEditMode} isEditMode/>}
+    </>
   );
 };
 export default ShowUsers;

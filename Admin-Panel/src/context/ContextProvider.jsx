@@ -3,7 +3,9 @@ import { DataProvider } from './UserDataContext'
 
 const ContextProvider = ({children}) => {
 
-  const [userData, setUserData] = useState([])
+  const [userData, setUserData] = useState(() => (
+    JSON.parse(localStorage.getItem('userData')) || []
+  ))
 
   const addData = (data) =>{
     setUserData((prev) => [{id : Date.now(), ...data}, ...prev])
