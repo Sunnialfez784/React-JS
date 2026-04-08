@@ -1,9 +1,18 @@
 import React, {useState} from "react";
 import AddUser from "./AddUser";
 import AllUsers from "./ShowUsers";
+import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
   const [isOpen, setIsOpen] = useState(false);
+
+  const navigate = useNavigate()
+
+  const handleLogout = () =>{
+    if(navigate){
+      
+    }
+  }
 
   return (
     <div>
