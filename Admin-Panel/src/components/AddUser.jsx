@@ -1,5 +1,7 @@
 import React, {useState} from "react";
 import {usersData} from "../context/UserDataContext";
+import {faEye , faEyeSlash} from "@fortawesome/free-solid-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const AddUser = ({isEditMode = false, form, setIsOpen}) => {
   const [formData, setFormData] = useState({
@@ -10,6 +12,9 @@ const AddUser = ({isEditMode = false, form, setIsOpen}) => {
   });
 
   const [errors, setErrors] = useState({});
+  const [visible, setVisible] = useState(false)
+  const [file, setFile] = useState(null)
+  const [preview, setPreview] = useState(null)
 
   const {addData, updateData} = usersData();
 
@@ -19,6 +24,16 @@ const AddUser = ({isEditMode = false, form, setIsOpen}) => {
       [e.target.name]: e.target.value,
     });
   };
+
+  const handleFileChange = (e) =>{
+    const selectedFile = e.target.files[0];
+    setFile(selectedFile);
+
+    if(selectedFile) {
+      const imageUrl = URL.createObjectURL(selectedFile);
+      setPreview(imageUrl);
+    }
+  }
 
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[A-Za-z]{2,}$/;
 
@@ -55,18 +70,19 @@ const AddUser = ({isEditMode = false, form, setIsOpen}) => {
     e.preventDefault();
 
     if (validate()) {
+      const userObj = {
+        ...formData,
+        id: isEditMode ? form.id : Date.now(),
+        image: preview
+      };
+
       if (isEditMode) {
-        updateData(form.id ,{
-          ...formData,
-          id : form.id
-        });
+        updateData(form.id, userObj);
       } else {
-        addData({
-          ...formData,
-          id: Date.now()
-        });
+        addData(userObj);
       }
-      setIsOpen(false); 
+
+      setIsOpen(false);
     }
   };
 
@@ -76,9 +92,14 @@ const AddUser = ({isEditMode = false, form, setIsOpen}) => {
         <div className="bg-white p-6 rounded-xl shadow-lg w-[400px]">
           <h3 className="text-3xl font-bold mb-4 text-black">Add User</h3>
           <form onSubmit={add}>
+            <input className="bg-black mb-2" type="file" onChange={handleFileChange} />
+            {preview && (
+              <img src={preview} alt="preview" width='200' />
+            )}
+
             <input 
               type="text" 
-              name="name" 
+              name="name"
               value={formData.name} 
               onChange={handleChange} 
               placeholder="Full Name" 
@@ -94,14 +115,23 @@ const AddUser = ({isEditMode = false, form, setIsOpen}) => {
               className="w-full mb-3 px-3 py-2 border rounded" />
             {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
 
+            <div className="relative w-[352px]">
             <input 
-              type="password" 
+              type={visible ? 'text' : 'password'}
               name="password" 
               value={formData.password} 
-              onChange={handleChange} 
+              onChange={handleChange}
               placeholder="Password" 
               className="w-full mb-3 px-3 py-2 border rounded" />
             {errors.password && <p className="text-red-500 text-sm">{errors.password}</p>}
+            
+            <span
+              onClick={() => setVisible(!visible)}
+              className="absolute right-2.5 top-5 -translate-y-1/2 cursor-pointer"
+            >
+              <FontAwesomeIcon icon={visible ? faEyeSlash : faEye} />
+            </span>
+            </div>
 
             <input 
               type="text" 
