@@ -26,12 +26,6 @@ const ShowUsers = () => {
     setIsEditMode(true);
   };
 
-  useEffect(() => {
-    if (isEditMode && form?.image) {
-      setPreview(form.image);
-    }
-  }, [isEditMode, form]);
-
   return (
     <>
       <div className="px-28">

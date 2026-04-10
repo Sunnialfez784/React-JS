@@ -13,10 +13,10 @@ const AddUser = ({isEditMode = false, form, setIsOpen}) => {
 
   const [errors, setErrors] = useState({});
   const [visible, setVisible] = useState(false)
-  const [file, setFile] = useState(null)
+  const [, setFile] = useState(null)
   const [preview, setPreview] = useState(null)
 
-  const {addData, updateData} = usersData();
+  const {userData ,addData, updateData} = usersData();
 
   const handleChange = (e) => {
     setFormData({
@@ -49,6 +49,12 @@ const AddUser = ({isEditMode = false, form, setIsOpen}) => {
     } else if (!emailRegex.test(formData.email)) {
       newErrors.email = "Invalid email format";
     }
+    
+    const isEmailDuplicate =  userData.some((u)=> u.email === formData.email)
+    if (isEmailDuplicate) {
+      alert("email is duplicate")
+      return;
+    }
 
     if (!formData.password) {
       newErrors.password = "Password is required";
@@ -60,6 +66,12 @@ const AddUser = ({isEditMode = false, form, setIsOpen}) => {
       newErrors.number = "Number is required";
     } else if (formData.number.length !== 10) {
       newErrors.number = "Number must be 10 digits";
+    }
+
+    const isNumberDuplicate =  userData.some((u)=> u.number === formData.number)
+    if (isNumberDuplicate) {
+      alert("Number is duplicate")
+      return;
     }
 
     setErrors(newErrors);
@@ -81,7 +93,6 @@ const AddUser = ({isEditMode = false, form, setIsOpen}) => {
       } else {
         addData(userObj);
       }
-
       setIsOpen(false);
     }
   };
@@ -89,30 +100,33 @@ const AddUser = ({isEditMode = false, form, setIsOpen}) => {
   return (
     <div className="flex justify-center p-6 mt-6 mb-6">
       <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-        <div className="bg-white p-6 rounded-xl shadow-lg w-[400px]">
-          <h3 className="text-3xl font-bold mb-4 text-black">Add User</h3>
+        <div className="bg-[#E8E8E8] p-6 rounded-xl shadow-lg w-[400px]">
+          <h3 className="bg-gradient-to-r from-[#cfcfcf] to-[#000000] bg-clip-text text-transparent font-extrabold text-3xl mb-4 ">Add User <div className="h-0.5 w-full bg-[#A49F9F]"></div></h3>
+          
           <form onSubmit={add}>
-            <input className="bg-black mb-2" type="file" onChange={handleFileChange} />
-            {preview && (
-              <img src={preview} alt="preview" width='200' />
-            )}
+            <div className="flex gap-2 items-center">
+              {preview && (
+                <img className="h-16 w-16 mb-2 rounded-full object-cover" src={preview} alt="preview"/> 
+              )}
+              <input className="bg-[#9CA3AF] font-semibold border-none w-28 mb-2" type="file" onChange={handleFileChange} />
+            </div>
 
             <input 
-              type="text" 
+              type="text"
               name="name"
               value={formData.name} 
               onChange={handleChange} 
               placeholder="Full Name" 
-              className="w-full mb-3 px-3 py-2 border rounded" />
+              className="w-full mb-3 bg-[#ffffff] px-3 text-black py-2 shadow-md rounded" />
             {errors.name && <p className="text-red-500 text-sm">{errors.name}</p>}
 
             <input 
               type="email" 
               name="email" 
               value={formData.email} 
-              onChange={handleChange} 
-              placeholder="Email" 
-              className="w-full mb-3 px-3 py-2 border rounded" />
+              onChange={handleChange}
+              placeholder="Email"
+              className="w-full mb-3 bg-[#ffffff] px-3 py-2 text-black shadow-md rounded" />
             {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
 
             <div className="relative w-[352px]">
@@ -122,12 +136,12 @@ const AddUser = ({isEditMode = false, form, setIsOpen}) => {
               value={formData.password} 
               onChange={handleChange}
               placeholder="Password" 
-              className="w-full mb-3 px-3 py-2 border rounded" />
+              className="w-full mb-3 bg-[#ffffff] px-3 py-2 text-black shadow-md rounded" />
             {errors.password && <p className="text-red-500 text-sm">{errors.password}</p>}
             
             <span
               onClick={() => setVisible(!visible)}
-              className="absolute right-2.5 top-5 -translate-y-1/2 cursor-pointer"
+              className="absolute right-2.5 text-black top-5 -translate-y-1/2 cursor-pointer"
             >
               <FontAwesomeIcon icon={visible ? faEyeSlash : faEye} />
             </span>
@@ -139,7 +153,7 @@ const AddUser = ({isEditMode = false, form, setIsOpen}) => {
               value={formData.number} 
               onChange={handleChange} 
               placeholder="Mobile Number" 
-              className="w-full mb-3 px-3 py-2 border rounded" />
+              className="w-full mb-3 bg-[#ffffff] px-3 text-black py-2 shadow-md rounded" />
             {errors.number && <p className="text-red-500 text-sm">{errors.number}</p>}
 
             <div className="flex justify-between mt-4">
