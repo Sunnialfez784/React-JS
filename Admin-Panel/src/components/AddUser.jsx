@@ -1,7 +1,7 @@
 import React, {useState} from "react";
-import { usersData} from "../context/UserDataContext";
-import {faEye , faEyeSlash} from "@fortawesome/free-solid-svg-icons"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {usersData} from "../context/UserDataContext";
+import {faEye, faEyeSlash} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 const AddUser = ({isEditMode = false, form, setIsOpen}) => {
   const [formData, setFormData] = useState({
@@ -12,11 +12,11 @@ const AddUser = ({isEditMode = false, form, setIsOpen}) => {
   });
 
   const [errors, setErrors] = useState({});
-  const [visible, setVisible] = useState(false)
-  const [, setFile] = useState(null)
-  const [preview, setPreview] = useState(null)
+  const [visible, setVisible] = useState(false);
+  const [, setFile] = useState(null);
+  const [preview, setPreview] = useState(null);
 
-  const {userData ,addData, updateData} = usersData();
+  const {userData, addData, updateData} = usersData();
 
   const handleChange = (e) => {
     setFormData({
@@ -25,15 +25,15 @@ const AddUser = ({isEditMode = false, form, setIsOpen}) => {
     });
   };
 
-  const handleFileChange = (e) =>{
+  const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
     setFile(selectedFile);
 
-    if(selectedFile) {
+    if (selectedFile) {
       const imageUrl = URL.createObjectURL(selectedFile);
       setPreview(imageUrl);
     }
-  }
+  };
 
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[A-Za-z]{2,}$/;
 
@@ -44,9 +44,9 @@ const AddUser = ({isEditMode = false, form, setIsOpen}) => {
       newErrors.name = "Full name is required";
     }
 
-    const isNameDuplicate =  userData.some((u)=> u.name === formData.name)
+    const isNameDuplicate = userData.some((u) => u.name === formData.name && (!isEditMode || u.id !== form.id));
     if (isNameDuplicate) {
-      alert("name is duplicate")
+      alert("name is duplicate");
       return;
     }
 
@@ -56,21 +56,21 @@ const AddUser = ({isEditMode = false, form, setIsOpen}) => {
       newErrors.email = "Invalid email format";
     }
 
-    const isEmailDuplicate =  userData.some((u)=> u.email === formData.email)
-      if (isEmailDuplicate) {
-        alert("email is duplicate")
-        return;
-      }
-    
+    const isEmailDuplicate = userData.some((u) => u.email === formData.email && (!isEditMode || u.id !== form.id));
+    if (isEmailDuplicate) {
+      alert("email is duplicate");
+      return;
+    }
+
     if (!formData.password) {
       newErrors.password = "Password is required";
     } else if (formData.password.length < 8) {
       newErrors.password = "Password must be at least 8 characters";
     }
 
-    const isPasswordDuplicate =  userData.some((u)=> u.password === formData.password)
+    const isPasswordDuplicate = userData.some((u) => u.password === formData.password && (!isEditMode || u.id !== form.id));
     if (isPasswordDuplicate) {
-      alert("Password is duplicate")
+      alert("Password is duplicate");
       return;
     }
 
@@ -80,9 +80,9 @@ const AddUser = ({isEditMode = false, form, setIsOpen}) => {
       newErrors.number = "Number must be 10 digits";
     }
 
-    const isNumberDuplicate =  userData.some((u)=> u.number === formData.number)
+    const isNumberDuplicate = userData.some((u) => u.number === formData.number && (!isEditMode || u.id !== form.id));
     if (isNumberDuplicate) {
-      alert("Number is duplicate")
+      alert("Number is duplicate");
       return;
     }
 
@@ -97,10 +97,9 @@ const AddUser = ({isEditMode = false, form, setIsOpen}) => {
       const userObj = {
         ...formData,
         id: isEditMode ? form.id : Date.now(),
-        image: preview
+        image: preview,
       };
 
-      
       if (isEditMode) {
         updateData(form.id, userObj);
       } else {
@@ -113,73 +112,38 @@ const AddUser = ({isEditMode = false, form, setIsOpen}) => {
   return (
     <div className="flex justify-center p-6 mt-6 mb-6">
       <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-        <div className="bg-[#E8E8E8] p-6 rounded-xl shadow-lg w-[400px]">
-          <h3 className="bg-gradient-to-r from-[#cfcfcf] to-[#000000] bg-clip-text text-transparent font-extrabold text-3xl mb-4 ">Add User <div className="h-0.5 w-full bg-[#A49F9F]"></div></h3>
-          
-          <form onSubmit={add}>
-            <div className="flex gap-2 items-center">
-              {preview && (
-                <img className="h-16 w-16 mb-2 rounded-full object-cover" src={preview} alt="preview"/> 
-              )}
-              <input className="bg-[#9CA3AF] font-semibold border-none w-28 mb-2" type="file" onChange={handleFileChange} />
-            </div>
+        <div className="bg-[#ffffff] p-6 rounded-md shadow-lg w-[470px]">
+          <h3 className=" text-black font-medium text-xl mb-4 ">Add User</h3>
 
-            <input 
-              type="text"
-              name="name"
-              value={formData.name} 
-              onChange={handleChange} 
-              placeholder="Full Name" 
-              className="w-full mb-3 bg-[#ffffff] px-3 text-black py-2 shadow-md rounded" />
+          <form onSubmit={add}>
+            <label className="text-black mb-1">Name</label>
+            <input type="text" name="name" value={formData.name} onChange={handleChange} placeholder="Full Name" className="w-full mb-5 bg-[#f9f8f8f0] px-3 text-black py-2 border rounded " />
             {errors.name && <p className="text-red-500 text-sm">{errors.name}</p>}
 
-            <input 
-              type="email" 
-              name="email" 
-              value={formData.email} 
-              onChange={handleChange}
-              placeholder="Email"
-              className="w-full mb-3 bg-[#ffffff] px-3 py-2 text-black shadow-md rounded" />
+            <label className="text-black mb-1">Email</label>
+            <input type="email" name="email" value={formData.email} onChange={handleChange} placeholder="Email" className="w-full mb-5 bg-[#f9f8f8f0] px-3 text-black py-2 border rounded " />  
             {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
 
-            <div className="relative w-[352px]">
-            <input 
-              type={visible ? 'text' : 'password'}
-              name="password" 
-              value={formData.password} 
-              onChange={handleChange}
-              placeholder="Password" 
-              className="w-full mb-3 bg-[#ffffff] px-3 py-2 text-black shadow-md rounded" />
-            {errors.password && <p className="text-red-500 text-sm">{errors.password}</p>}
-            
-            <span
-              onClick={() => setVisible(!visible)}
-              className="absolute right-2.5 text-black top-5 -translate-y-1/2 cursor-pointer"
-            >
-              <FontAwesomeIcon icon={visible ? faEyeSlash : faEye} />
-            </span>
+            <div className="relative w-full">
+              <label className="text-black mb-1">Password</label>
+              <input type={visible ? "text" : "password"} name="password" value={formData.password} onChange={handleChange} placeholder="Password" className="w-full mb-5 bg-[#f9f8f8f0] px-3 text-black py-2 border rounded " />
+              {errors.password && <p className="text-red-500 text-sm">{errors.password}</p>}
+
+              <span onClick={() => setVisible(!visible)} className="absolute right-2.5 text-black top-12 -translate-y-1/2 cursor-pointer">
+                <FontAwesomeIcon icon={visible ? faEyeSlash : faEye} />
+              </span>
             </div>
 
-            <input 
-              type="text" 
-              name="number" 
-              value={formData.number} 
-              onChange={handleChange} 
-              placeholder="Mobile Number" 
-              className="w-full mb-3 bg-[#ffffff] px-3 text-black py-2 shadow-md rounded" />
+            <label className="text-black mb-1">Phone</label>
+            <input type="text" name="number" value={formData.number} onChange={handleChange} placeholder="Mobile Number" className="w-full mb-5 bg-[#f9f8f8f0] px-3 text-black py-2 border rounded " />
             {errors.number && <p className="text-red-500 text-sm">{errors.number}</p>}
 
             <div className="flex justify-between mt-4">
-              <button 
-                type="button" 
-                onClick={() => setIsOpen(false)} 
-                className="px-4 py-2 bg-gray-400 rounded">
+              <button type="button" onClick={() => setIsOpen(false)} className="px-4 py-2 bg-gray-400 rounded">
                 Cancel
               </button>
 
-              <button 
-                type="submit" 
-                className="px-4 py-2 bg-blue-500 text-white rounded">
+              <button type="submit" className="px-4 py-2 bg-blue-500 text-white rounded">
                 {isEditMode ? "Edit" : "Add"}
               </button>
             </div>
