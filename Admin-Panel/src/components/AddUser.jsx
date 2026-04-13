@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {usersData} from "../context/UserDataContext";
+import { usersData} from "../context/UserDataContext";
 import {faEye , faEyeSlash} from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -44,22 +44,34 @@ const AddUser = ({isEditMode = false, form, setIsOpen}) => {
       newErrors.name = "Full name is required";
     }
 
+    const isNameDuplicate =  userData.some((u)=> u.name === formData.name)
+    if (isNameDuplicate) {
+      alert("name is duplicate")
+      return;
+    }
+
     if (!formData.email) {
       newErrors.email = "Email is required";
     } else if (!emailRegex.test(formData.email)) {
       newErrors.email = "Invalid email format";
     }
-    
-    const isEmailDuplicate =  userData.some((u)=> u.email === formData.email)
-    if (isEmailDuplicate) {
-      alert("email is duplicate")
-      return;
-    }
 
+    const isEmailDuplicate =  userData.some((u)=> u.email === formData.email)
+      if (isEmailDuplicate) {
+        alert("email is duplicate")
+        return;
+      }
+    
     if (!formData.password) {
       newErrors.password = "Password is required";
     } else if (formData.password.length < 8) {
       newErrors.password = "Password must be at least 8 characters";
+    }
+
+    const isPasswordDuplicate =  userData.some((u)=> u.password === formData.password)
+    if (isPasswordDuplicate) {
+      alert("Password is duplicate")
+      return;
     }
 
     if (!formData.number) {
@@ -88,6 +100,7 @@ const AddUser = ({isEditMode = false, form, setIsOpen}) => {
         image: preview
       };
 
+      
       if (isEditMode) {
         updateData(form.id, userObj);
       } else {

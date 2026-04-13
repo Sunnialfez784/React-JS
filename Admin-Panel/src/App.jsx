@@ -3,6 +3,7 @@ import { Route, Routes } from 'react-router-dom'
 import Dashboard from './components/Dashboard'
 import AddUser  from "./components/AddUser";
 import ShowUsers from './components/ShowUsers'
+import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
 
@@ -10,9 +11,10 @@ function App() {
     <div className='bg-gray-100 min-h-screen w-full'>
       <Routes>
         <Route path='/' element={<Login />} />
-        <Route path='/adduser' element={<AddUser />} />
-        <Route path='/dashboard' element={<Dashboard />} />
-        <Route path='/showuser' element={<ShowUsers />} />
+
+        <Route path='/dashboard' element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+        <Route path='/adduser' element={<ProtectedRoute><AddUser /></ProtectedRoute>} />
+        <Route path='/showuser' element={<ProtectedRoute><ShowUsers /></ProtectedRoute>} />
       </Routes>
     </div>
   )

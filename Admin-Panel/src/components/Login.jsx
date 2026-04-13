@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
@@ -7,29 +7,36 @@ const Login = () => {
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [showError, setShowError] = useState(false);
+  // const [showError, setShowError] = useState(false);
   
   const admin = email === "sunnialfez@gmail.com" && password === "1234"
 
-  const errors = (
-    <div role="alert" data-variant="error">
-      <strong>Error!</strong> Please Enter the Right email or Password.
-    </div>
-  );
+  useEffect(() => {
+    const isAuth = localStorage.getItem('isAuth')
+    
+    if(isAuth) {
+      navigate('/dashboard')
+    }
+  }, [])
+
+  // const errors = (
+  //   <div role="alert" data-variant="error">
+  //     <strong>Error!</strong> Please Enter the Right email or Password.
+  //   </div>
+  // );
 
   const add = (e) => {
     e.preventDefault();
 
-    if(admin) {
-      navigate('/dashboard')  
-    }else{
-      setShowError(true);  
-    }
+    if(admin){
+    localStorage.setItem("isAuth", "true")
+    navigate("/dashboard")
+  }
   };
 
   return (
     <>
-    {showError && errors}
+    {/* {showError && errors} */}
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <form 
         onSubmit={add} 

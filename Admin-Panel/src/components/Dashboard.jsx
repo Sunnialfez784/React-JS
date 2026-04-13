@@ -8,7 +8,8 @@ const Dashboard = () => {
   const navigate = useNavigate()
 
   const handleLogout = () =>{
-    navigate("/")
+    localStorage.removeItem("isAuth")
+    navigate("/", {replace : true})
   }
 
   return (
