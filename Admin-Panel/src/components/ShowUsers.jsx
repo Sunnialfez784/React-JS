@@ -6,7 +6,6 @@ import {PencilSquareIcon, TrashIcon, EyeIcon, EyeSlashIcon} from "@heroicons/rea
 
 const ShowUsers = () => {
   const {userData, deleteData} = usersData();
-
   const [isEditMode, setIsEditMode] = useState(false);
   const [visibleId, setVisibleId] = useState(null);
   const [selectedUserId, setSelectedUserId] = useState(null);

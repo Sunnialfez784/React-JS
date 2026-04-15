@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import {useState} from "react";
 import {usersData} from "../context/UserDataContext";
 import {faEye, faEyeSlash} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
@@ -23,26 +23,8 @@ const AddUser = ({isEditMode = false, form, setIsOpen}) => {
   };
 
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[A-Za-z]{2,}$/;
-  const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@#$%]).{8,}$/ 
+  const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@#$%]).{8,}$/
 
-  // const strongPassword = ((password) =>{
-  //   if(password >= 8){
-
-  //     const capital = false;
-  //     const samll = false;
-  //     const special = false;
-  //     const number = false;
-
-  //     for(let i = 0; i < password.length; i++){
-  //       let char = password[i];
-
-  //       if(char >= "A" && char <= "Z") capital = true
-  //       else if(char >= "a" && char <= "z") samll = true
-  //       else if(char >= "0" && char <= "9") number = true
-  //       else special = true 
-  //     }
-  //   }
-  // })
 
   const validate = () => {
     let newErrors = {};
@@ -68,13 +50,13 @@ const AddUser = ({isEditMode = false, form, setIsOpen}) => {
       alert("email is duplicate");
       return;
     }
-
+    
     if (!formData.password) {
       newErrors.password = "Password is required";
     } else if (formData.password.length < 8) {
       newErrors.password = "Password must be at least 8 characters";
-    } else if(!passwordRegex.test(formData.password)) {
-      newErrors.password = "Your Password are Wick!"
+    } else if (!passwordRegex.test(formData.password)) {
+      newErrors.password = "Your Password are Wick!";
     }
 
     const isPasswordDuplicate = userData.some((u) => u.password === formData.password && (!isEditMode || u.id !== form.id));
@@ -141,7 +123,7 @@ const AddUser = ({isEditMode = false, form, setIsOpen}) => {
               value={formData.email} 
               onChange={handleChange} 
               placeholder="Email" 
-              className="w-full mb-5 bg-[#f9f8f8f0] px-3 text-black py-2 border rounded " />  
+              className="w-full mb-5 bg-[#f9f8f8f0] px-3 text-black py-2 border rounded " />
             {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
 
             <div className="relative w-full">
@@ -171,16 +153,11 @@ const AddUser = ({isEditMode = false, form, setIsOpen}) => {
             {errors.number && <p className="text-red-500 text-sm">{errors.number}</p>}
 
             <div className="flex justify-between mt-4">
-              <button 
-                type="button" 
-                onClick={() => setIsOpen(false)} 
-                className="px-4 py-2 bg-gray-400 rounded">
+              <button type="button" onClick={() => setIsOpen(false)} className="px-4 py-2 bg-gray-400 rounded">
                 Cancel
               </button>
 
-              <button 
-                type="submit" 
-                className="px-4 py-2 bg-blue-500 text-white rounded">
+              <button type="submit" className="px-4 py-2 bg-blue-500 text-white rounded">
                 {isEditMode ? "Edit" : "Add"}
               </button>
             </div>
