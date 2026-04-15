@@ -77,13 +77,13 @@ const ShowUsers = () => {
 
                 <PiShieldWarningLight className="text-[20px] text-white rounded-full" />
                 </div>
-                <p className="text-center">Are you sure you want to delete this User? This action cannot be undone. </p>
+                <p className="text-center text-sm">Are you sure You want to Delete this User? This action cannot be undone. </p>
               </div>
               <div className="w-full h-[1px] bg-gray-200"></div>
             </header>
 
             <footer className="flex gap-3 mt-4">
-              <button type="button" commandfor="demo-dialog" command="close" className=" text-xs border  font-medium px-3 py-2 rounded-[3px]">
+              <button type="button" commandfor="demo-dialog" command="close" className=" text-xs border-[1.6px]  font-medium px-3 py-2 rounded-[3px]">
                 Cancel
               </button>
 

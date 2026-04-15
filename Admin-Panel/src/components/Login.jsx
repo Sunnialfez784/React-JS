@@ -11,6 +11,7 @@ const Login = () => {
 
   const admin = email === "sunnialfez@gmail.com" && password === "1234"
 
+
   useEffect(() => {
     const isAuth = localStorage.getItem('isAuth')
 
@@ -18,6 +19,7 @@ const Login = () => {
       navigate('/dashboard')
     }
   }, [])
+
 
   const errors = (
     <div role="alert" data-variant="error">
@@ -32,7 +34,7 @@ const Login = () => {
       localStorage.setItem("isAuth", "true")
       navigate("/dashboard")
     }else{
-      setShowError("/dashboard")
+      setShowError("/")
     }
   };
 
@@ -42,7 +44,7 @@ const Login = () => {
       <div className="min-h-screen flex items-center justify-center bg-gray-100">
         <form
           onSubmit={add}
-          className="bg-gray-400 p-8 rounded-2xl shadow-lg w-full max-w-md"
+          className="bg-[#ffffff] rounded-md shadow-lg p-8 text-black w-full max-w-md"
         >
           <h1 className="text-2xl font-bold mb-6 text-center">Login Form</h1>
           <div className="mb-4">
@@ -55,7 +57,7 @@ const Login = () => {
                 type="email"
                 value={email}
                 onChange={((e) => setEmail(e.target.value))}
-                className="mb-3 bg-[#ffffff] px-3 text-black py-2 shadow-md rounded focus:outline-none focus:ring-2 focus:ring-[#82868FDB]"
+                className="mb-3 bg-[#f9f8f8f0] px-3 text-black py-2 shadow-sm border rounded focus:outline-none w-full focus:ring-1 focus:ring-[#82868FDB]"
                 placeholder="you@example.com"
                 required
               />
@@ -72,7 +74,7 @@ const Login = () => {
                 type="password"
                 value={password}
                 onChange={((e) => setPassword(e.target.value))}
-                className="mb-3 bg-[#ffffff] px-3 text-black py-2 shadow-md rounded focus:outline-none focus:ring-2 focus:ring-[#82868FDB]"
+                className="mb-3 bg-[#f9f8f8f0] px-3 text-black py-2 shadow-sm border rounded focus:outline-none w-full focus:ring-1 focus:ring-[#82868FDB]"
                 placeholder="Password"
               />
             </label>

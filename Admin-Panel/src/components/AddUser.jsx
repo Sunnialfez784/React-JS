@@ -13,8 +13,6 @@ const AddUser = ({isEditMode = false, form, setIsOpen}) => {
 
   const [errors, setErrors] = useState({});
   const [visible, setVisible] = useState(false);
-  const [preview, setPreview] = useState(null);
-
   const {userData, addData, updateData} = usersData();
 
   const handleChange = (e) => {
@@ -25,6 +23,26 @@ const AddUser = ({isEditMode = false, form, setIsOpen}) => {
   };
 
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[A-Za-z]{2,}$/;
+  const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@#$%]).{8,}$/ 
+
+  // const strongPassword = ((password) =>{
+  //   if(password >= 8){
+
+  //     const capital = false;
+  //     const samll = false;
+  //     const special = false;
+  //     const number = false;
+
+  //     for(let i = 0; i < password.length; i++){
+  //       let char = password[i];
+
+  //       if(char >= "A" && char <= "Z") capital = true
+  //       else if(char >= "a" && char <= "z") samll = true
+  //       else if(char >= "0" && char <= "9") number = true
+  //       else special = true 
+  //     }
+  //   }
+  // })
 
   const validate = () => {
     let newErrors = {};
@@ -55,6 +73,8 @@ const AddUser = ({isEditMode = false, form, setIsOpen}) => {
       newErrors.password = "Password is required";
     } else if (formData.password.length < 8) {
       newErrors.password = "Password must be at least 8 characters";
+    } else if(!passwordRegex.test(formData.password)) {
+      newErrors.password = "Your Password are Wick!"
     }
 
     const isPasswordDuplicate = userData.some((u) => u.password === formData.password && (!isEditMode || u.id !== form.id));
@@ -86,7 +106,6 @@ const AddUser = ({isEditMode = false, form, setIsOpen}) => {
       const userObj = {
         ...formData,
         id: isEditMode ? form.id : Date.now(),
-        image: preview,
       };
 
       if (isEditMode) {
@@ -106,16 +125,34 @@ const AddUser = ({isEditMode = false, form, setIsOpen}) => {
 
           <form onSubmit={add}>
             <label className="text-black mb-1">Name</label>
-            <input type="text" name="name" value={formData.name} onChange={handleChange} placeholder="Full Name" className="w-full mb-5 bg-[#f9f8f8f0] px-3 text-black py-2 border rounded " />
+            <input 
+              type="text" 
+              name="name" 
+              value={formData.name} 
+              onChange={handleChange} 
+              placeholder="Full Name" 
+              className="w-full mb-5 bg-[#f9f8f8f0] px-3 text-black py-2 border rounded " />
             {errors.name && <p className="text-red-500 text-sm">{errors.name}</p>}
 
             <label className="text-black mb-1">Email</label>
-            <input type="email" name="email" value={formData.email} onChange={handleChange} placeholder="Email" className="w-full mb-5 bg-[#f9f8f8f0] px-3 text-black py-2 border rounded " />  
+            <input 
+              type="email" 
+              name="email" 
+              value={formData.email} 
+              onChange={handleChange} 
+              placeholder="Email" 
+              className="w-full mb-5 bg-[#f9f8f8f0] px-3 text-black py-2 border rounded " />  
             {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
 
             <div className="relative w-full">
               <label className="text-black mb-1">Password</label>
-              <input type={visible ? "text" : "password"} name="password" value={formData.password} onChange={handleChange} placeholder="Password" className="w-full mb-5 bg-[#f9f8f8f0] px-3 text-black py-2 border rounded " />
+              <input 
+                type={visible ? "text" : "password"} 
+                name="password" 
+                value={formData.password} 
+                onChange={handleChange} 
+                placeholder="Password" 
+                className="w-full mb-5 bg-[#f9f8f8f0] px-3 text-black py-2 border rounded" />
               {errors.password && <p className="text-red-500 text-sm">{errors.password}</p>}
 
               <span onClick={() => setVisible(!visible)} className="absolute right-2.5 text-black top-12 -translate-y-1/2 cursor-pointer">
@@ -124,15 +161,26 @@ const AddUser = ({isEditMode = false, form, setIsOpen}) => {
             </div>
 
             <label className="text-black mb-1">Phone</label>
-            <input type="text" name="number" value={formData.number} onChange={handleChange} placeholder="Mobile Number" className="w-full mb-5 bg-[#f9f8f8f0] px-3 text-black py-2 border rounded " />
+            <input 
+              type="text" 
+              name="number" 
+              value={formData.number} 
+              onChange={handleChange} 
+              placeholder="Mobile Number" 
+              className="w-full mb-5 bg-[#f9f8f8f0] px-3 text-black py-2 border rounded " />
             {errors.number && <p className="text-red-500 text-sm">{errors.number}</p>}
 
             <div className="flex justify-between mt-4">
-              <button type="button" onClick={() => setIsOpen(false)} className="px-4 py-2 bg-gray-400 rounded">
+              <button 
+                type="button" 
+                onClick={() => setIsOpen(false)} 
+                className="px-4 py-2 bg-gray-400 rounded">
                 Cancel
               </button>
 
-              <button type="submit" className="px-4 py-2 bg-blue-500 text-white rounded">
+              <button 
+                type="submit" 
+                className="px-4 py-2 bg-blue-500 text-white rounded">
                 {isEditMode ? "Edit" : "Add"}
               </button>
             </div>

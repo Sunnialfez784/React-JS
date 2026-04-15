@@ -1,16 +1,17 @@
-import React, {useState} from "react";
+import {useState} from "react";
 import AddUser from "./AddUser";
 import AllUsers from "./ShowUsers";
 import { useNavigate } from "react-router-dom";
 import { AiOutlineUsergroupAdd } from "react-icons/ai";
+import { TbLogout } from "react-icons/tb";
 
 const Dashboard = () => {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate()
 
   const handleLogout = () =>{
-    localStorage.removeItem("isAuth")
-    navigate("/", {replace : true})
+    localStorage.removeItem("isAuth");
+    navigate("/", {replace : true});
   }
 
   return (
@@ -21,8 +22,7 @@ const Dashboard = () => {
           <h1 className="  text-white font-semibold mx-2 text-2xl">User Dashboard</h1>
         </div>
         <button 
-        style={{fontWeight:"500"}}
-        onClick={handleLogout} className="px-2.5 py-2 text-xs bg-white">Logout</button>
+          onClick={handleLogout} className="px-2.5 py-2 text-xs font-medium bg-white"><TbLogout className="text-[18px]" />Logout</button>
       </div>
       <div className="w-full flex mt-7 mb-4 justify-end text-white py-2 px-32">
         <button
@@ -31,7 +31,7 @@ const Dashboard = () => {
            <AiOutlineUsergroupAdd className="text-xl" />Add Users
         </button>
       </div>
-      {isOpen && <AddUser setIsOpen={setIsOpen} />} {/*<-- Conditional Rendering */}
+      {isOpen && <AddUser setIsOpen={setIsOpen} />}
       <AllUsers setIsOpen={setIsOpen} />
     </div>
   );
