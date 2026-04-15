@@ -13,7 +13,6 @@ const AddUser = ({isEditMode = false, form, setIsOpen}) => {
 
   const [errors, setErrors] = useState({});
   const [visible, setVisible] = useState(false);
-  const [, setFile] = useState(null);
   const [preview, setPreview] = useState(null);
 
   const {userData, addData, updateData} = usersData();
@@ -23,16 +22,6 @@ const AddUser = ({isEditMode = false, form, setIsOpen}) => {
       ...formData,
       [e.target.name]: e.target.value,
     });
-  };
-
-  const handleFileChange = (e) => {
-    const selectedFile = e.target.files[0];
-    setFile(selectedFile);
-
-    if (selectedFile) {
-      const imageUrl = URL.createObjectURL(selectedFile);
-      setPreview(imageUrl);
-    }
   };
 
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[A-Za-z]{2,}$/;
