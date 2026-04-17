@@ -3,9 +3,8 @@ import React, {useState} from "react";
 const App = () => {
   const [title, setTitle] = useState("");
   const [detais, setDetais] = useState("");
-
   const [task, setTask] = useState([]);
-
+        
   const formSubmitHandler = (e) => {
     e.preventDefault();
 
