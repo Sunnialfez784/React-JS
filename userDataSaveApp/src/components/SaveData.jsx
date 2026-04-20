@@ -1,14 +1,12 @@
-import React, {useContext, useState} from "react";
-import {DataContext} from "../context/DataContext";
-import Header from "./Header";
+import React from 'react'
+import Header from './Header'
+import { useContext } from 'react';
+import { DataContext } from '../context/DataContext';
 
-const UserData = () => {
+const SaveData = () => {
+
   const {userData, saveData, removeData} = useContext(DataContext);
-  const [data, setData] = useState([])
 
-  const addBtn = () =>{
-    setData(userData)
-  }
 
   return (
     <>
@@ -18,7 +16,7 @@ const UserData = () => {
           <table className="text-black min-w-full divide-y divide-gray-200">
             <thead>
               <tr className="font-semibold h-9 border-b-2  text-[13px]">
-                <th className="w-48 text-[#5c5a5a]">Users</th>
+                <th className="w-48 text-[#5c5a5a]">Name</th>
                 <th className="w-48 text-[#5c5a5a]">Email</th>
                 <th className="w-48 text-[#5c5a5a]">Phone</th>
                 <th className="w-48 text-[#5c5a5a]">Website</th>
@@ -34,7 +32,7 @@ const UserData = () => {
                   <td className="">{user.phone}</td>
                   <td className="">{user.website}</td>
                   <td className="flex gap-2 justify-center">
-                    <button onClick={addBtn} className="h-7 w-12 p-1 mt-1.5 bg-green-200 rounded-md">Save</button>
+                    <button className="h-7 w-12 p-1 bg-red-200 mt-1.5 rounded-md">Delete</button>
                   </td>
                 </tr>
               ))}
@@ -43,7 +41,7 @@ const UserData = () => {
         </div>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default UserData;
+export default SaveData

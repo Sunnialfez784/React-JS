@@ -1,41 +1,41 @@
-import React, {useEffect, useState} from "react";
+import React, { createContext, useEffect, useState } from "react";
 
-const DataContext = ({children}) => {
-  const [useData, setUseData] = useState([]);
-  const saveData = (data) =>{
-    setUseData((prev)=> [{id: Date.now(), ...data}, ...prev])
-  }
+export const DataContext = createContext();
 
-  const removeData = (data) => {
-    setUseData((prev) => {
-      return prev.filter((prevData)=> prevData.id !== id);
-    })
-  }
+const DataProvider = ({ children }) => {
+  const [userData, setUseData] = useState([]);
+
+  const saveData = (data) => {
+    setUseData((prev) => [{ id: Date.now(), ...data }, ...prev]);
+  };
+
+  const removeData = (id) => {
+    setUseData((prev) => prev.filter((item) => item.id !== id));
+  };
 
   useEffect(() => {
-    fetch('https://jsonplaceholder.typicode.com/todos/1')
-    .then((res) => res.json())
-    .then((data) => setUseData(data))
-  }, [])
-  
-  useEffect(() => {
-    const user = JSON.parse(localStorage.getItem('user'))
+    fetch("https://jsonplaceholder.typicode.com/users")
+      .then((res) => res.json())
+      .then((data) => setUseData(data));
+  }, []);
 
-    if(user && user.length > 0){
-      setUseData(user)
+  useEffect(() => {
+    const storedData = JSON.parse(localStorage.getItem("userData"));
+
+    if (storedData && storedData.length > 0) {
+      setUseData(storedData);
     }
-  }, [])
-  
+  }, []);
+
   useEffect(() => {
-    localStorage.setItem('user', JSON.stringify(user))
-  }, [user])
-  
+    localStorage.setItem("userData", JSON.stringify(userData));
+  }, [userData]);
 
   return (
-    <DataContext.provider value={useData,saveData,removeData}>
-    {children}
-    </DataContext.provider>
-  )
+    <DataContext.Provider value={{ userData, saveData, removeData }}>
+      {children}
+    </DataContext.Provider>
+  );
 };
 
-export default DataContext;
+export default DataProvider;

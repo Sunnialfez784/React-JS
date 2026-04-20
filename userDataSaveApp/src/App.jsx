@@ -1,15 +1,21 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
 import './App.css'
 
+import UserData from './components/UserData'
+import SaveData from './components/SaveData'
+import Header from './components/Header'
+
+import { Outlet, Route, Routes } from 'react-router-dom'
+
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
     <>
-      
+      <Routes>
+        <Route path='/' element={<Header />}/>
+        <Route path='/userdata' element={<UserData />}/>
+        <Route path='/savedata' element={<SaveData />}/>
+      </Routes>
     </>
   )
 }

@@ -85,7 +85,7 @@ const ShowUsers = () => {
               <button type="button" commandfor="demo-dialog" command="close" className=" text-xs border-[1.6px]  font-medium px-3 py-2 rounded-[3px]">
                 Cancel
               </button>
-
+              
               <button onClick={() => deleteData(selectedUserId)} className="py-2 px-3 bg-red-600  rounded-[3px] text-white font-medium text-xs" value="confirm">
                 Delete
               </button>
