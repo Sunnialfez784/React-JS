@@ -1,13 +1,14 @@
 import React, {useContext, useState} from "react";
 import {DataContext} from "../context/DataContext";
 import Header from "./Header";
+import { HiOutlineUserAdd } from "react-icons/hi";
+import { IoMdPersonAdd } from "react-icons/io";
 
 const UserData = () => {
-  const {userData, saveData, removeData} = useContext(DataContext);
-  const [data, setData] = useState([])
+  const {userData, savedUsers, saveData} = useContext(DataContext);
 
-  const addBtn = () =>{
-    setData(userData)
+  const addBtn = (data) =>{
+    saveData(data);
   }
 
   return (
@@ -34,7 +35,7 @@ const UserData = () => {
                   <td className="">{user.phone}</td>
                   <td className="">{user.website}</td>
                   <td className="flex gap-2 justify-center">
-                    <button onClick={addBtn} className="h-7 w-12 p-1 mt-1.5 bg-green-200 rounded-md">Save</button>
+                    <button onClick={()=>addBtn(user)} className="flex items-center px-2 py-2 bg-green-900 text-white gap-1 mt-1.5 rounded-[5px]"><IoMdPersonAdd className="text-base text-white" /> Save</button>
                   </td>
                 </tr>
               ))}

@@ -2,11 +2,15 @@ import React from 'react'
 import Header from './Header'
 import { useContext } from 'react';
 import { DataContext } from '../context/DataContext';
+import { TrashIcon  } from "@heroicons/react/24/solid";
 
 const SaveData = () => {
 
-  const {userData, saveData, removeData} = useContext(DataContext);
+  const {savedUsers, removeData} = useContext(DataContext);
 
+  const deleteData = (id) =>{
+    removeData(id)
+  }
 
   return (
     <>
@@ -25,14 +29,14 @@ const SaveData = () => {
             </thead>
 
             <tbody className="font-medium text-[14px]">
-              {userData.map((user) => (
+              {savedUsers.map((user) => (
                 <tr key={user.id} className="border-b-2 h-11 text-center text-[13px] hover:bg-[#ebebeb]">
                   <td className="">{user.name}</td>
                   <td className="">{user.email}</td>
                   <td className="">{user.phone}</td>
                   <td className="">{user.website}</td>
                   <td className="flex gap-2 justify-center">
-                    <button className="h-7 w-12 p-1 bg-red-200 mt-1.5 rounded-md">Delete</button>
+                    <button onClick={() => deleteData(user.id)} className="flex items-center px-2 py-2 bg-red-900 text-white gap-1 mt-1.5 rounded-[5px]"><TrashIcon className="w-4 text-white" /> Delete</button>
                   </td>
                 </tr>
               ))}

@@ -12,8 +12,8 @@ function App() {
   return (
     <>
       <Routes>
-        <Route path='/' element={<Header />}/>
-        <Route path='/userdata' element={<UserData />}/>
+        <Route path='/' element={<UserData />}/>
+        <Route path='/header' element={<Header />}/>
         <Route path='/savedata' element={<SaveData />}/>
       </Routes>
     </>
