@@ -7,7 +7,7 @@ const Cards = ({image, product_name, product_short_details, product_price}) => {
       <div className="flex p-5" key={image}>
         <div className="min-h-[370px] flex flex-col justify-between w-64 bg-white">
           <div className="flex items-center justify-center w-full mt-9 mb-2">
-            <img src={image} alt="test" className="w-28 h-24 sm:object-contain object-cover" />
+            <img src={image} alt="test" className="w-28 h-24 sm:object-contain " />
           </div>
           <div className="px-10 py-3">
             <h1 className="text-2xl font-semibold mb-1 text-center">{product_name}</h1>

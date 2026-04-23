@@ -1,13 +1,15 @@
 import React from 'react'
 import { Link,NavLink } from 'react-router-dom'
+import Appsile from "../assets/Nav/Appsile.png"
 
 const Navbar = () => {
   return (
-    <header className="shadow sticky w-full z-50 top-0">
+    <header className="shadow sticky w-full z-50 top-0 mb-2">
         <nav className="bg-white border-gray-200 px-4 lg:px-6 py-2.5">
           <div className="flex flex-wrap justify-between items-center px-8">
             <div className="flex items-center font-medium text-2xl">
-              Products Shop
+              <img src={Appsile} alt="" className='h-10 w-10 rounded-full mr-1'/>
+              Appsile Shop
             </div>
             <div className="justify-between items-center w-full lg:flex lg:w-auto lg:order-1">
               <ul className="flex flex-col mt-4 font-medium lg:flex-row lg:space-x-8 lg:mt-0">

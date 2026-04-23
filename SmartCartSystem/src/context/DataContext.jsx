@@ -8,7 +8,6 @@ const DataContext = () => {
     return Array.isArray(storedData) ? storedData : [];
   })
 
-
   const cars = fetch("https://myfakeapi.com/api/cars/")
   useEffect(() => {
     cars.then((res) => res.json())
