@@ -7,6 +7,7 @@ import Bike from "../assets/bikes/Royal Enfield Classic 350.png"
 import Cars from "../assets/Cars/Tesla Model 3.png"
 import Laptop from "../assets/Home/Macbook-Pro-1.jpg"
 import Mobiles from "../assets/Home/1945291-17.png";
+import { Link } from "react-router-dom";
 
 const Home = () => {
   return (
@@ -33,7 +34,10 @@ const Home = () => {
           </h1>
           <div className="flex gap-2 mt-4">
             <div className="h-40 w-64 rounded-md overflow-hidden object-contain bg-gray-400">
-              <img src={Bike} alt="" className="h-40 w-full object-cover object-bottom"/>
+              <img src={Bike} alt="" className="h-40 w-full object-cover object-bottom" />
+              <Link to='/bikes'>
+                Bike
+              </Link>
             </div>
             <div className="h-40 w-64 rounded-md overflow-hidden bg-gray-400">
               <img src={Cars} alt="" className="h-40 w-full object-cover object-center"/>

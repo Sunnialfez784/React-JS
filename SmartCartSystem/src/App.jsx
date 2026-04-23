@@ -8,6 +8,7 @@ import Bikes from './pages/Bikes'
 import Laptops from './pages/Laptops'
 import Mobiles from './pages/Mobiles'
 import Navbar from './components/Navbar'
+import Errors from './pages/Errors'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -20,6 +21,8 @@ function App() {
         <Route path='/bikes' element={<Bikes />} />
         <Route path='/laptops' element={<Laptops />} />
         <Route path='/mobiles' element={<Mobiles />} />
+
+        <Route path='*' element={<Errors />} />
       </Routes>
     </div>
   )
