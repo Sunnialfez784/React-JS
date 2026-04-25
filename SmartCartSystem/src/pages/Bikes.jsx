@@ -1,24 +1,32 @@
-import React, { useContext } from "react";
-import { DataContext } from "../context/DataContext";
+import React, {useContext, useEffect, useState} from "react";
+import {DataContext} from "../context/DataContext";
 import Cards from "../components/Cards";
 import Navbar from "../components/Navbar";
-
-import Yamaha from "../assets/bikes/R15.png"
-import KTM from "../assets/bikes/KTM Duke 200.png"
-import Royal from "../assets/bikes/Royal Enfield Classic 350.png"
-import Bajaj from "../assets/bikes/Bajaj Pulsar NS200.png"
-import TVS from "../assets/bikes/APACHE RTR 160 4V.png"
-import Honda from "../assets/bikes/Honda Hornet.png"
+import {BASE_URL} from "../apis";
+import Loader from "../components/Loader";
 
 const Bikes = () => {
-  
-  const {bikesData} = useContext(DataContext)
+  const [bikesData, setBikesData] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    setLoading(true);
+    fetch(`${BASE_URL}/showroom/bikes`)
+      .then((res) => res.json())
+      .then(({data}) => {
+        setBikesData(data);
+        setLoading(false);
+      }).finally(()=>{
+        setLoading(false)
+      })
+  }, []);
 
   return (
     <>
       <Navbar />
-      {bikesData.map((item,i) => (
-        <Cards key={i} item={item} /> 
+    
+      {loading ? <Loader/>: bikesData.map((item, i) => (
+        <Cards key={i} item={item} />
       ))}
     </>
   );

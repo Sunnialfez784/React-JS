@@ -1,23 +1,30 @@
-import React, { useContext } from "react";
-import { DataContext } from "../context/DataContext";
+import React, {useContext, useEffect, useState} from "react";
+import {DataContext} from "../context/DataContext";
 import Navbar from "../components/Navbar";
 import Cards from "../components/Cards";
-
-import iPhone from "../assets/Mobile/iPhone 17.png";
-import Samsung from "../assets/Mobile/Samsung galaxy S25 Ultra.png";
-import OnePlus from "../assets/Mobile/OnePlus Ace 6t.png";
-import Xiaomi from "../assets/Mobile/Xiaomi Redmi Note 14 pro.png";
-import Vivo from "../assets/Mobile/Vivo X300 Pro.png";
-import Google from "../assets/Mobile/Google Pixel 10 Pro XL.png";
+import { BASE_URL } from "../apis";
+import Loader from "../components/Loader";
 
 const Mobiles = () => {
-  
-  const {mobileData} = useContext(DataContext)
+  const [mobileData, setMobileData] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    setLoading(true)
+    fetch(`${BASE_URL}/showroom/mobiles`)
+      .then((res) => res.json())
+      .then(({data}) => {
+        setMobileData(data);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, []);
 
   return (
     <>
       <Navbar />
-      {mobileData.map((item, i) => (
+      {loading ? <Loader /> : mobileData.map((item, i) => (
         <Cards key={i} item={item} />
       ))}
     </>

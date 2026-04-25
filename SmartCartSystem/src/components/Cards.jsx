@@ -5,7 +5,7 @@ import { IMAGE_BASE_URL } from "../apis";
 const Cards = ({item}) => {
   return (
     <>
-      <div className="flex p-5" key={item.image}>
+      <div className="flex text-black p-5" key={item.image}>
         <div className="min-h-[370px] flex flex-col justify-between w-64 bg-white">
           <div className="flex items-center justify-center w-full mt-9 mb-2">
             <img src={`${IMAGE_BASE_URL}${item.imageUrl}`} alt="test" className="w-28 h-24 sm:object-contain " />

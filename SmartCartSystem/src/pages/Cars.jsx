@@ -1,23 +1,30 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { DataContext } from "../context/DataContext";
 import Navbar from "../components/Navbar";
 import Cards from "../components/Cards";
-
-import Tesla from '../assets/Cars/Tesla Model 3.png'
-import BMW from '../assets/Cars/BMW M4.png'
-import Audi from '../assets/Cars/Audi A6.png'
-import Thar from '../assets/Cars/Mahindra Thar.png'
-import Hyundai from '../assets/Cars/Hyundai Creta.png'
-import Toyota from '../assets/Cars/Toyota Fortuner.png'
+import { BASE_URL } from "../apis";
+import Loader from "../components/Loader";
 
 const Cars = () => {
-  
-  const {carsData} = useContext(DataContext);
+
+  const [carsData, setCarsData] = useState([])
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    setLoading(true)
+      fetch(`${BASE_URL}/showroom/cars`)
+      .then((res) => res.json())    
+      .then(({data}) =>{      
+       setCarsData(data)
+      }).finally(()=>{
+        setLoading(false)
+      })
+    }, [])
 
   return (
     <>
       <Navbar />
-      {carsData.map((item,i) => (
+      {loading ? <Loader /> : carsData.map((item,i) => (
         <Cards key={i} item={item} />
       ))}
     </>

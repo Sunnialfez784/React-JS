@@ -14,7 +14,7 @@ const Home = () => {
     <>
       <Navbar />
 
-      <main className="w-full flex items-center flex-col">
+      <main className="w-full flex text-black items-center flex-col">
         <div className="w-[95%] h-80 mb-3 flex justify-between overflow-hidden bg-white px-24 py-4">
           <div className="mt-10">
             <p className="bg-zinc-400 text-white p-1 w-[115px] text-[10px] rounded-full">Welcome to Appsile Shop</p>
