@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
 import {faEye, faEyeSlash} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import { BASE_URL } from "../apis";
 
 const Register = () => {
   const [name, setName] = useState("");
@@ -70,21 +71,21 @@ const Register = () => {
     alert("Registration successful. Please login.");
     navigate("/login", {replace: true});
 
-    // fetch("http://192.168.0.113:8000/api/v1/users/register", {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify({
-    //     name,
-    //     password,
-    //     email,
-    //     phone,
-    //   }), 
-    // })
-    //   .then((response) => response.json())
-    //   .then((data) => console.log("Success:", data))
-    //   .catch((error) => console.log("Error:", error));
+    fetch(`${BASE_URL}/users/register`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name,
+        password,
+        email,
+        phone,
+      }), 
+    })
+      .then((response) => response.json())
+      .then((data) => console.log("Success:", data))
+      .catch((error) => console.log("Error:", error));
 
     console.log({name, email, password, phone});
   };

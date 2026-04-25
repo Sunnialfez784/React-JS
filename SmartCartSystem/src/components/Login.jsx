@@ -2,6 +2,9 @@ import React, {useEffect, useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
 import {faEye, faEyeSlash} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import { BASE_URL } from "../apis";
+import { useAuth } from "../context/AuthProvider";
+
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -9,21 +12,40 @@ const Login = () => {
   const [visible, setVisible] = useState(false);
   const [showError, setShowError] = useState(false);
 
-  // useEffect(() => {
-  //   const storedData = JSON.parse(localStorage.getItem("savedProduct"));
-  // }, []);
-
   const navigate = useNavigate();
+  const { login } = useAuth();
 
-  // useEffect(() => {
-  //   const isAuth = localStorage.getItem("isAuth");
+  const handleLogin = () => {
+    const userData = { email: "test@gmail.com" };
 
-  //   if (isAuth) {
-  //     // navigate("/");
-  //   }
-  // }, []);
+    login(userData);
+    navigate("/home");
+  }
 
-  fetch("http://192.168.0.113:8000/api/v1/users/login", {
+  const errors = (
+    <div role="alert" data-variant="error">
+      <strong>Error!</strong> Please Enter the Right email or Password.
+    </div>
+  );
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+
+    const users = JSON.parse(localStorage.getItem("registeredUsers") || "[]");
+    const accessToken = JSON.parse(localStorage.getItem("accessToken"))
+    const user = users.find((u) => u.email === email.toLowerCase() && u.password === password);
+    if(user){
+      localStorage.setItem("users", JSON.stringify(accessToken))
+    }else{
+      accessToken=""
+    }
+
+    if (!user) {
+      setShowError(errors);
+      return; 
+    }
+
+    fetch(`${BASE_URL}/users/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -36,25 +58,6 @@ const Login = () => {
       .then((response) => response.json())
       .then((data) => console.log("Success:", data))
       .catch((error) => console.log("Error:", error));
-
-
-  const errors = (
-    <div role="alert" data-variant="error">
-      <strong>Error!</strong> Please Enter the Right email or Password.
-    </div>
-  );
-
-  const handleLogin = (e) => {
-    e.preventDefault();
-
-    const users = JSON.parse(localStorage.getItem("registeredUsers") || "[]");
-
-    const user = users.find((u) => u.email === email.toLowerCase() && u.password === password);
-
-    if (!user) {
-      setShowError(errors);
-      return;
-    }
 
     localStorage.setItem("isLoggedIn", "true");
     localStorage.setItem("currentUser", JSON.stringify(user));
