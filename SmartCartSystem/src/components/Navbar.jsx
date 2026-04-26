@@ -6,12 +6,12 @@ import {TbLogout} from "react-icons/tb";
 const Navbar = () => {
 
   const navigate = useNavigate()
+  const { logout } = useAuth();
 
   const handleLogout = () => {
-    localStorage.removeItem("isLoggedIn");
-    localStorage.removeItem("currentUser");
+    logout();
     navigate("/login");
-  };
+  }
 
   return (
     <header className="shadow sticky text-black w-full z-50 top-0 mb-2">
