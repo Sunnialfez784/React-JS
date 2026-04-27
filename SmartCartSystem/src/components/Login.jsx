@@ -2,9 +2,8 @@ import React, {useEffect, useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
 import {faEye, faEyeSlash} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import { BASE_URL } from "../apis";
-import { useAuth } from "../context/AuthProvider";
-
+import {BASE_URL} from "../apis";
+import {useAuth} from "../context/AuthContext";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -13,14 +12,7 @@ const Login = () => {
   const [showError, setShowError] = useState(false);
 
   const navigate = useNavigate();
-  const { login } = useAuth();
-
-  const handleLogin = () => {
-    const userData = { email: "test@gmail.com" };
-
-    login(userData);
-    navigate("/home");
-  }
+  const {login} = useAuth();
 
   const errors = (
     <div role="alert" data-variant="error">
@@ -28,47 +20,45 @@ const Login = () => {
     </div>
   );
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
 
-    const users = JSON.parse(localStorage.getItem("registeredUsers") || "[]");
-    const accessToken = JSON.parse(localStorage.getItem("accessToken"))
-    const user = users.find((u) => u.email === email.toLowerCase() && u.password === password);
-    if(user){
-      localStorage.setItem("users", JSON.stringify(accessToken))
-    }else{
-      accessToken=""
+    try {
+      const res = await fetch(`${BASE_URL}/users/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({email, password}),
+      });
+
+      const data = await res.json();
+
+      console.log("Response Data:", data);
+      if (!res.ok) {
+        throw new Error(data.message || "Login failed");
+      }
+
+      const accessToken = data.data?.accessToken;
+      const user = data.user;
+
+      if (!accessToken) {
+        throw new Error("Token not found");
+      }
+
+      localStorage.setItem("accessToken", accessToken);
+      login({user, accessToken});
+      navigate("/", {replace: true});
+    } catch (err) {
+      console.log(err);
+      setShowError(err.message);
+      localStorage.removeItem("accessToken");
     }
-
-    if (!user) {
-      setShowError(errors);
-      return; 
-    }
-
-    fetch(`${BASE_URL}/users/login`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email,
-        password,
-      }), 
-    })
-      .then((response) => response.json())
-      .then((data) => console.log("Success:", data))
-      .catch((error) => console.log("Error:", error));
-
-    localStorage.setItem("isLoggedIn", "true");
-    localStorage.setItem("currentUser", JSON.stringify(user));
-
-    navigate("/", {replace: true});
   };
-
 
   return (
     <>
-    {showError && errors}
+      {showError && errors}
       <div className="flex justify-center text-black items-center w-full h-screen">
         <form onSubmit={handleLogin} className="h-80 w-96 flex p-10 flex-col rounded-md bg-white">
           <h1 className="text-3xl text-blue-950 font-semibold mb-5">Login</h1>

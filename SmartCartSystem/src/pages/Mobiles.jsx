@@ -1,5 +1,4 @@
 import React, {useContext, useEffect, useState} from "react";
-import {DataContext} from "../context/DataContext";
 import Navbar from "../components/Navbar";
 import Cards from "../components/Cards";
 import { BASE_URL } from "../apis";
@@ -25,7 +24,7 @@ const Mobiles = () => {
     <>
       <Navbar />
       {loading ? <Loader /> : mobileData.map((item, i) => (
-        <Cards key={i} item={item} />
+        <Cards key={i} item={item} isMobile />
       ))}
     </>
   );

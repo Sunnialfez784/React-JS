@@ -4,6 +4,7 @@ import Dashboard from './components/Dashboard';
 import AddUser  from "./components/AddUser";
 import ShowUsers from './components/ShowUsers';
 import ProtectedRoute from './components/ProtectedRoute';
+import Loader from '../../SmartCartSystem/src/components/Loader';
 
 function App() {
 

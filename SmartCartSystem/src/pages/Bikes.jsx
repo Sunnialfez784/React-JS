@@ -1,5 +1,4 @@
 import React, {useContext, useEffect, useState} from "react";
-import {DataContext} from "../context/DataContext";
 import Cards from "../components/Cards";
 import Navbar from "../components/Navbar";
 import {BASE_URL} from "../apis";
