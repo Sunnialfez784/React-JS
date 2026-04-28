@@ -1,14 +1,36 @@
-import React from "react";
+import React, {useState} from "react";
 import Bike from "../assets/Home/b1.png";
+import {Link} from "react-router-dom";
 
-const Details = () => {
+const Details = ({item}) => {
+  const [count, setCount] = useState(1);
+
+  const addBtn = () => {
+    if (count < 7) {
+      setCount(count + 1);
+    }
+  };
+
+  const minusBtn = () => {
+    if (count > 1) {
+      setCount(count - 1);
+    }
+  };
+
+  const formatNumber = (num) => {
+    return Number(num).toLocaleString("INR", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    });
+  };
+
   return (
     <div className=" text-black p-10 h-screen w-full bg-white">
       <div className="flex w-full justify-center flex-row">
         <div>
           <img src={Bike} alt="" className="h-96 w-96 rounded-md border" />
         </div>
-        <div className="w-[450px] h-96 ml-10 p-10 border">
+        <div className="w-[450px] h-96 ml-10 p-[30px] border">
           <div className="flex items-center w-full">
             <h1 className="text-2xl font-semibold">Bajaj Pulsar RS 200</h1>
           </div>
@@ -38,10 +60,12 @@ const Details = () => {
             </div>
           </div>
           <div className="mt-5">
-            <h1 className="text-2xl font-sans font-bold"> ₹2,07,635</h1>
+            <h1 className="text-2xl font-sans font-bold"> ₹{formatNumber(207635 * count)}</h1>
           </div>
-          <div className="flex justify-end h-20 items-end">
-            <button className="bg-green-400 h-10 w-96">Add to Card</button>
+          <div className="flex h-16 items-end">
+            <Link to='/addtocard'>
+              <button className="bg-green-400 h-10 w-96">Add to Card</button>
+            </Link>
           </div>
         </div>
       </div>

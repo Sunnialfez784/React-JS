@@ -13,6 +13,8 @@ import Login from './components/Login'
 import Register from './components/Register'
 import ProtectedRoute from './components/ProtectedRoute'
 import Details from './components/Details'
+import AddToCard from './components/AddToCard'
+import AddProduct from './components/AddProduct'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -29,6 +31,8 @@ function App() {
         <Route path='/laptops' element={<Laptops />} />
         <Route path='/mobiles' element={<Mobiles />} /> */}
         <Route path='/details' element={<Details />}/>
+        <Route path='/addtocard' element={<AddToCard />}/>
+        <Route path='/addproduct' element={<AddProduct />} />
 
         <Route path='/' element={<ProtectedRoute><Home /></ProtectedRoute>} />
         <Route path='/cars' element={<ProtectedRoute><Cars /></ProtectedRoute>} />

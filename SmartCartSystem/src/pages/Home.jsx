@@ -55,14 +55,14 @@ const Home = () => {
             Electronic Accesspries
           </h1>
           <div className="flex gap-2 mt-4">
-            <div className="h-40 w-64 rounded-md overflow-hidden object-contain bg-gray-400">
-              <Link to="/bikes">
-                <img src={Bike} alt="" className="h-40 w-full object-cover object-bottom" />
-              </Link>
-            </div>
             <div className="h-40 w-64 rounded-md overflow-hidden bg-gray-400">
               <Link to="/Cars">
                 <img src={Cars} alt="" className="h-40 w-full object-cover object-center" />
+              </Link>
+            </div>
+            <div className="h-40 w-64 rounded-md overflow-hidden object-contain bg-gray-400">
+              <Link to="/bikes">
+                <img src={Bike} alt="" className="h-40 w-full object-cover object-bottom" />
               </Link>
             </div>
             <div className="h-40 w-auto rounded-md overflow-hidden bg-gray-400">
