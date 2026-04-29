@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import {Link, NavLink, useNavigate} from "react-router-dom";
 import Header from "./Header";
 import AddProduct from './AddProduct'
+import AddToCard from "./AddToCard";
 
 const Navbar = ({isButton}) => {
 
@@ -72,7 +73,7 @@ const Navbar = ({isButton}) => {
                   </NavLink>
                 </li>
               </ul>
-              {isButton ? "" : 
+              {isButton ? <Link to='/addtocard'> <button className="bg-white h-10 w-24 flex rounded text-xs justify-center font-sans font-medium items-center py-2 pr-4 pl-3 duration-200 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 hover:text-orange-700 lg:p-0">Add To Card</button></Link> : 
               <button onClick={() => setIsOpen(true)} className="bg-white h-10 w-24 flex rounded text-xs justify-center font-sans font-medium items-center py-2 pr-4 pl-3 duration-200 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 hover:text-orange-700 lg:p-0">Add Product</button>}
             </div>
           </div>

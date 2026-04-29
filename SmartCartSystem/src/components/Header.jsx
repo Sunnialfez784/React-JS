@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import Appsile from "../assets/Nav/Appsile.png";
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {useAuth} from "../context/AuthContext";
 import {TbLogout} from "react-icons/tb";
 import {BASE_URL} from "../apis";
@@ -49,6 +49,7 @@ const Header = () => {
         <div className="flex items-center">
           <div className="relative">
             <input type="text" placeholder="Search by Product" value={search} onChange={(e) => setSearch(e.target.value)} className="w-72 bg-gray-200 text-lg px-3 py-2" />
+            <Link to='/addtocard'>
             
             {search && (
               <div className="absolute z-50 bg-white w-full max-h-60 overflow-y-auto shadow-lg">
@@ -64,6 +65,7 @@ const Header = () => {
                 )}
               </div>
             )}
+            </Link>
           </div>
           <button onClick={handleLogout} className="border-[2px] ml-5 px-2 py-1 mb-1">
             <TbLogout /> Logout

@@ -25,20 +25,20 @@ function App() {
         <Route path='/login' element={<Login />} />
         <Route path='/Register' element={<Register />} />
 
-        {/* <Route path='/' element={<Home />} />
+        <Route path='/' element={<Home />} />
         <Route path='/cars' element={<Cars />} />
         <Route path='/bikes' element={<Bikes />} />
         <Route path='/laptops' element={<Laptops />} />
-        <Route path='/mobiles' element={<Mobiles />} /> */}
+        <Route path='/mobiles' element={<Mobiles />} />
         <Route path='/details' element={<Details />}/>
         <Route path='/addtocard' element={<AddToCard />}/>
         <Route path='/addproduct' element={<AddProduct />} />
 
-        <Route path='/' element={<ProtectedRoute><Home /></ProtectedRoute>} />
+        {/* <Route path='/' element={<ProtectedRoute><Home /></ProtectedRoute>} />
         <Route path='/cars' element={<ProtectedRoute><Cars /></ProtectedRoute>} />
         <Route path='/bikes' element={<ProtectedRoute><Bikes /></ProtectedRoute>} />
         <Route path='/laptops' element={<ProtectedRoute><Laptops /></ProtectedRoute>} />
-        <Route path='/mobiles' element={<ProtectedRoute><Mobiles /></ProtectedRoute>} />
+        <Route path='/mobiles' element={<ProtectedRoute><Mobiles /></ProtectedRoute>} /> */}
 
         <Route path='*' element={<Errors />} />
       </Routes>

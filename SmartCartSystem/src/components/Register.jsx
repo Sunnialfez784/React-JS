@@ -71,21 +71,21 @@ const Register = () => {
     alert("Registration successful. Please login.");
     navigate("/login", {replace: true});
 
-    fetch(`${BASE_URL}/users/register`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        name,
-        password,
-        email,
-        phone,
-      }), 
-    })
-      .then((response) => response.json())
-      .then((data) => console.log("Success:", data))
-      .catch((error) => console.log("Error:", error));
+    // fetch(`${BASE_URL}/users/register`, {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify({
+    //     name,
+    //     password,
+    //     email,
+    //     phone,
+    //   }), 
+    // })
+    //   .then((response) => response.json())
+    //   .then((data) => console.log("Success:", data))
+    //   .catch((error) => console.log("Error:", error));
 
     console.log({name, email, password, phone});
   };

@@ -24,6 +24,10 @@ const Details = ({item}) => {
     });
   };
 
+  const addToCart = () => {
+    alert("Add Successfully")
+  }
+
   return (
     <div className=" text-black p-10 h-screen w-full bg-white">
       <div className="flex w-full justify-center flex-row">
@@ -63,9 +67,7 @@ const Details = ({item}) => {
             <h1 className="text-2xl font-sans font-bold"> ₹{formatNumber(207635 * count)}</h1>
           </div>
           <div className="flex h-16 items-end">
-            <Link to='/addtocard'>
-              <button className="bg-green-400 h-10 w-96">Add to Card</button>
-            </Link>
+            <button onClick={addToCart} className="bg-green-400 h-10 w-96">Add to Card</button>
           </div>
         </div>
       </div>
