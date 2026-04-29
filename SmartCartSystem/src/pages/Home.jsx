@@ -32,7 +32,7 @@ const Home = () => {
 
   return (
     <>
-      <Navbar />
+      <Navbar isButton/>
 
       <main className="w-full flex text-black items-center flex-col">
         <div className="w-[95%] h-80 mb-3 flex justify-between overflow-hidden bg-white px-24 py-4">
@@ -52,7 +52,7 @@ const Home = () => {
         </div>
         <div className="w-[95%] h-80 p-5 bg-white">
           <h1 style={{fontFamily: "Rubik"}} className="font-medium text-xl">
-            Electronic Accesspries
+            All Products
           </h1>
           <div className="flex gap-2 mt-4">
             <div className="h-40 w-64 rounded-md overflow-hidden bg-gray-400">
