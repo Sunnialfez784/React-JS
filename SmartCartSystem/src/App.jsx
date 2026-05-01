@@ -15,6 +15,9 @@ import ProtectedRoute from './components/ProtectedRoute'
 import Details from './components/Details'
 import AddToCard from './components/AddToCard'
 import AddProduct from './components/AddProduct'
+import Order from './components/Order'
+import Profile from './components/Profile'
+import Fashion from './pages/Fashion'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -33,6 +36,9 @@ function App() {
         <Route path='/details' element={<Details />}/>
         <Route path='/addtocard' element={<AddToCard />}/>
         <Route path='/addproduct' element={<AddProduct />} />
+        <Route path='/orders' element={<Order />} />
+        <Route path='/profile' element={<Profile />} />
+        <Route path='fashion' element={<Fashion />} />
 
         {/* <Route path='/' element={<ProtectedRoute><Home /></ProtectedRoute>} />
         <Route path='/cars' element={<ProtectedRoute><Cars /></ProtectedRoute>} />
