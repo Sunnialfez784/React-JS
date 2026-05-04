@@ -10,6 +10,9 @@ import {GiLaptop} from "react-icons/gi";
 import {FaMobileScreen} from "react-icons/fa6";
 import {AiOutlineProduct} from "react-icons/ai";
 import { LuShirt } from "react-icons/lu";
+import toys from '../assets/Home/toys.png'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBaseballBatBall, faCouch } from "@fortawesome/free-solid-svg-icons";
 
 
 const Navbar = ({isButton}) => {
@@ -81,7 +84,6 @@ const Navbar = ({isButton}) => {
                     }>
                     <FaMobileScreen className="h-9 w-9" />
                     Mobiles
-                    <img src="../assets/hero.png" alt="" />
                   </NavLink>
                 </li>
                 <li>
@@ -94,7 +96,43 @@ const Navbar = ({isButton}) => {
                     }>
                     <LuShirt className="h-9 w-9" />
                     Fashion
-                    <img src="../assets/hero.png" alt="" />
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    to="/kids"
+                    className={({isActive}) =>
+                      `
+                     leading-4 h-9 w-10 flex flex-col rounded text-[14px] justify-center font-sans items-center py-2 pr-4 pl-3 duration-200 ${isActive ? "text-orange-700" : "text-gray-700"} border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 hover:text-orange-700 lg:p-0
+                  `
+                    }>
+                    <FontAwesomeIcon icon={faTeddyBear} />
+
+                    Kids
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    to="/sports"
+                    className={({isActive}) =>
+                      `
+                     leading-4 h-9 w-10 flex flex-col rounded text-[14px] justify-center font-sans items-center py-2 pr-4 pl-3 duration-200 ${isActive ? "text-orange-700" : "text-gray-700"} border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 hover:text-orange-700 lg:p-0
+                  `
+                    }>
+                    <FontAwesomeIcon icon={faBaseballBatBall} />
+                    Sports
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    to="/furniture"
+                    className={({isActive}) =>
+                      `
+                     leading-4 h-9 w-10 flex flex-col rounded text-[14px] justify-center font-sans items-center py-2 pr-4 pl-3 duration-200 ${isActive ? "text-orange-700" : "text-gray-700"} border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 hover:text-orange-700 lg:p-0
+                  `
+                    }>
+                    <FontAwesomeIcon icon={faCouch} />
+                    Furniture
                   </NavLink>
                 </li>
               </ul>

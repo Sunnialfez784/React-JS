@@ -78,7 +78,7 @@ const Register = () => {
     alert("Registration successful. Please login.");
     navigate("/login", {replace: true});
 
-    fetch(`${BASE_URL}/users/register`, {
+    fetch(`${BASE_URL}/shops/register-user`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

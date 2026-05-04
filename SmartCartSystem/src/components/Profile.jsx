@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { PiUserCircle } from "react-icons/pi";
 
 const Profile = () => {
   const [firstName, setFirstName] = useState("");
@@ -10,12 +11,17 @@ const Profile = () => {
 
   return (
     <div className="flex justify-center gap-2 flex-col items-center bg-gray-200 w-full h-screen">
-      <div className="h-[120px] w-[550px] rounded-md bg-white">
-
+      <div className="flex gap-6 h-[100px] w-[550px] rounded-md py-3 px-10 bg-white">
+        <PiUserCircle className="rounded-full bg-black h-20 w-20"/>
+        <div className="flex flex-col mt-3">
+          <h1 className="text-black text-xs">Hello</h1>
+          <h1 className="text-black text-2xl font-medium">Sunni Alfez</h1>
+        </div>
       </div>
 
-      <div className="bg-white h-[320px] w-[550px] rounded-md p-5 shadow-md backdrop-blur-3xl">
+      <div className="bg-white min-h-[320px] w-[550px] rounded-md p-5 shadow-md backdrop-blur-3xl">
         <div className="flex flex-col gap-0.5">
+          <h1 className="text-black font-medium text-[20px] mb-4">Change User Information here</h1>
           <div className="flex gap-4 items-center mb-2">
             <div className="w-[50%]">
               <label htmlFor="" className="text-gray-500 text-[12px] mb-1">

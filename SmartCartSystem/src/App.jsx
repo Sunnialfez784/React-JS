@@ -18,6 +18,10 @@ import AddProduct from './components/AddProduct'
 import Order from './components/Order'
 import Profile from './components/Profile'
 import Fashion from './pages/Fashion'
+import RatingComponent from './components/RatingComponent'
+import Furniture from './pages/Furniture'
+import Sports from './pages/Sports'
+import Toys from './pages/Toys'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -28,23 +32,28 @@ function App() {
         <Route path='/login' element={<Login />} />
         <Route path='/Register' element={<Register />} />
 
-        <Route path='/' element={<Home />} />
+        {/* <Route path='/' element={<Home />} />
         <Route path='/cars' element={<Cars />} />
         <Route path='/bikes' element={<Bikes />} />
         <Route path='/laptops' element={<Laptops />} />
-        <Route path='/mobiles' element={<Mobiles />} />
-        <Route path='/details' element={<Details />}/>
-        <Route path='/addtocard' element={<AddToCard />}/>
-        <Route path='/addproduct' element={<AddProduct />} />
-        <Route path='/orders' element={<Order />} />
-        <Route path='/profile' element={<Profile />} />
-        <Route path='fashion' element={<Fashion />} />
+        <Route path='/mobiles' element={<Mobiles />} /> */}
 
-        {/* <Route path='/' element={<ProtectedRoute><Home /></ProtectedRoute>} />
+        <Route path='/details' element={<ProtectedRoute><Details /></ProtectedRoute>}/>
+        <Route path='/addtocard' element={<ProtectedRoute><AddToCard /></ProtectedRoute>}/>
+        <Route path='/addproduct' element={<ProtectedRoute><AddProduct /></ProtectedRoute>} />
+        <Route path='/orders' element={<ProtectedRoute><Order /></ProtectedRoute>} />
+        <Route path='/profile' element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+        <Route path='/rating' element={<ProtectedRoute><RatingComponent /></ProtectedRoute>} />
+        <Route path='/fashion' element={<ProtectedRoute><Fashion /></ProtectedRoute>} />
+        <Route path='/furniture' element={<ProtectedRoute><Furniture /></ProtectedRoute>} />
+        <Route path='/sports' element={<ProtectedRoute><Sports /></ProtectedRoute>} />
+        <Route path='/kids' element={<ProtectedRoute><Toys /></ProtectedRoute>}/>
+
+        <Route path='/' element={<ProtectedRoute><Home /></ProtectedRoute>} />
         <Route path='/cars' element={<ProtectedRoute><Cars /></ProtectedRoute>} />
         <Route path='/bikes' element={<ProtectedRoute><Bikes /></ProtectedRoute>} />
         <Route path='/laptops' element={<ProtectedRoute><Laptops /></ProtectedRoute>} />
-        <Route path='/mobiles' element={<ProtectedRoute><Mobiles /></ProtectedRoute>} /> */}
+        <Route path='/mobiles' element={<ProtectedRoute><Mobiles /></ProtectedRoute>} />
 
         <Route path='*' element={<Errors />} />
       </Routes>

@@ -15,21 +15,43 @@ const Header = () => {
   const [search, setSearch] = useState("");
   const [dropDown, setDropDown] = useState(false);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const [cars, bikes, mobiles, laptops] = await Promise.all([fetch(`${BASE_URL}/showroom/cars`).then((res) => res.json()), fetch(`${BASE_URL}/showroom/bikes`).then((res) => res.json()), fetch(`${BASE_URL}/showroom/mobiles`).then((res) => res.json()), fetch(`${BASE_URL}/showroom/laptops`).then((res) => res.json())]);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     const [cars, bikes, mobiles, laptops] = await Promise.all([fetch(`${BASE_URL}/showroom/cars`).then((res) => res.json()), fetch(`${BASE_URL}/showroom/bikes`).then((res) => res.json()), fetch(`${BASE_URL}/showroom/mobiles`).then((res) => res.json()), fetch(`${BASE_URL}/showroom/laptops`).then((res) => res.json())]);
 
-      setAllProducts([...cars.data, ...bikes.data, ...mobiles.data, ...laptops.data]);
-    };
+  //     setAllProducts([...cars.data, ...bikes.data, ...mobiles.data, ...laptops.data]);
+  //   };
 
-    fetchData();
-  }, []);
+  //   fetchData();
+  // }, []);
 
   const filteredProducts = search ? allProducts.filter((item) => item.product_name?.toLowerCase().includes(search.toLowerCase())) : [];
 
-  const handleLogout = () => {
-    logout();
-    navigate("/login");
+  const handleLogout = async () => {
+    try {
+      const token = localStorage.getItem("accessToken");
+
+      const res = await fetch(`${BASE_URL}/shops/logout-user`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const data = await res.json();
+      console.log("Logout response:", data);
+
+      localStorage.removeItem("accessToken");
+      logout();
+      navigate("/login");
+    } catch (err) {
+      console.log(err);
+
+      localStorage.removeItem("accessToken");
+      logout();
+      navigate("/login");
+    }
   };
 
   return (

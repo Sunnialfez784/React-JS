@@ -1,4 +1,5 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
+import {BASE_URL} from "../apis";
 
 const AddProduct = ({setIsOpen}) => {
   const [picture, setPicture] = useState("");
@@ -21,6 +22,25 @@ const AddProduct = ({setIsOpen}) => {
 
   const add = (e) => {
     e.preventDefault();
+
+    useEffect(() => {
+      fetch(`${BASE_URL}/shops/add-product`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          picture,
+          productName,
+          productDetails,
+          productPrice,
+          category,
+        }),
+      })
+        .then((response) => response.json())
+        .then((data) => console.log("Success:", data))
+        .catch((error) => console.log("Error:", error));
+    }, []);
 
     if (!productName || !productPrice) {
       alert("Fill required fields");

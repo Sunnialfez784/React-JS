@@ -1,19 +1,19 @@
 import React, {useContext, useEffect, useState} from "react";
 import Navbar from "../components/Navbar";
 import Cards from "../components/Cards";
-import {BASE_URL} from "../apis";
+import { BASE_URL } from "../apis";
 import Loader from "../components/Loader";
-import {useAuth} from "../context/AuthContext";
+import { useAuth } from "../context/AuthContext";
 
-const Cars = () => {
-  const [carsData, setCarsData] = useState([]);
+const Furniture = () => {
+  const [furniture, setFurniture] = useState([]);
   const [loading, setLoading] = useState(false);
   const {token} = useAuth();
 
   useEffect(() => {
     setLoading(true);
 
-    fetch(`${BASE_URL}/shops/all-products-filter?productType=cars`, {
+    fetch(`${BASE_URL}/shops/all-products-filter?productType=furniture`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -21,7 +21,7 @@ const Cars = () => {
     })
       .then((res) => res.json())
       .then(({data}) => {
-        setCarsData(data || []);
+        setFurniture(data || []);
       })
       .catch((err) => console.error(err))
       .finally(() => {
@@ -32,9 +32,11 @@ const Cars = () => {
   return (
     <>
       <Navbar />
-      {loading ? <Loader /> : Array.isArray(carsData) ? carsData.map((item) => <Cards key={item._id} item={item} />) : <p>No Cars Found</p>}
+      
+      {loading ? <Loader /> : furniture.map((item, i) => <Cards key={i} item={item} />)}
+    
     </>
   );
 };
 
-export default Cars;
+export default Furniture;

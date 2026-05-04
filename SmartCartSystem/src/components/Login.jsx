@@ -24,15 +24,15 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      // const res = await fetch(`${BASE_URL}/users/login`, {
-      //   method: "POST",
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //   },
-      //   body: JSON.stringify({email, password}),
-      // });
+      const res = await fetch(`${BASE_URL}/shops/login-user`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({email, password}),
+      });
 
-      // const data = await res.json();
+      const data = await res.json();
 
       console.log("Response Data:", data);
       if (!res.ok) {

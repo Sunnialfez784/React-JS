@@ -23,10 +23,10 @@ const Cards = ({item, isMobile = false}) => {
         </div> */}
           <div className={`h-52 ${isMobile ? "w-[265px]" : "w-[265px]"} bg-gray-300 rounded-md`}>
         <Link to='/details'>
-            <img src={`${IMAGE_BASE_URL}${item.imageUrl}`} alt="test" className={`w-full h-full  rounded-md ${isMobile ? "object-contain" : "object-cover"} `} />
+            <img src={item.productImageUrl} alt="test" className={`w-full h-full  rounded-md ${isMobile ? "object-contain" : "object-cover"} `} />
             <div className="flex items-center gap-1">
-              <img src={`${IMAGE_BASE_URL}${item.imageUrl}`} alt="test" className="w-5 h-5 object-cover mt-1 rounded-full " />
-              <h1 className="text-[14px] mt-1 font-semibold mb-1">{item.product_name}</h1>
+              <img src={item.productImageUrl} alt="test" className="w-5 h-5 object-cover mt-1 rounded-full " />
+              <h1 className="text-[14px] mt-1 font-semibold mb-1">{item.productName}</h1>
             </div>
         </Link>
           </div>
