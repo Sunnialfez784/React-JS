@@ -1,58 +1,59 @@
 import React, {useEffect, useState} from "react";
 import {BASE_URL} from "../apis";
+import {useAuth} from "../context/AuthContext";
 
 const AddProduct = ({setIsOpen}) => {
-  const [picture, setPicture] = useState("");
+  const [productImage, setProductImage] = useState("");
   const [productName, setProductName] = useState("");
   const [productDetails, setProductDetails] = useState("");
   const [productPrice, setProductPrice] = useState("");
-  const [category, setCategory] = useState("");
+  const [productType, setProductType] = useState("");
   const [file, setFile] = useState(null);
 
-  const handlePicture = () => {
-    const file = e.target.files[0];
-    setPicture(URL.createObjectURL(file));
-  };
+  const {token} = useAuth();
 
   const handleImageChange = (e) => {
     const selectedFile = e.target.files[0];
     setFile(selectedFile);
-    setPicture(URL.createObjectURL(selectedFile));
+    setProductImage(URL.createObjectURL(selectedFile));
   };
 
-  const add = (e) => {
+  const add = async (e) => {
     e.preventDefault();
 
-    useEffect(() => {
-      fetch(`${BASE_URL}/shops/add-product`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          picture,
-          productName,
-          productDetails,
-          productPrice,
-          category,
-        }),
-      })
-        .then((response) => response.json())
-        .then((data) => console.log("Success:", data))
-        .catch((error) => console.log("Error:", error));
-    }, []);
-
-    if (!productName || !productPrice) {
-      alert("Fill required fields");
+    if (!productName || !productPrice || !productType) {
+      alert("Fill all fields including productType");
       return;
     }
 
+    const formData = new FormData();
+
+    formData.append("productName", productName);
+    formData.append("productDetails", productDetails);
+    formData.append("productPrice", productPrice);
+    formData.append("productType", productType);
+    formData.append("productImage", file);
+    try {
+      const res = await fetch(`${BASE_URL}/shops/add-product`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        body: formData,
+      });
+
+      const data = await res.json();
+      console.log("Success:", data);
+    } catch (error) {
+      console.log("Error:", error);
+    }
+
     const newProduct = {
-      picture,
+      productImage,
       productName,
       productDetails,
       productPrice,
-      category,
+      productType,
     };
 
     console.log(newProduct);
@@ -69,12 +70,16 @@ const AddProduct = ({setIsOpen}) => {
             <div className="flex gap-3 justify-between items-center">
               <div>
                 <label className="mt-3.5 mb-1">Select Product</label>
-                <select value={category} onChange={(e) => setCategory(e.target.value)} aria-label="Select an option" className="w-40 border bg-white p-2">
+                <select value={productType} onChange={(e) => setProductType(e.target.value)} aria-label="Select an option" className="w-40 border bg-white p-2">
                   <option value="">Select an option</option>
-                  <option value="Cars">Cars</option>
-                  <option value="Bikes">Bikes</option>
-                  <option value="Laptops">Laptops</option>
-                  <option value="Mobiles">Mobiles</option>
+                  <option value="cars">Cars</option>
+                  <option value="bikes">Bikes</option>
+                  <option value="laptops">Laptops</option>
+                  <option value="mobiles">Mobiles</option>
+                  <option value="fashion">Fashion</option>
+                  <option value="toys">Toys</option>
+                  <option value="sports">Sports</option>
+                  <option value="furniture">Furniture</option>
                 </select>
               </div>
 
@@ -87,7 +92,7 @@ const AddProduct = ({setIsOpen}) => {
                   Upload
                   <input onChange={handleImageChange} type="file" id="uploadFile" className="sr-only" />
                 </label>
-                {picture && <img src={picture} alt="preview" className="mt-3 w-24 h-24 object-cover rounded border" />}
+                {productImage && <img src={productImage} alt="preview" className="mt-3 w-24 h-24 object-cover rounded border" />}
               </div>
             </div>
 

@@ -10,10 +10,14 @@ const Mobiles = () => {
   const [loading, setLoading] = useState(false);
   const {token} = useAuth();
 
+  const type = "mobiles";
+
+  if (!type) return;
+
   useEffect(() => {
   setLoading(true);
 
-  fetch(`${BASE_URL}/shops/all-products-filter?productType=mobiles`, {
+  fetch(`${BASE_URL}/shops/all-products-by-name?productType=mobiles`, {
     method: "GET",
     headers: {
       Authorization: `Bearer ${token}`,

@@ -18,10 +18,10 @@ import AddProduct from './components/AddProduct'
 import Order from './components/Order'
 import Profile from './components/Profile'
 import Fashion from './pages/Fashion'
-import RatingComponent from './components/RatingComponent'
 import Furniture from './pages/Furniture'
 import Sports from './pages/Sports'
 import Toys from './pages/Toys'
+import Keychain from './pages/Keychain'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -43,11 +43,11 @@ function App() {
         <Route path='/addproduct' element={<ProtectedRoute><AddProduct /></ProtectedRoute>} />
         <Route path='/orders' element={<ProtectedRoute><Order /></ProtectedRoute>} />
         <Route path='/profile' element={<ProtectedRoute><Profile /></ProtectedRoute>} />
-        <Route path='/rating' element={<ProtectedRoute><RatingComponent /></ProtectedRoute>} />
         <Route path='/fashion' element={<ProtectedRoute><Fashion /></ProtectedRoute>} />
         <Route path='/furniture' element={<ProtectedRoute><Furniture /></ProtectedRoute>} />
         <Route path='/sports' element={<ProtectedRoute><Sports /></ProtectedRoute>} />
         <Route path='/kids' element={<ProtectedRoute><Toys /></ProtectedRoute>}/>
+        <Route path='/keychain' element={<ProtectedRoute><Keychain /></ProtectedRoute>}/>
 
         <Route path='/' element={<ProtectedRoute><Home /></ProtectedRoute>} />
         <Route path='/cars' element={<ProtectedRoute><Cars /></ProtectedRoute>} />

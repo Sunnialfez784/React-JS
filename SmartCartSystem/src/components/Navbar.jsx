@@ -9,11 +9,12 @@ import {RiMotorbikeLine} from "react-icons/ri";
 import {GiLaptop} from "react-icons/gi";
 import {FaMobileScreen} from "react-icons/fa6";
 import {AiOutlineProduct} from "react-icons/ai";
-import { LuShirt } from "react-icons/lu";
-import toys from '../assets/Home/toys.png'
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBaseballBatBall, faCouch } from "@fortawesome/free-solid-svg-icons";
-
+import {LuShirt} from "react-icons/lu";
+import toys from "../assets/Home/toys.png";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faBaseballBatBall, faCouch} from "@fortawesome/free-solid-svg-icons";
+import { GiBearHead } from "react-icons/gi";
+import { Key } from 'lucide-react';
 
 const Navbar = ({isButton}) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -106,8 +107,7 @@ const Navbar = ({isButton}) => {
                      leading-4 h-9 w-10 flex flex-col rounded text-[14px] justify-center font-sans items-center py-2 pr-4 pl-3 duration-200 ${isActive ? "text-orange-700" : "text-gray-700"} border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 hover:text-orange-700 lg:p-0
                   `
                     }>
-                    <FontAwesomeIcon icon={faTeddyBear} />
-
+                    <GiBearHead className="h-8 w-8" />
                     Kids
                   </NavLink>
                 </li>
@@ -135,13 +135,27 @@ const Navbar = ({isButton}) => {
                     Furniture
                   </NavLink>
                 </li>
+                <li>
+                  <NavLink
+                    to="/kids"
+                    className={({isActive}) =>
+                      `
+                     leading-4 h-9 w-10 flex flex-col rounded text-[14px] justify-center font-sans items-center py-2 pr-4 pl-3 duration-200 ${isActive ? "text-orange-700" : "text-gray-700"} border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 hover:text-orange-700 lg:p-0
+                  `
+                    }>
+                    <Key className="h-5 w-4"/>
+                    Keychain
+                  </NavLink>
+                </li>
               </ul>
-              {isButton ? "" : 
+              {isButton ? (
+                ""
+              ) : (
                 <button onClick={() => setIsOpen(true)} className="bg-white h-10 w-28 flex rounded text-xs justify-center font-sans font-medium items-center py-2 pr-4 pl-3 duration-200 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 hover:text-orange-700 lg:p-0">
                   <AiOutlineProduct className="h-4 w-4" />
                   Add Product
                 </button>
-              }
+              )}
             </div>
           </div>
           {isOpen && <AddProduct setIsOpen={setIsOpen} />}

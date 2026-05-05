@@ -53,11 +53,10 @@ const Home = () => {
 
       <main className="w-full flex text-black items-center flex-col">
         <div className="w-[95%] min-h-80 mb-3 flex justify-between overflow-hidden bg-white px-24 py-4">
-          <div className="mt-10">
+          <div className="mt-20">
             <div className=" leading-relaxed">
               <h1 className="text-yellow-500 leading-9 text-4xl font-extrabold">India’s Smart Hub</h1>
               <h1 className="text-4xl font-extrabold leading-8">for Tech & Vehicles</h1>
-              {/* <h1 className="text-4xl font-extrabold leading-10">In The World</h1> */}
             </div>
             <p className="text-lg font-medium">Our shop provide the perfect & best quality product</p>
             <button className=" bg-black rounded-sm text-sm py-2.5 px-6 font-medium mt-2 text-white shadow-gray-200 shadow-xl">Shop Now</button>
@@ -68,7 +67,7 @@ const Home = () => {
           <h1 style={{fontFamily: "Rubik"}} className="font-medium text-xl">
             All Products
           </h1>
-          <div className="flex flex-wrap text-black">{loading ? <Loader /> : product.map((item) => <Cards key={item.productId} item={item} />)}</div>
+          <div className="flex flex-wrap text-black">{loading ? <Loader /> : product.map((item) => <Cards key={item.productId} item={item} isHome/>)}</div>
         </div>
       </main>
     </>

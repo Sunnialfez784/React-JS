@@ -5,19 +5,19 @@ import { BASE_URL } from "../apis";
 import Cards from "../components/Cards";
 import { useAuth } from "../context/AuthContext";
 
-const Fashion = () => {
-  const [fashion, setFashion] = useState([]);
+const Keychain = () => {
+  const [keyChain, setKeyChain] = useState([]);
   const [loading, setLoading] = useState(false);
   const {token} = useAuth();
 
-  const type = "fashion";
+  const type = "keyChain";
 
   if (!type) return;
 
   useEffect(() => {
       setLoading(true);
   
-      fetch(`${BASE_URL}/shops/all-products-by-name?productType=fashion`, {
+      fetch(`${BASE_URL}/shops/all-products-by-name?productType=keyChain`, {
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -25,7 +25,7 @@ const Fashion = () => {
       })
         .then((res) => res.json())
         .then(({data}) => {
-          setFashion(data || []);
+          setKeyChain(data || []);
         })
         .catch((err) => console.error(err))
         .finally(() => {
@@ -36,9 +36,9 @@ const Fashion = () => {
   return (
     <>
       <Navbar />  
-      {loading ? <Loader /> : fashion.map((item, i) => <Cards key={i} item={item} />)}
+      {loading ? <Loader /> : keyChain.map((item, i) => <Cards key={i} item={item} />)}
     </>
   );
 };
 
-export default Fashion;
+export default Keychain;

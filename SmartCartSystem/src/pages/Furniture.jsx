@@ -10,10 +10,14 @@ const Furniture = () => {
   const [loading, setLoading] = useState(false);
   const {token} = useAuth();
 
+  const type = "furniture";
+
+  if (!type) return;
+
   useEffect(() => {
     setLoading(true);
 
-    fetch(`${BASE_URL}/shops/all-products-filter?productType=furniture`, {
+    fetch(`${BASE_URL}/shops/all-products-by-name?productType=furniture`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,

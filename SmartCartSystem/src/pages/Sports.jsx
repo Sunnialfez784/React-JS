@@ -10,10 +10,14 @@ const Sports = () => {
   const [loading, setLoading] = useState(false);
   const {token} = useAuth();
 
+  const type = "sports";
+
+  if (!type) return;
+
   useEffect(() => {
     setLoading(true);
 
-    fetch(`${BASE_URL}/shops/all-products-filter?productType=sports`, {
+    fetch(`${BASE_URL}/shops/all-products-by-name?productType=sports`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,
