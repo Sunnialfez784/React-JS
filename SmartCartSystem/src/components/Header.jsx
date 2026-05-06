@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useState, useRef} from "react";
 import Appsile from "../assets/Nav/Appsile.png";
 import {Link, useNavigate} from "react-router-dom";
 import {useAuth} from "../context/AuthContext";
@@ -10,34 +10,76 @@ import {MagnifyingGlassIcon} from "@heroicons/react/24/solid";
 
 const Header = () => {
   const navigate = useNavigate();
-  const {logout} = useAuth();
+  const {token, logout} = useAuth();
   const [allProducts, setAllProducts] = useState([]);
   const [search, setSearch] = useState("");
   const [dropDown, setDropDown] = useState(false);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const [cars, bikes, mobiles, laptops] = await Promise.all
-        ([fetch(`${BASE_URL}/shops/all-products-by-name?productType=cars`)
-          .then((res) => res.json()),
-        fetch(`${BASE_URL}/shops/all-products-by-name?productType=bikes`)
-          .then((res) => res.json()), 
-        fetch(`${BASE_URL}/shops/all-products-by-name?productType=mobiles`)
-          .then((res) => res.json()), 
-        fetch(`${BASE_URL}/shops/all-products-by-name?productType=laptops`)
-          .then((res) => res.json())]);
+  const dropdownRef = useRef(null);
+  const searchRef = useRef(null);
 
-      setAllProducts([...cars.data, ...bikes.data, ...mobiles.data, ...laptops.data]);
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+        setDropDown(false);
+      }
+
+      if (searchRef.current && !searchRef.current.contains(e.target)) {
+        setSearch("");
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+        setDropDown(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!token) return;
+
+    const fetchData = async () => {
+      try {
+        const headers = {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        };
+
+        const [cars, bikes, mobiles, laptops] = await Promise.all([fetch(`${BASE_URL}/shops/all-products-by-name?productType=cars`, {headers}).then((res) => res.json()), fetch(`${BASE_URL}/shops/all-products-by-name?productType=bikes`, {headers}).then((res) => res.json()), fetch(`${BASE_URL}/shops/all-products-by-name?productType=mobiles`, {headers}).then((res) => res.json()), fetch(`${BASE_URL}/shops/all-products-by-name?productType=laptops`, {headers}).then((res) => res.json())]);
+
+        setAllProducts([...(cars?.data || []), ...(bikes?.data || []), ...(mobiles?.data || []), ...(laptops?.data || [])]);
+      } catch (error) {
+        console.log("Fetch error:", error);
+      }
     };
 
     fetchData();
-  }, []);
+  }, [token]);
 
-  const filteredProducts = search ? allProducts.filter((item) => item.product_name?.toLowerCase().includes(search.toLowerCase())) : [];
+  const filteredProducts = search ? allProducts.filter((item) => item.productName?.toLowerCase().includes(search.toLowerCase())) : [];
 
   const handleLogout = async () => {
     try {
-      const token = localStorage.getItem("accessToken");
+      if (!token) {
+        console.log("No token found");
+        navigate("/login");
+        return;
+      }
 
       const res = await fetch(`${BASE_URL}/shops/logout-user`, {
         method: "POST",
@@ -49,13 +91,9 @@ const Header = () => {
 
       const data = await res.json();
       console.log("Logout response:", data);
-
-      localStorage.removeItem("accessToken");
-      logout();
-      navigate("/login");
     } catch (err) {
       console.log(err);
-
+    } finally {
       localStorage.removeItem("accessToken");
       logout();
       navigate("/login");
@@ -70,31 +108,29 @@ const Header = () => {
           Appsile Shop
         </div>
 
-        <div className="flex items-center">
+        <div ref={searchRef} className="flex relative items-center">
           <div className="relative w-full">
             <div className="">
               <MagnifyingGlassIcon className="w-5 h-5 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
               <input type="text" placeholder="Search by Product" value={search} onChange={(e) => setSearch(e.target.value)} className="w-full pl-10 pr-3 py-1 border border-blue-400 rounded-lg focus:outline-none bg-white" />
             </div>
 
-            <Link to="/addtocard">
-              {search && (
-                <div className="absolute z-50 bg-white w-full max-h-60 overflow-y-auto shadow-lg">
-                  {filteredProducts.length > 0 ? (
-                    filteredProducts.map((item, index) => (
-                      <Link to={`/product/${item.id}`} key={item.id}>
-                        <div className="p-2 border-b hover:bg-gray-100">
-                          <h2>{item.product_name}</h2>
-                          <p>{item.product_price}</p>
-                        </div>
-                      </Link>
-                    ))
-                  ) : (
-                    <p className="p-2 text-gray-500">No product found</p>
-                  )}
-                </div>
-              )}
-            </Link>
+            {search && (
+              <div className="absolute z-50 bg-white w-full max-h-60 overflow-y-auto shadow-lg">
+                {filteredProducts.length > 0 ? (
+                  filteredProducts.map((item) => (
+                    <Link to={`/product/${item.id}`}>
+                      <div className="p-2 border-b hover:bg-gray-100">
+                        <h2>{item.productName}</h2>
+                        <p>{item.productPrice}</p>
+                      </div>
+                    </Link>
+                  ))
+                ) : (
+                  <p className="p-2 text-gray-500">No product found</p>
+                )}
+              </div>
+            )}
           </div>
 
           <div className="flex items-center">
@@ -108,8 +144,8 @@ const Header = () => {
               </button>
 
               {dropDown && (
-                <div id="dropdownInformation" className="z-10 absolute right-0 mt-2  bg-white border rounded shadow-lg w-72">
-                  <div className="p-2">
+                <div ref={dropdownRef} id="dropdownInformation" className="z-10 absolute right-0 mt-2  bg-white border rounded shadow-lg w-72">
+                  {/* <div className="p-2">
                     <div className="z-10 bg-neutral-primary-medium border border-default-medium rounded-base shadow-lg w-72">
                       <img className="w-8 h-8 rounded-full" src="/docs/images/people/profile-picture-5.jpg" alt="Rounded avatar" />
                       <div className="text-sm">
@@ -117,7 +153,7 @@ const Header = () => {
                         <div className="truncate text-body">name@flowbite.com</div>
                       </div>
                     </div>
-                  </div>
+                  </div> */}
 
                   <ul className="px-2 pb-2 text-sm text-body font-medium" aria-labelledby="dropdownInformationButton">
                     <li>

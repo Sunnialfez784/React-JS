@@ -40,7 +40,6 @@ const Bikes = () => {
       <Navbar />
       
       {loading ? <Loader /> : bikesData.map((item, i) => <Cards key={i} item={item} />)}
-      {loading ?  <Loader /> :  bikesData.map((item,i) => <Details key={i} item={item}/>)}
     </>
   );
 };

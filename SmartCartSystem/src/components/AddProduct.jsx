@@ -80,6 +80,10 @@ const AddProduct = ({setIsOpen}) => {
                   <option value="toys">Toys</option>
                   <option value="sports">Sports</option>
                   <option value="furniture">Furniture</option>
+                  <option value="keychain">Keychain</option>
+                  <option value="camera">Camera</option>
+                  <option value="headset">Headset</option>
+                  <option value="shoes">Shoes</option>
                 </select>
               </div>
 
