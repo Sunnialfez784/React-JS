@@ -1,23 +1,23 @@
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import Navbar from "../components/Navbar";
 import Cards from "../components/Cards";
 import {BASE_URL} from "../apis";
 import Loader from "../components/Loader";
 import {useAuth} from "../context/AuthContext";
 
-const Laptops = () => {
-  const [laptopData, setLaptopData] = useState([]);
+const Watch = () => {
+  const [watch, setWatch] = useState([]);
   const [loading, setLoading] = useState(false);
   const {token} = useAuth();
 
-  const type = "laptops";
+  const type = "watch";
 
   if (!type) return;
 
   useEffect(() => {
     setLoading(true);
 
-    fetch(`${BASE_URL}/shops/all-products-by-name?productType=laptops`, {
+    fetch(`${BASE_URL}/shops/all-products-by-name?productType=watch`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -25,7 +25,7 @@ const Laptops = () => {
     })
       .then((res) => res.json())
       .then(({data}) => {
-        setLaptopData(data || []);
+        setWatch(data || []);
       })
       .catch((err) => console.error(err))
       .finally(() => {
@@ -33,12 +33,11 @@ const Laptops = () => {
       });
   }, []);
 
-  return (
-    <>
-      <Navbar />
-      {loading ? <Loader /> : laptopData.map((item, i) => <Cards key={i} item={item} />)}
-    </>
-  );
+  return <>
+    <Navbar />
+    {loading ? <Loader /> : watch.map((item, i) => <Cards key={i} item={item} />)}
+    
+  </>;
 };
 
-export default Laptops;
+export default Watch;

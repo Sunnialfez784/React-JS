@@ -12,11 +12,12 @@ import {AiOutlineProduct} from "react-icons/ai";
 import {LuShirt} from "react-icons/lu";
 import toys from "../assets/Home/toys.png";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faBaseballBatBall, faCouch} from "@fortawesome/free-solid-svg-icons";
+import {faBaseballBatBall, faCouch, faShoePrints} from "@fortawesome/free-solid-svg-icons";
 import {GiBearHead} from "react-icons/gi";
 import {IoCamera} from "react-icons/io5";
 import {RiKey2Line} from "react-icons/ri";
 import {IoHeadset} from "react-icons/io5";
+import { KeyboardMusic, Speaker, SportShoe, Watch } from "lucide-react";
 
 const Navbar = ({isButton}) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -181,10 +182,44 @@ const Navbar = ({isButton}) => {
                      text-[14px] leading-4 h-9 w-10 flex flex-col justify-center font-sans items-center rounded py-2 pr-4 pl-3 duration-200 ${isActive ? "text-orange-700" : "text-gray-700"} border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent leading-none lg:border-0 hover:text-orange-700 lg:p-0
                   `
                     }>
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1" className="w-6 h-6">
-                      <path d="M2 14h5l3-4 4 2 3 1h5v3H2z" />
-                    </svg>
+                    <SportShoe size={52} strokeWidth={2.7} />
                     Shoes
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    to="/watch"
+                    className={({isActive}) =>
+                      `
+                     text-[14px] leading-4 h-9 w-10 flex flex-col justify-center font-sans items-center rounded py-2 pr-4 pl-3 duration-200 ${isActive ? "text-orange-700" : "text-gray-700"} border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent leading-none lg:border-0 hover:text-orange-700 lg:p-0
+                  `
+                    }>
+                    <Watch size={44} strokeWidth={3} absoluteStrokeWidth />
+                    Watch
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    to="/Speaker"
+                    className={({isActive}) =>
+                      `
+                     text-[14px] leading-4 h-9 w-10 flex flex-col justify-center font-sans items-center rounded py-2 pr-4 pl-3 duration-200 ${isActive ? "text-orange-700" : "text-gray-700"} border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent leading-none lg:border-0 hover:text-orange-700 lg:p-0
+                  `
+                    }>
+                    <Speaker size={44} strokeWidth={4} absoluteStrokeWidth />
+                    Speaker
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    to="/instrument"
+                    className={({isActive}) =>
+                      `
+                     text-[14px] leading-4 h-9 ml-1.5 w-10 flex flex-col justify-center font-sans items-center rounded py-2 pr-4 pl-3 duration-200 ${isActive ? "text-orange-700" : "text-gray-700"} border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent leading-none lg:border-0 hover:text-orange-700 lg:p-0
+                  `
+                    }>
+                    <KeyboardMusic size={44} strokeWidth={3} absoluteStrokeWidth />
+                    Instruments
                   </NavLink>
                 </li>
               </ul>

@@ -7,6 +7,9 @@ import {BASE_URL} from "../apis";
 import {CgProfile} from "react-icons/cg";
 import {IoIosArrowDown} from "react-icons/io";
 import {MagnifyingGlassIcon} from "@heroicons/react/24/solid";
+import { ListOrdered } from "lucide-react";
+import { RiOrderPlayFill } from "react-icons/ri";
+import { FaBorderAll, FaFirstOrder, FaJediOrder } from "react-icons/fa6";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -105,7 +108,7 @@ const Header = () => {
       <div className="w-full">
         <div className="flex items-center font-poppins mb-3 font-medium text-2xl">
           <img src={Appsile} alt="" className="h-10 w-10 rounded-full" />
-          Appsile Shop
+          Appsile Smart Hub
         </div>
 
         <div ref={searchRef} className="flex relative items-center">
@@ -135,7 +138,7 @@ const Header = () => {
 
           <div className="flex items-center">
             <div className="flex relative items-center">
-              <button onClick={() => setDropDown(!dropDown)} id="dropdownInformationButton" data-dropdown-toggle="dropdownInformation" className="inline-flex items-center justify-center text-black bg-brand box-border border border-transparent hover:bg-brand-strong w-28 focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none" type="button">
+              <button onClick={() => setDropDown(!dropDown)} id="dropdownInformationButton" data-dropdown-toggle="dropdownInformation" className="inline-flex items-center justify-center text-black bg-brand box-border border border-transparent hover:bg-brand-strong w-24 ml-2 focus:ring-2 focus:ring-slate-100 shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none" type="button">
                 <CgProfile className="h-5 w-5" />
                 User
                 <svg className="w-3 h-3 ms-1.5 -me-0.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
@@ -144,7 +147,7 @@ const Header = () => {
               </button>
 
               {dropDown && (
-                <div ref={dropdownRef} id="dropdownInformation" className="z-10 absolute right-0 mt-2  bg-white border rounded shadow-lg w-72">
+                <div ref={dropdownRef} id="dropdownInformation" className="z-10 absolute   top-9 mt-2  bg-white border rounded shadow-lg w-72">
                   {/* <div className="p-2">
                     <div className="z-10 bg-neutral-primary-medium border border-default-medium rounded-base shadow-lg w-72">
                       <img className="w-8 h-8 rounded-full" src="/docs/images/people/profile-picture-5.jpg" alt="Rounded avatar" />
@@ -162,6 +165,13 @@ const Header = () => {
                           <path stroke="currentColor" strokeWidth="2" d="M7 17v1a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1a3 3 0 0 0-3-3h-4a3 3 0 0 0-3 3Zm8-9a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
                         </svg>
                         Account
+                      </Link>
+                    </li>
+
+                    <li>
+                      <Link to="/orders" className="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded">
+                        <FaJediOrder className="w-4 h-4 me-1.5"/>
+                        Orders
                       </Link>
                     </li>
 

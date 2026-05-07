@@ -29,11 +29,13 @@ const AddToCard = () => {
   return (
     <>
       <Navbar />
+
       <div className="bg-gray-200 h-screen flex justify-center mt-4 w-full text-black">
         <div className="flex justify-center flex-col bg-white w-[1200px] h-[500px]">
           <h1 style={{fontFamily: "Montserrat Alternates"}} className="text-3xl ml-36 mb-2 font-medium">
             Your Cart
           </h1>
+
           <div className="flex justify-center">
             <div className="flex h-32 p-3 justify-between rounded-t-md w-[550px] bg-[#e5e7eba1] ">
               <div className="flex">

@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { PiUserCircle } from "react-icons/pi";
+import React, {useState} from "react";
+import {PiUserCircle} from "react-icons/pi";
 
 const Profile = () => {
   const [firstName, setFirstName] = useState("");
@@ -9,10 +9,13 @@ const Profile = () => {
   const [gender, setGender] = useState("");
   const [phone, setPhone] = useState("");
 
+  const details = localStorage.getItem(JSON.parse("registeredUsers"));
+  console.log("hello",details);
+
   return (
     <div className="flex justify-center gap-2 flex-col items-center bg-gray-200 w-full h-screen">
       <div className="flex gap-6 h-[100px] w-[550px] rounded-md py-3 px-10 bg-white">
-        <PiUserCircle className="rounded-full bg-black h-20 w-20"/>
+        <PiUserCircle className="rounded-full bg-black h-20 w-20" />
         <div className="flex flex-col mt-3">
           <h1 className="text-black text-xs">Hello</h1>
           <h1 className="text-black text-2xl font-medium">Sunni Alfez</h1>

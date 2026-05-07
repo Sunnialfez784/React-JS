@@ -33,6 +33,7 @@ const AddProduct = ({setIsOpen}) => {
     formData.append("productPrice", productPrice);
     formData.append("productType", productType);
     formData.append("productImage", file);
+    
     try {
       const res = await fetch(`${BASE_URL}/shops/add-product`, {
         method: "POST",
@@ -84,6 +85,9 @@ const AddProduct = ({setIsOpen}) => {
                   <option value="camera">Camera</option>
                   <option value="headset">Headset</option>
                   <option value="shoes">Shoes</option>
+                  <option value="watch">Watch</option>
+                  <option value="speaker">Speaker</option>
+                  <option value="instrument">Instrument</option>
                 </select>
               </div>
 

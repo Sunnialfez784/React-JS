@@ -10,6 +10,7 @@ import Bike1 from "../assets/Home/b1.png";
 import {BASE_URL} from "../apis";
 import Loader from "../components/Loader";
 import {useAuth} from "../context/AuthContext";
+import { Link } from "react-router-dom";
 
 const Home = () => {
   const image = [Laptop1, Bike1, Car1, Phone1];
@@ -59,15 +60,18 @@ const Home = () => {
               <h1 className="text-4xl font-extrabold leading-8">for Tech & Vehicles</h1>
             </div>
             <p className="text-lg font-medium">Our shop provide the perfect & best quality product</p>
-            <button className=" bg-black rounded-sm text-sm py-2.5 px-6 font-medium mt-2 text-white shadow-gray-200 shadow-xl">Shop Now</button>
+            <Link to='/laptops'>
+              <button className=" bg-black rounded-sm text-sm py-2.5 px-6 font-medium mt-2 text-white shadow-gray-200 shadow-xl">Shop Now</button>
+            </Link>
           </div>
           <img src={image[currentIndex]} alt="slider" className="h-80 mr-3 object-cover bg-white opacity-100 hover:opacity-50 transition-opacity duration-500 ease-in-out" />
         </div>
+
         <div className="w-[95%] flex flex-col p-5 bg-white">
           <h1 style={{fontFamily: "Rubik"}} className="font-medium text-xl">
             All Products
           </h1>
-          <div className="flex flex-wrap text-black">{loading ? <Loader /> : product.map((item) => <Cards key={item.productId} item={item} isHome/>)}</div>
+          <div className="flex flex-wrap text-black">{loading ? <Loader /> : product.map((item) => <Cards key={item.productId} item={item} isHome />)}</div>
         </div>
       </main>
     </>

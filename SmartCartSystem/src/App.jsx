@@ -1,5 +1,3 @@
-import { useState } from 'react'
-import './App.css'
 import Cards from './components/Cards'
 import { Route, Routes } from 'react-router-dom'
 import Home from './pages/Home'
@@ -24,9 +22,12 @@ import Toys from './pages/Toys'
 import Keychain from './pages/Keychain'
 import Camera from './pages/Camera'
 import Headset from './pages/Headset'
+import Shoes from './pages/Shoes'
+import Watch from './pages/Watch'
+import Speaker from './pages/Speaker'
+import Instrument from './pages/Instrument'
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
     <div className='flex w-full flex-wrap bg-gray-200'>
@@ -57,6 +58,10 @@ function App() {
         <Route path='/keychain' element={<ProtectedRoute><Keychain /></ProtectedRoute>}/>
         <Route path='/camera' element={<ProtectedRoute><Camera /></ProtectedRoute>}/>
         <Route path='/headset' element={<ProtectedRoute><Headset /></ProtectedRoute>}/>
+        <Route path='/shoes' element={<ProtectedRoute><Shoes /></ProtectedRoute>}/>
+        <Route path='/watch' element={<ProtectedRoute><Watch /></ProtectedRoute>}/>
+        <Route path='/speaker' element={<ProtectedRoute><Speaker /></ProtectedRoute>}/>
+        <Route path='/instrument' element={<ProtectedRoute><Instrument /></ProtectedRoute>}/>
 
         <Route path='*' element={<Errors />} />
       </Routes>
