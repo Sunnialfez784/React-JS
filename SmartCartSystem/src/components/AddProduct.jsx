@@ -88,6 +88,7 @@ const AddProduct = ({setIsOpen}) => {
                   <option value="watch">Watch</option>
                   <option value="speaker">Speaker</option>
                   <option value="instrument">Instrument</option>
+                  <option value="charging">Charging</option>
                 </select>
               </div>
 

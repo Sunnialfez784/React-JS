@@ -51,7 +51,7 @@ const Header = () => {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, []);
+  }, []); 
 
   useEffect(() => {
     if (!token) return;
@@ -63,9 +63,9 @@ const Header = () => {
           Authorization: `Bearer ${token}`,
         };
 
-        const [cars, bikes, mobiles, laptops] = await Promise.all([fetch(`${BASE_URL}/shops/all-products-by-name?productType=cars`, {headers}).then((res) => res.json()), fetch(`${BASE_URL}/shops/all-products-by-name?productType=bikes`, {headers}).then((res) => res.json()), fetch(`${BASE_URL}/shops/all-products-by-name?productType=mobiles`, {headers}).then((res) => res.json()), fetch(`${BASE_URL}/shops/all-products-by-name?productType=laptops`, {headers}).then((res) => res.json())]);
+        const [product] = await Promise.all([fetch(`${BASE_URL}/shops/all-products`, {headers}).then((res) => res.json())]);
 
-        setAllProducts([...(cars?.data || []), ...(bikes?.data || []), ...(mobiles?.data || []), ...(laptops?.data || [])]);
+        setAllProducts([...(product?.data || [])]);
       } catch (error) {
         console.log("Fetch error:", error);
       }
@@ -138,29 +138,17 @@ const Header = () => {
 
           <div className="flex items-center">
             <div className="flex relative items-center">
-              <button onClick={() => setDropDown(!dropDown)} id="dropdownInformationButton" data-dropdown-toggle="dropdownInformation" className="inline-flex items-center justify-center text-black bg-brand box-border border border-transparent hover:bg-brand-strong w-24 ml-2 focus:ring-2 focus:ring-slate-100 shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none" type="button">
+              <button onClick={() => setDropDown(!dropDown)} id="dropdownInformationButton" data-dropdown-toggle="dropdownInformation" className="inline-flex items-center justify-center text-black bg-brand box-border border border-transparent hover:bg-brand-strong w-24 focus:ring-2 focus:ring-slate-100 shadow-xs font-medium leading-5 rounded-base text-sm px-4 cursor-pointer py-2.5 focus:outline-none" type="button">
                 <CgProfile className="h-5 w-5" />
                 User
-                <svg className="w-3 h-3 ms-1.5 -me-0.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                  <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m19 9-7 7-7-7" />
-                </svg>
               </button>
-
+                  
               {dropDown && (
                 <div ref={dropdownRef} id="dropdownInformation" className="z-10 absolute   top-9 mt-2  bg-white border rounded shadow-lg w-72">
-                  {/* <div className="p-2">
-                    <div className="z-10 bg-neutral-primary-medium border border-default-medium rounded-base shadow-lg w-72">
-                      <img className="w-8 h-8 rounded-full" src="/docs/images/people/profile-picture-5.jpg" alt="Rounded avatar" />
-                      <div className="text-sm">
-                        <div className="font-medium text-heading">Bonnie Green</div>
-                        <div className="truncate text-body">name@flowbite.com</div>
-                      </div>
-                    </div>
-                  </div> */}
 
                   <ul className="px-2 pb-2 text-sm text-body font-medium" aria-labelledby="dropdownInformationButton">
                     <li>
-                      <Link to="/profile" className="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded">
+                      <Link to="/profile" className="inline-flex cursor-pointer items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded">
                         <svg className="w-4 h-4 me-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                           <path stroke="currentColor" strokeWidth="2" d="M7 17v1a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1a3 3 0 0 0-3-3h-4a3 3 0 0 0-3 3Zm8-9a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
                         </svg>
@@ -169,14 +157,14 @@ const Header = () => {
                     </li>
 
                     <li>
-                      <Link to="/orders" className="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded">
+                      <Link to="/orders" className="inline-flex cursor-pointer items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded">
                         <FaJediOrder className="w-4 h-4 me-1.5"/>
                         Orders
                       </Link>
                     </li>
 
                     <li>
-                      <h1 onClick={handleLogout} href="#" className="inline-flex items-center w-full p-2 text-fg-danger hover:bg-neutral-tertiary-medium rounded">
+                      <h1 onClick={handleLogout} href="#" className="inline-flex cursor-pointer items-center w-full p-2 text-fg-danger hover:bg-neutral-tertiary-medium rounded">
                         <svg className="w-4 h-4 me-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                           <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M20 12H8m12 0-4 4m4-4-4-4M9 4H7a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h2" />
                         </svg>

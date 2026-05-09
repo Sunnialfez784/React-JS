@@ -26,6 +26,7 @@ import Shoes from './pages/Shoes'
 import Watch from './pages/Watch'
 import Speaker from './pages/Speaker'
 import Instrument from './pages/Instrument'
+import Charging from './pages/Charging'
 
 function App() {
 
@@ -48,7 +49,7 @@ function App() {
         <Route path='/mobiles' element={<ProtectedRoute><Mobiles /></ProtectedRoute>} />
         <Route path='/details' element={<ProtectedRoute><Details /></ProtectedRoute>}/>
         <Route path='/addtocard' element={<ProtectedRoute><AddToCard /></ProtectedRoute>}/>
-        <Route path='/addproduct' element={<ProtectedRoute><AddProduct /></ProtectedRoute>} />
+        {/* <Route path='/addproduct' element={<ProtectedRoute><AddProduct /></ProtectedRoute>} /> */}
         <Route path='/orders' element={<ProtectedRoute><Order /></ProtectedRoute>} />
         <Route path='/profile' element={<ProtectedRoute><Profile /></ProtectedRoute>} />
         <Route path='/fashion' element={<ProtectedRoute><Fashion /></ProtectedRoute>} />
@@ -62,6 +63,7 @@ function App() {
         <Route path='/watch' element={<ProtectedRoute><Watch /></ProtectedRoute>}/>
         <Route path='/speaker' element={<ProtectedRoute><Speaker /></ProtectedRoute>}/>
         <Route path='/instrument' element={<ProtectedRoute><Instrument /></ProtectedRoute>}/>
+        <Route path='/charging' element={<ProtectedRoute><Charging /></ProtectedRoute>}/>
 
         <Route path='*' element={<Errors />} />
       </Routes>

@@ -3,7 +3,7 @@ import {Link, NavLink, useNavigate} from "react-router-dom";
 import Header from "./Header";
 import AddProduct from "./AddProduct";
 import AddToCard from "./AddToCard";
-import {MdOutlineHome} from "react-icons/md";
+import {MdCable , MdOutlineHome} from "react-icons/md";
 import {LiaCarSideSolid} from "react-icons/lia";
 import {RiMotorbikeLine} from "react-icons/ri";
 import {GiLaptop} from "react-icons/gi";
@@ -222,11 +222,23 @@ const Navbar = ({isButton}) => {
                     Instruments
                   </NavLink>
                 </li>
+                <li>
+                  <NavLink
+                    to="/charging"
+                    className={({isActive}) =>
+                      `
+                     text-[14px] leading-4 h-9 ml-1.5 w-10 flex flex-col justify-center font-sans items-center rounded py-2 pr-4 pl-3 duration-200 ${isActive ? "text-orange-700" : "text-gray-700"} border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent leading-none lg:border-0 hover:text-orange-700 lg:p-0
+                  `
+                    }>
+                    <MdCable size={22} />
+                    Charging
+                  </NavLink>
+                </li>
               </ul>
               {isButton ? (
                 ""
               ) : (
-                <button onClick={() => setIsOpen(true)} className="bg-white h-10 w-28 flex rounded text-xs justify-center font-sans font-medium items-center py-2 pr-4 pl-3 duration-200 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 hover:text-orange-700 lg:p-0">
+                <button onClick={() => setIsOpen(true)} className="bg-white h-10 w-24 flex rounded text-xs justify-center font-sans font-medium items-center py-2 pr-4 pl-3 duration-200 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 hover:text-orange-700 lg:p-0">
                   <AiOutlineProduct className="h-4 w-4" />
                   Add Product
                 </button>

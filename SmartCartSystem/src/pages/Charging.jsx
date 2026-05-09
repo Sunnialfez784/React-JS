@@ -1,25 +1,25 @@
 import React, {useContext, useEffect, useState} from "react";
-import Cards from "../components/Cards";
 import Navbar from "../components/Navbar";
+import Cards from "../components/Cards";
 import {BASE_URL} from "../apis";
 import Loader from "../components/Loader";
-import AddProduct from "../components/AddProduct";
 import {useAuth} from "../context/AuthContext";
-import Details from "../components/Details";
 
-const Bikes = () => {
-  const [bikesData, setBikesData] = useState([]);
+const Charging = () => {
+  const [charging, setCharging] = useState([]);
   const [loading, setLoading] = useState(false);
   const {token} = useAuth();
 
-  const type = "bikes";
+  const type = "cars";
 
   if (!type) return;
 
   useEffect(() => {
+    if (!token) return;
+
     setLoading(true);
 
-    fetch(`${BASE_URL}/shops/all-products-by-name?productType=bikes`, {
+    fetch(`${BASE_URL}/shops/all-products-by-name?productType=charging`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -27,21 +27,18 @@ const Bikes = () => {
     })
       .then((res) => res.json())
       .then(({data}) => {
-        setBikesData(data || []);
+        setCharging(data || []);
       })
       .catch((err) => console.error(err))
-      .finally(() => {
-        setLoading(false);
-      });
-  }, []);
+      .finally(() => setLoading(false));
+  }, [token]);
 
   return (
     <>
       <Navbar />
-
-      {loading ? <Loader /> : bikesData.map((item, i) => <Cards key={i} item={item} />)}
+      {loading ? <Loader /> : charging.map((item, i) => <Cards key={i} item={item} />)}
     </>
   );
 };
 
-export default Bikes;
+export default Charging;

@@ -10,7 +10,7 @@ import Bike1 from "../assets/Home/b1.png";
 import {BASE_URL} from "../apis";
 import Loader from "../components/Loader";
 import {useAuth} from "../context/AuthContext";
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
 
 const Home = () => {
   const image = [Laptop1, Bike1, Car1, Phone1];
@@ -21,7 +21,10 @@ const Home = () => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    if (!token) return;
+
     setLoading(true);
+
     fetch(`${BASE_URL}/shops/all-products`, {
       headers: {
         "Content-Type": "application/json",
@@ -38,7 +41,7 @@ const Home = () => {
       .finally(() => {
         setLoading(false);
       });
-  }, []);
+  }, [token]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -60,7 +63,7 @@ const Home = () => {
               <h1 className="text-4xl font-extrabold leading-8">for Tech & Vehicles</h1>
             </div>
             <p className="text-lg font-medium">Our shop provide the perfect & best quality product</p>
-            <Link to='/laptops'>
+            <Link to="/laptops">
               <button className=" bg-black rounded-sm text-sm py-2.5 px-6 font-medium mt-2 text-white shadow-gray-200 shadow-xl">Shop Now</button>
             </Link>
           </div>

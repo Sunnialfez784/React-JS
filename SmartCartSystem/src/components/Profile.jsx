@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import {PiUserCircle} from "react-icons/pi";
+import { useAuth } from "../context/AuthContext";
 
 const Profile = () => {
   const [firstName, setFirstName] = useState("");
@@ -9,8 +10,9 @@ const Profile = () => {
   const [gender, setGender] = useState("");
   const [phone, setPhone] = useState("");
 
-  const details = localStorage.getItem(JSON.parse("registeredUsers"));
-  console.log("hello",details);
+  // const details = localStorage.getItem(JSON.parse("currentUser"));
+  const {user} = useAuth()
+  console.log("hello",user);
 
   return (
     <div className="flex justify-center gap-2 flex-col items-center bg-gray-200 w-full h-screen">

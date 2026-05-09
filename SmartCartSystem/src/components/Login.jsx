@@ -33,20 +33,20 @@ const Login = () => {
       });
 
       const data = await res.json();
-
+      
       console.log("Response Data:", data);
+
       if (!res.ok) {
         throw new Error(data.message || "Login failed");
       }
-
+      
       const accessToken = data.data?.accessToken;
-      const user = data.user;
-
+      const user = data.data;
+      
       if (!accessToken) {
         throw new Error("Token not found");
       }
 
-      localStorage.setItem("accessToken", accessToken);
       login({user, accessToken});
       navigate("/", {replace: true});
     } catch (err) {
@@ -60,46 +60,25 @@ const Login = () => {
     <>
       {showError && errors}
       <div className="flex justify-center text-black items-center w-full h-screen">
-        <form
-          onSubmit={handleLogin}
-          className="min-h-80 w-96 flex p-10 flex-col rounded-md bg-white"
-        >
+        <form onSubmit={handleLogin} className="min-h-80 w-96 flex p-10 flex-col rounded-md bg-white">
           <h1 className="text-3xl font-semibold text-gray-500 mb-5">Login</h1>
           <div className="flex flex-col gap-1">
             <label htmlFor="" className="text-gray-500 text-[12px] mb-1">
               Email
             </label>
-            <input
-              type="text"
-              placeholder="Enter Your Email"
-              className="text-black border mb-2 px-2 py-1.5 w-full rounded-md bg-white text-[16px]"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
+            <input type="text" placeholder="Enter Your Email" className="text-black border mb-2 px-2 py-1.5 w-full rounded-md bg-white text-[16px]" value={email} onChange={(e) => setEmail(e.target.value)} />
 
             <div className="relative w-full">
               <label htmlFor="" className="text-gray-500 text-[12px] mb-1">
                 Password
               </label>
-              <input
-                type={visible ? "text" : "password"}
-                placeholder="Enter Your Password"
-                className="text-black border mb-2 px-2 py-1.5 w-full rounded-md bg-white text-[16px]"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-              <span
-                onClick={() => setVisible(!visible)}
-                className="absolute right-2.5 text-sm text-black top-10 -translate-y-1/2 cursor-pointer"
-              >
+              <input type={visible ? "text" : "password"} placeholder="Enter Your Password" className="text-black border mb-2 px-2 py-1.5 w-full rounded-md bg-white text-[16px]" value={password} onChange={(e) => setPassword(e.target.value)} />
+              <span onClick={() => setVisible(!visible)} className="absolute right-2.5 text-sm text-black top-10 -translate-y-1/2 cursor-pointer">
                 <FontAwesomeIcon icon={visible ? faEyeSlash : faEye} />
               </span>
             </div>
           </div>
-          <button
-            type="submit"
-            className="mt-6 py-1 rounded-sm font-semibold bg-slate-500 text-white text-sm"
-          >
+          <button type="submit" className="mt-6 py-1 rounded-sm font-semibold bg-slate-500 text-white text-sm">
             Login
           </button>
 
