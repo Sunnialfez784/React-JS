@@ -43,27 +43,27 @@ const AddToCard = () => {
     setProducts(updated);
   };
 
-  const deleteProduct = (id) => {
-    
-    useEffect(() => {
-      fetch(`${BASE_URL}/shops/delete-cart-item/${cart_item_id}`, {
-        method: "GET",
+  const deleteProduct = async (id) => {
+    try {
+      const res = await fetch(`${BASE_URL}/shops/delete-cart-item/${id}`, {
+        method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      })
-        .then((res) => res.json())
-        .then(({data}) => {
-          setBikesData(data || []);
-        })
-        .catch((err) => console.error(err))
-        .finally(() => {
-          setLoading(false);
-        });
-    }, []);
+      });
 
-    const filtered = products.filter((item) => item.cart_item_id !== id);
-    setProducts(filtered);
+      const result = await res.json();
+
+      console.log(result);
+
+      if (result.success) {
+        const filtered = products.filter((item) => item.cart_item_id !== id);
+
+        setProducts(filtered);
+      }
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   const formatNumber = (num) => {

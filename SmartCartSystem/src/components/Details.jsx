@@ -3,7 +3,7 @@ import Bike from "../assets/Home/b1.png";
 import {Link, useLocation} from "react-router-dom";
 import {useAuth} from "../context/AuthContext";
 import Navbar from "./Navbar";
-import { BASE_URL } from "../apis";
+import {BASE_URL} from "../apis";
 
 const Details = ({item}) => {
   const {state} = useLocation();
@@ -21,22 +21,32 @@ const Details = ({item}) => {
 
   const addToCart = async () => {
     try {
+      console.log("TOKEN:", token);
+
       const res = await fetch(`${BASE_URL}/shops/add-product-to-cart`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify({productId :state.productId,quantity :count}),
+        body: JSON.stringify({
+          productId: state.productId,
+          quantity: count,
+        }),
       });
 
       const data = await res.json();
-      console.log("Success:", data);
-      alert("Successfully add the Product")
 
+      if (data.success) {
+        console.log("Success:", data);
+        alert("Product added successfully");
+      } else {
+        console.log("Failed:", data);
+        alert(data.message);
+      }
     } catch (error) {
       console.log("Error:", error);
-      alert('Not add this product')
+      alert("Product not added");
     }
   };
 

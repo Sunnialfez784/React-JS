@@ -9,8 +9,8 @@ const Register = () => {
   const [lastName, setLastName] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
-  const [gender, setGender] = useState("")
   const [phone, setPhone] = useState("");
+  const [gender, setGender] = useState("")
   const [visible, setVisible] = useState(false);
   const [error, setError] = useState({});
 
