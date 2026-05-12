@@ -4,6 +4,7 @@ import Navbar from "./Navbar";
 import {Link} from "react-router-dom";
 import {useAuth} from "../context/AuthContext";
 import {BASE_URL} from "../apis";
+import BillingDetails from "../pages/BillingDetails";
 
 const AddToCard = () => {
   const [products, setProducts] = useState([]);
@@ -76,54 +77,127 @@ const AddToCard = () => {
   const subtotal = products.reduce((acc, item) => acc + item.snapshot_price * item.quantity, 0);
 
   return (
-    <>
-      <Navbar />
+  <>
+    <Navbar />
 
-      <div className="bg-gray-200  flex justify-center mt-4 w-full text-black py-10">
-        <div className="flex flex-col bg-white w-[1200px] h-[500px] p-5 rounded-lg">
-          <h1 style={{fontFamily: "Montserrat Alternates"}} className="text-3xl ml-10 mb-5 font-medium">
-            Your Cart
-          </h1>
+    <div className="bg-[#f1f3f6] min-h-screen py-6 px-4 text-black">
+      <div className="max-w-[1400px] mx-auto">
 
-          <div className="flex justify-between">
+        <h1
+          style={{fontFamily: "Montserrat Alternates"}}
+          className="text-4xl font-semibold">
+          Your Cart
+        </h1>
+
+        <div className="">
+          <BillingDetails />
+        </div>
+
+        <div className="flex gap-6 items-start">
+
+          <div className="flex-1 bg-white rounded-xl shadow-sm p-5">
+
+            <h2 className="text-2xl font-semibold mb-5">
+              Cart Items
+            </h2>
+
             <div
-              className="w-[700px] max-h-96 overflow-y-auto 
-     [&::-webkit-scrollbar]:w-2
-     [&::-webkit-scrollbar-track]:bg-gray-100
-     [&::-webkit-scrollbar-thumb]:bg-gray-300
-     [&::-webkit-scrollbar-thumb]:rounded-full">
+              className="max-h-[650px] overflow-y-auto pr-2
+              [&::-webkit-scrollbar]:w-2
+              [&::-webkit-scrollbar-track]:bg-gray-100
+              [&::-webkit-scrollbar-thumb]:bg-gray-300
+              [&::-webkit-scrollbar-thumb]:rounded-full">
+
               {products.length > 0 ? (
                 products.map((item) => (
-                  <div key={`${item.cart_item_id}`} className="flex h-32 p-3 justify-between rounded-md mb-4 bg-[#e5e7eba1]">
-                    <div className="flex">
-                      <img src={item.productImageUrl} alt="" className="h-24 w-24 border object-cover" />
+                  <div
+                    key={item.cart_item_id}
+                    className="flex justify-between items-center bg-[#f8f9fb] border border-gray-200 rounded-xl p-4 mb-4 hover:shadow-md duration-200">
 
-                      <div className="flex flex-col ml-3">
-                        <h1 className="font-semibold text-xl">{item.snapshot_name}</h1>
+                    <div className="flex gap-4">
 
-                        <p>{item.productDetails}</p>
+                      <img
+                        src={item.productImageUrl}
+                        alt=""
+                        className="w-28 h-28 rounded-lg border object-cover bg-white"
+                      />
 
-                        <h1 className="text-xl font-bold">₹{formatNumber(item.snapshot_price * item.quantity)}</h1>
+                      <div className="flex flex-col justify-between">
+
+                        <div>
+                          <h1 className="font-semibold text-xl">
+                            {item.snapshot_name}
+                          </h1>
+
+                          <p className="text-gray-500 text-sm mt-1 line-clamp-2">
+                            {item.productDetails}
+                          </p>
+                        </div>
+
+                        <h1 className="text-2xl font-bold mt-3">
+                          ₹
+                          {formatNumber(
+                            item.snapshot_price * item.quantity
+                          )}
+                        </h1>
                       </div>
                     </div>
 
-                    <div className="flex flex-col justify-between">
-                      <button onClick={() => deleteProduct(item.cart_item_id)} className="ml-20">
+                    <div className="flex flex-col items-end justify-between h-28">
+
+                      <button
+                        onClick={() =>
+                          deleteProduct(item.cart_item_id)
+                        }
+                        className="p-2 rounded-full hover:bg-red-100 duration-200">
                         <TrashIcon className="w-5 text-red-500" />
                       </button>
 
-                      <div className="h-10 w-24 bg-[#ffffff8b] rounded-lg mt-2 flex justify-between items-center p-1">
-                        <button onClick={() => minusBtn(item.cart_item_id)} className="border">
-                          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-4">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14" />
+                      <div className="flex items-center gap-4 bg-white border rounded-lg px-3 py-2 shadow-sm">
+
+                        <button
+                          onClick={() =>
+                            minusBtn(item.cart_item_id)
+                          }
+                          className="w-7 h-7 border rounded flex items-center justify-center hover:bg-gray-100">
+
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            strokeWidth={1.5}
+                            stroke="currentColor"
+                            className="size-4">
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              d="M5 12h14"
+                            />
                           </svg>
                         </button>
 
-                        <h1 className="font-semibold text-lg">{item.quantity}</h1>
+                        <h1 className="font-semibold text-lg min-w-[20px] text-center">
+                          {item.quantity}
+                        </h1>
 
-                        <button onClick={() => addBtn(item.cart_item_id)} className="border">
-                          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-4">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                        <button
+                          onClick={() =>
+                            addBtn(item.cart_item_id)
+                          }
+                          className="w-7 h-7 border rounded flex items-center justify-center hover:bg-gray-100">
+
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            strokeWidth={1.5}
+                            stroke="currentColor"
+                            className="size-4">
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              d="M12 4.5v15m7.5-7.5h-15"
+                            />
                           </svg>
                         </button>
                       </div>
@@ -131,43 +205,64 @@ const AddToCard = () => {
                   </div>
                 ))
               ) : (
-                <h1 className="text-xl font-semibold text-center mt-10">Cart is Empty</h1>
+                <div className="h-[300px] flex items-center justify-center">
+                  <h1 className="text-2xl font-semibold text-gray-500">
+                    Cart is Empty
+                  </h1>
+                </div>
               )}
             </div>
+          </div>
 
-            <div className="h-72 w-96 ml-4 flex flex-col justify-between rounded-md bg-[#e5e7eba1] p-5">
-              <div>
-                <h1 className="font-semibold text-xl">Order Summary</h1>
+          <div className="w-[380px] sticky top-5">
 
-                <div className="mt-4">
-                  <div className="flex justify-between items-center">
-                    <h1>Subtotal</h1>
-                    <h1>₹{formatNumber(subtotal)}</h1>
-                  </div>
+            <div className="bg-white rounded-xl shadow-sm p-6">
 
-                  <div className="flex justify-between mt-2">
-                    <h1>Delivery fee</h1>
-                    <h1>₹40.00</h1>
-                  </div>
+              <h1 className="text-2xl font-semibold mb-5">
+                Order Summary
+              </h1>
 
-                  <div className="h-[1px] my-3 w-full bg-[#ADADAD24]"></div>
+              <div className="space-y-4">
 
-                  <div className="flex justify-between mt-2 font-bold">
-                    <h1>Total Amount</h1>
-                    <h1>₹{formatNumber(subtotal + 40)}</h1>
-                  </div>
+                <div className="flex justify-between text-gray-600">
+                  <h1>Subtotal</h1>
+
+                  <h1>
+                    ₹{formatNumber(subtotal)}
+                  </h1>
+                </div>
+
+                <div className="flex justify-between text-gray-600">
+                  <h1>Delivery Fee</h1>
+
+                  <h1>₹40.00</h1>
+                </div>
+
+                <div className="border-t pt-4 flex justify-between text-xl font-bold">
+                  <h1>Total Amount</h1>
+
+                  <h1>
+                    ₹{formatNumber(subtotal + 40)}
+                  </h1>
                 </div>
               </div>
 
-              <Link to="/orders">
-                <button className="bg-white w-full p-2 rounded-md font-semibold">Go To Checkout</button>
+              <Link to="/billingdetails">
+                <button className="w-full bg-black text-white py-3 rounded-lg mt-6 font-semibold hover:bg-gray-800 duration-200">
+                  Go To Checkout
+                </button>
               </Link>
+
+              <p className="text-xs text-gray-500 text-center mt-4">
+                Cash on Delivery Available
+              </p>
             </div>
           </div>
         </div>
       </div>
-    </>
-  );
+    </div>
+  </>
+);
 };
 
 export default AddToCard;

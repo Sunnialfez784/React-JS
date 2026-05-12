@@ -27,6 +27,7 @@ import Watch from './pages/Watch'
 import Speaker from './pages/Speaker'
 import Instrument from './pages/Instrument'
 import Charging from './pages/Charging'
+import BillingDetails from './pages/BillingDetails'
 import Payment from './pages/Payment'
 
 function App() {
@@ -65,6 +66,7 @@ function App() {
         <Route path='/speaker' element={<ProtectedRoute><Speaker /></ProtectedRoute>}/>
         <Route path='/instrument' element={<ProtectedRoute><Instrument /></ProtectedRoute>}/>
         <Route path='/charging' element={<ProtectedRoute><Charging /></ProtectedRoute>}/>
+        <Route path='/billingdetails' element={<ProtectedRoute><BillingDetails /></ProtectedRoute>} />
         <Route path='/payment' element={<ProtectedRoute><Payment /></ProtectedRoute>} />
 
         <Route path='*' element={<Errors />} />

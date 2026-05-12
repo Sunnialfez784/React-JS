@@ -36,7 +36,6 @@ const Details = ({item}) => {
       });
 
       const data = await res.json();
-
       if (data.success) {
         console.log("Success:", data);
         alert("Product added successfully");

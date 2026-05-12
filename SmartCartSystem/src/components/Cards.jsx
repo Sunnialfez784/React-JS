@@ -7,7 +7,7 @@ import Mobiles from "../pages/Mobiles";
 const Cards = ({item, isMobile = false, isHome = false}) => {
   return (
     <>
-      <div className={`${isHome ? "" : "h-[555px]"} flex text-black p-5`} key={item.image}>
+      <div className={`${isHome ? "" : "h-[638px]"} flex text-black p-5`} key={item.image}>
         <div className={`h-52 ${isMobile ? "" : "w-[265px]"} mb-2 bg-gray-300 rounded-md`}>
           <Link state={item} to="/details">
             <img src={item.productImageUrl} alt="test" className={`w-full h-full  rounded-md ${isMobile ? "object-contain" : "object-cover"} `} />
