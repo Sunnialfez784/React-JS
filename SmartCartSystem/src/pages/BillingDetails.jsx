@@ -136,10 +136,9 @@ const BillingDetails = () => {
   };
 
   return (
-    <div className="w-full min-h-52 bg-[#f1f3f6] text-black flex justify-center ">
+    <div className="w-full h-36 bg-[#f1f3f6] text-black flex justify-center">
       <div className="w-[800px]">
 
-        {/* Selected Address */}
         {selectedAddress && (
           <div className="bg-white p-5 rounded shadow border">
             <div className="flex items-center justify-between">
@@ -170,7 +169,6 @@ const BillingDetails = () => {
           </div>
         )}
 
-        {/* Add Address Form */}
         {showForm && (
           <div className="bg-white p-6 rounded shadow mt-5">
             <h1 className="text-3xl font-bold mb-6">

@@ -36,7 +36,7 @@ const Mobiles = () => {
   return (
     <>
       <Navbar />
-      {loading ? <Loader /> : mobileData.map((item, i) => <Cards key={i} item={item} isMobile />)}
+      {loading ? <Loader /> : mobileData.map((item, i) => <Cards key={i} item={item} isProduct />)}
     </>
   );
 };

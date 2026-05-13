@@ -29,6 +29,7 @@ import Instrument from './pages/Instrument'
 import Charging from './pages/Charging'
 import BillingDetails from './pages/BillingDetails'
 import Payment from './pages/Payment'
+import ProductBill from './pages/ProductBill'
 
 function App() {
 
@@ -68,6 +69,8 @@ function App() {
         <Route path='/charging' element={<ProtectedRoute><Charging /></ProtectedRoute>}/>
         <Route path='/billingdetails' element={<ProtectedRoute><BillingDetails /></ProtectedRoute>} />
         <Route path='/payment' element={<ProtectedRoute><Payment /></ProtectedRoute>} />
+        <Route path='/productbill' element={<ProtectedRoute><ProductBill /></ProtectedRoute>} />
+
 
         <Route path='*' element={<Errors />} />
       </Routes>

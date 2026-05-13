@@ -1,11 +1,13 @@
 import React from "react";
 import Navbar from "../components/Navbar";
+import { useLocation } from "react-router-dom";
 
 const Payment = () => {
-  const subtotal = 2499;
+  const {state : subTotal} = useLocation()
   const deliveryFee = 40;
-  const totalAmount = subtotal + deliveryFee;
-
+  const totalAmount = subTotal + deliveryFee;
+  console.log(subTotal,'state');
+  
   const formatNumber = (num) => {
     return Number(num).toLocaleString("en-IN", {
       minimumFractionDigits: 2,
@@ -23,13 +25,12 @@ const Payment = () => {
 
       <div className="bg-gray-200 text-black min-h-screen flex justify-center py-10">
         <div className="w-[880px] flex justify-end">
-          {/* Right Side COD Card */}
+
           <div className="w-96 h-[480px] rounded-md bg-white p-5 shadow-md">
             <h1 className="text-2xl font-semibold mb-5">
               Payment Method
             </h1>
 
-            {/* Cash On Delivery */}
             <div className="border rounded-md p-4 bg-gray-100">
               <div className="flex items-center gap-3">
                 <input
@@ -56,8 +57,8 @@ const Payment = () => {
               </h1>
 
               <div className="flex justify-between">
-                <span>Subtotal</span>
-                <span>₹{formatNumber(subtotal)}</span>
+                <span>subTotal</span>
+                <span>₹{formatNumber(subTotal)}</span>
               </div>
 
               <div className="flex justify-between mt-2">
