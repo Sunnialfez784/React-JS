@@ -1,13 +1,18 @@
 import React from "react";
 import Navbar from "../components/Navbar";
-import { useLocation } from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
+import {BASE_URL} from "../apis";
+import {useAuth} from "../context/AuthContext";
 
 const Payment = () => {
-  const {state : subTotal} = useLocation()
+  const location = useLocation();
+  const subTotal = location?.state || 0;
+
+  const {token} = useAuth();
+
   const deliveryFee = 40;
-  const totalAmount = subTotal + deliveryFee;
-  console.log(subTotal,'state');
-  
+  const totalAmount = subTotal + deliveryFee
+
   const formatNumber = (num) => {
     return Number(num).toLocaleString("en-IN", {
       minimumFractionDigits: 2,
@@ -15,9 +20,39 @@ const Payment = () => {
     });
   };
 
-  const handleOrder = () => {
-    alert("Order Placed Successfully");
-  };
+  const navigate = useNavigate()
+
+  const handleOrder = async () => {
+  try {
+
+    console.log("subtotal:", subTotal);
+    console.log("total:", totalAmount);
+
+    const res = await fetch(`${BASE_URL}/shops/order-payment`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        price: Number(totalAmount),
+      }),
+    });
+
+    const data = await res.json();
+
+    console.log(data);
+
+    navigate('/orders')
+    if (data.success) {
+      alert("Order placed successfully");
+    } else {
+      alert(data.message);
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
 
   return (
     <>
@@ -25,39 +60,24 @@ const Payment = () => {
 
       <div className="bg-gray-200 text-black min-h-screen flex justify-center py-10">
         <div className="w-[880px] flex justify-end">
+          <div className="w-96 rounded-2xl bg-white p-6 shadow-xl">
+            <h1 className="text-2xl font-bold mb-5">Payment Method</h1>
 
-          <div className="w-96 h-[480px] rounded-md bg-white p-5 shadow-md">
-            <h1 className="text-2xl font-semibold mb-5">
-              Payment Method
-            </h1>
-
-            <div className="border rounded-md p-4 bg-gray-100">
+            <div className="border rounded-xl p-4 bg-gray-100">
               <div className="flex items-center gap-3">
-                <input
-                  type="radio"
-                  checked
-                  readOnly
-                  className="w-4 h-4"
-                />
+                <input type="radio" checked readOnly className="w-4 h-4" />
 
-                <h1 className="font-semibold text-lg">
-                  Cash On Delivery
-                </h1>
+                <h1 className="font-semibold text-lg">Cash On Delivery</h1>
               </div>
 
-              <p className="text-sm text-gray-600 mt-2">
-                Pay when your order arrives at your doorstep.
-              </p>
+              <p className="text-sm text-gray-600 mt-2">Pay when your order arrives at your doorstep.</p>
             </div>
 
-            {/* Order Summary */}
-            <div className="bg-gray-100 rounded-md p-4 mt-5">
-              <h1 className="font-semibold text-lg mb-3">
-                Order Summary
-              </h1>
+            <div className="bg-gray-100 rounded-xl p-4 mt-5">
+              <h1 className="font-semibold text-lg mb-3">Order Summary</h1>
 
               <div className="flex justify-between">
-                <span>subTotal</span>
+                <span>Subtotal</span>
                 <span>₹{formatNumber(subTotal)}</span>
               </div>
 
@@ -74,9 +94,7 @@ const Payment = () => {
               </div>
             </div>
 
-            <button
-              onClick={handleOrder}
-              className="bg-black text-white w-full p-3 rounded-md font-semibold mt-5 hover:bg-gray-800 duration-200">
+            <button onClick={handleOrder} className="bg-black text-white w-full p-3 rounded-xl font-semibold mt-5 hover:bg-gray-800 duration-200">
               Place Order
             </button>
           </div>
