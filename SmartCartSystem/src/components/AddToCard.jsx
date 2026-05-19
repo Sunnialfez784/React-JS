@@ -11,10 +11,10 @@ const AddToCard = () => {
   const navigate = useNavigate();
 
   const {state} = useLocation();
-  const {token} = useAuth();
+  const {token, addBtn, minusBtn, getQuantity} = useAuth();
 
   useEffect(() => {
-    fetch(`${BASE_URL}/shops/get-all-cart-item`, {
+    fetch(`${BASE_URL}/carts/all-cart-item`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -26,7 +26,6 @@ const AddToCard = () => {
 
         const updatedProducts = (res.data || []).map((item) => ({
           ...item,
-          quantity: 1,
           checked: false,
         }));
 
@@ -35,26 +34,15 @@ const AddToCard = () => {
       .catch((err) => console.error(err));
   }, [token]);
 
-  const addBtn = (id) => {
-    const updated = products.map((item) => (item.cart_item_id === id ? {...item, quantity: item.quantity + 1} : item));
-
-    setProducts(updated);
-  };
-
   const handleCheckbox = (id) => {
     const updated = products.map((item) => (item.cart_item_id === id ? {...item, checked: !item.checked} : item));
-
-    setProducts(updated);
-  };
-  const minusBtn = (id) => {
-    const updated = products.map((item) => (item.cart_item_id === id && item.quantity > 1 ? {...item, quantity: item.quantity - 1} : item));
 
     setProducts(updated);
   };
 
   const subtotal = products.reduce((acc, item) => {
     if (item.checked) {
-      return acc + item.snapshot_price * item.quantity;
+      return acc + item.snapshot_price * getQuantity(item.productId);
     }
 
     return acc;
@@ -70,7 +58,7 @@ const AddToCard = () => {
         }),
       );
 
-      const res = await fetch(`${BASE_URL}/shops/order-items`, {
+      const res = await fetch(`${BASE_URL}/orders/order-items`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -80,8 +68,8 @@ const AddToCard = () => {
           productIds: checkedProduct,
         }),
       });
-      
-      console.log("products",products);
+
+      console.log("products", products);
       console.log(checkedProduct);
       const data = await res.json();
       navigate("/payment", {state: subtotal});
@@ -93,7 +81,7 @@ const AddToCard = () => {
 
   const deleteProduct = async (id) => {
     try {
-      const res = await fetch(`${BASE_URL}/shops/delete-cart-item/${id}`, {
+      const res = await fetch(`${BASE_URL}/carts/delete-cart-item/${id}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -156,7 +144,7 @@ const AddToCard = () => {
                               <p className="text-gray-500 text-sm mt-1 line-clamp-2">{item.productDetails}</p>
                             </div>
 
-                            <h1 className="text-2xl font-bold mt-3">₹{formatNumber(item.snapshot_price * item.quantity)}</h1>
+                            <h1 className="text-2xl font-bold mt-3">₹{formatNumber(item.snapshot_price * getQuantity(item.productId))}</h1>
                           </div>
                         </div>
 
@@ -166,15 +154,15 @@ const AddToCard = () => {
                           </button>
 
                           <div className="flex items-center gap-4 bg-white border rounded-lg px-3 py-2 shadow-sm">
-                            <button onClick={() => minusBtn(item.cart_item_id)} className="w-7 h-7 border rounded flex items-center justify-center hover:bg-gray-100">
+                            <button onClick={() => minusBtn(item.productId)} className="w-7 h-7 border rounded flex items-center justify-center hover:bg-gray-100">
                               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-4">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14" />
                               </svg>
                             </button>
 
-                            <h1 className="font-semibold text-lg min-w-[20px] text-center">{item.quantity}</h1>
+                            <h1 className="font-semibold text-lg min-w-[20px] text-center">{getQuantity(item.productId)}</h1>
 
-                            <button onClick={() => addBtn(item.cart_item_id)} className="w-7 h-7 border rounded flex items-center justify-center hover:bg-gray-100">
+                            <button onClick={() => addBtn(item.productId)} className="w-7 h-7 border rounded flex items-center justify-center hover:bg-gray-100">
                               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-4">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                               </svg>

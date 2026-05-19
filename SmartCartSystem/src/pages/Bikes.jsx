@@ -19,7 +19,7 @@ const Bikes = () => {
   useEffect(() => {
     setLoading(true);
 
-    fetch(`${BASE_URL}/shops/all-products-by-name?productType=bikes`, {
+    fetch(`${BASE_URL}/products/all-products-by-name?productType=bikes`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,

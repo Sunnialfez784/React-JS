@@ -38,12 +38,7 @@ function App() {
       <Routes>
         <Route path='/login' element={<Login />} />
         <Route path='/Register' element={<Register />} />
-
-        {/* <Route path='/' element={<Home />} />
-        <Route path='/cars' element={<Cars />} />
-        <Route path='/bikes' element={<Bikes />} />
-        <Route path='/laptops' element={<Laptops />} />
-        <Route path='/mobiles' element={<Mobiles />} /> */}
+        
 
         <Route path='/' element={<ProtectedRoute><Home /></ProtectedRoute>} />
         <Route path='/cars' element={<ProtectedRoute><Cars /></ProtectedRoute>} />
@@ -52,7 +47,6 @@ function App() {
         <Route path='/mobiles' element={<ProtectedRoute><Mobiles /></ProtectedRoute>} />
         <Route path='/details' element={<ProtectedRoute><Details /></ProtectedRoute>}/>
         <Route path='/addtocard' element={<ProtectedRoute><AddToCard /></ProtectedRoute>}/>
-        {/* <Route path='/addproduct' element={<ProtectedRoute><AddProduct /></ProtectedRoute>} /> */}
         <Route path='/orders' element={<ProtectedRoute><Order /></ProtectedRoute>} />
         <Route path='/profile' element={<ProtectedRoute><Profile /></ProtectedRoute>} />
         <Route path='/fashion' element={<ProtectedRoute><Fashion /></ProtectedRoute>} />
@@ -69,7 +63,8 @@ function App() {
         <Route path='/charging' element={<ProtectedRoute><Charging /></ProtectedRoute>}/>
         <Route path='/billingdetails' element={<ProtectedRoute><BillingDetails /></ProtectedRoute>} />
         <Route path='/payment' element={<ProtectedRoute><Payment /></ProtectedRoute>} />
-        <Route path='/productbill' element={<ProtectedRoute><ProductBill /></ProtectedRoute>} />
+        {/* <Route path='/productbill' element={<ProtectedRoute><ProductBill /></ProtectedRoute>} /> */}
+        <Route path="/invoice" element={<ProductBill />} />
 
 
         <Route path='*' element={<Errors />} />

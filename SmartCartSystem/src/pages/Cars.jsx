@@ -19,7 +19,7 @@ const Cars = () => {
 
     setLoading(true);
 
-    fetch(`${BASE_URL}/shops/all-products-by-name?productType=cars`, {
+    fetch(`${BASE_URL}/products/all-products-by-name?productType=cars`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,

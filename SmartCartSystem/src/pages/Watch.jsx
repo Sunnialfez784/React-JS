@@ -17,7 +17,7 @@ const Watch = () => {
   useEffect(() => {
     setLoading(true);
 
-    fetch(`${BASE_URL}/shops/all-products-by-name?productType=watch`, {
+    fetch(`${BASE_URL}/products/all-products-by-name?productType=watch`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,

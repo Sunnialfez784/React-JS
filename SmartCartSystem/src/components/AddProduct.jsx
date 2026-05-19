@@ -8,6 +8,7 @@ const AddProduct = ({setIsOpen}) => {
   const [productDetails, setProductDetails] = useState("");
   const [productPrice, setProductPrice] = useState("");
   const [productType, setProductType] = useState("");
+  const [productAddress, setProductAddress] = useState("");
   const [file, setFile] = useState(null);
 
   const {token} = useAuth();
@@ -21,7 +22,7 @@ const AddProduct = ({setIsOpen}) => {
   const add = async (e) => {
     e.preventDefault();
 
-    if (!productName || !productPrice || !productType) {
+    if (!productName || !productPrice || !productType || !productAddress) {
       alert("Fill all fields including productType");
       return;
     }
@@ -33,9 +34,10 @@ const AddProduct = ({setIsOpen}) => {
     formData.append("productPrice", productPrice);
     formData.append("productType", productType);
     formData.append("productImage", file);
+    formData.append("productAddress", productAddress);
     
     try {
-      const res = await fetch(`${BASE_URL}/shops/add-product`, {
+      const res = await fetch(`${BASE_URL}/products/add-product`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -55,6 +57,7 @@ const AddProduct = ({setIsOpen}) => {
       productDetails,
       productPrice,
       productType,
+      productAddress,
     };
 
     console.log(newProduct);
@@ -113,6 +116,9 @@ const AddProduct = ({setIsOpen}) => {
 
             <label className="text-black text-sms mb-1">Product Price</label>
             <input type="number" placeholder="Enter the Product Price" value={productPrice} onChange={(e) => setProductPrice(e.target.value)} className="w-full mb-5 bg-[#f9f8f8f0] px-3 text-black text-sm py-2 border rounded" />
+            
+            <label className="text-black text-sms mb-1">Product Address</label>
+            <input type="text" placeholder="Enter the Product Address" value={productAddress} onChange={(e) => setProductAddress(e.target.value)} className="w-full mb-5 bg-[#f9f8f8f0] px-3 text-black text-sm py-2 border rounded" />
 
             <div className="flex justify-between mt-4">
               <button type="button" onClick={() => setIsOpen(false)} className="px-4 py-2 bg-white border rounded">

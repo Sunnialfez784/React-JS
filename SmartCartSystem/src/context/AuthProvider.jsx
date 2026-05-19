@@ -2,20 +2,26 @@ import {useState} from "react";
 import {AuthContext} from "./AuthContext";
 
 export const AuthProvider = ({children}) => {
-  const [count, setCount] = useState(1);
+  const [quantities, setQuantities] = useState({});
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")) || JSON.parse(localStorage.getItem("currentUser")) || null);
   const [token, setToken] = useState(localStorage.getItem("accessToken") || "");
 
-  const addBtn = () => {
-    if (count < 7) {
-      setCount(count + 1);
-    }
+  const addBtn = (productId) => {
+    setQuantities((prev) => ({
+      ...prev,
+      [productId]: prev[productId] ? prev[productId] + 1 : 1,
+    }));
   };
 
-  const minusBtn = () => {
-    if (count > 1) {
-      setCount(count - 1);
-    }
+  const minusBtn = (productId) => {
+    setQuantities((prev) => ({
+      ...prev,
+      [productId]: prev[productId] > 1 ? prev[productId] - 1 : 1,
+    }));
+  };
+
+  const getQuantity = (productId) => {
+    return quantities[productId] || 1;
   };
 
   const login = ({user: nextUser, accessToken}) => {
@@ -41,5 +47,5 @@ export const AuthProvider = ({children}) => {
     setToken("");
   };
 
-  return <AuthContext.Provider value={{count, addBtn, minusBtn, user, token, isAuthenticated: Boolean(token), login, logout}}>{children}</AuthContext.Provider>;
+  return <AuthContext.Provider value={{ quantities,addBtn,minusBtn,getQuantity,user,setUser,token,isAuthenticated: Boolean(token),login,logout,}}>{children}</AuthContext.Provider>
 };

@@ -19,7 +19,7 @@ const Camera = () => {
   useEffect(() => {
     setLoading(true);
 
-    fetch(`${BASE_URL}/shops/all-products-by-name?productType=camera`, {
+    fetch(`${BASE_URL}/products/all-products-by-name?productType=camera`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,

@@ -8,9 +8,11 @@ import {BASE_URL} from "../apis";
 const Details = ({item}) => {
   const {state} = useLocation();
 
-  const {addBtn, minusBtn, count} = useAuth();
+  const {addBtn, minusBtn, getQuantity} = useAuth();
 
   const {token} = useAuth();
+
+  const count = getQuantity(state.productId);
 
   const formatNumber = (num) => {
     return Number(num).toLocaleString("INR", {
@@ -23,7 +25,7 @@ const Details = ({item}) => {
     try {
       console.log("TOKEN:", token);
 
-      const res = await fetch(`${BASE_URL}/shops/add-product-to-cart`, {
+      const res = await fetch(`${BASE_URL}/carts/add-product-to-cart`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -65,7 +67,7 @@ const Details = ({item}) => {
               <div className="mt-2 text-sm leading-[1.2]">
                 <p>{state.productDetails}</p>
                 <div className="h-10 w-24 bg-[#ffffff8b] rounded-lg mt-2 flex justify-between items-center p-1">
-                  <button onClick={minusBtn} className="border">
+                  <button onClick={() => minusBtn(state.productId)} className="border">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-4 font-bold">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14" />
                     </svg>
@@ -73,7 +75,7 @@ const Details = ({item}) => {
 
                   <h1 className="font-semibold text-lg">{count}</h1>
 
-                  <button onClick={addBtn} className="border">
+                  <button onClick={() => addBtn(state.productId)} className="border">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-4">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                     </svg>

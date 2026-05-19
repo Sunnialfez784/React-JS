@@ -25,7 +25,7 @@ const Home = () => {
 
     setLoading(true);
 
-    fetch(`${BASE_URL}/shops/all-products`, {
+    fetch(`${BASE_URL}/products/all-products`, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,

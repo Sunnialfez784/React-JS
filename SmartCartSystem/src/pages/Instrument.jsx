@@ -17,7 +17,7 @@ const Instrument = () => {
   useEffect(() => {
       setLoading(true);
   
-      fetch(`${BASE_URL}/shops/all-products-by-name?productType=instrument`, {
+      fetch(`${BASE_URL}/products/all-products-by-name?productType=instrument`, {
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,

@@ -17,7 +17,7 @@ const Laptops = () => {
   useEffect(() => {
     setLoading(true);
 
-    fetch(`${BASE_URL}/shops/all-products-by-name?productType=laptops`, {
+    fetch(`${BASE_URL}/products/all-products-by-name?productType=laptops`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,

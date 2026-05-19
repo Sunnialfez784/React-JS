@@ -4,48 +4,16 @@ import Cars from "../assets/Home/c1.png";
 import {CheckCircleIcon, ClockIcon, ChevronRightIcon} from "@heroicons/react/24/solid";
 import {useAuth} from "../context/AuthContext";
 import {BASE_URL} from "../apis";
+import { Link } from "react-router-dom";
 
 const Order = () => {
-  // const orders = [
-  //   {
-  //     id: 1,
-  //     image: Cars,
-  //     title: "Audi A6",
-  //     category: "Luxury Sedan",
-  //     price: "₹80,00,000.00",
-  //     status: "Delivered",
-  //     date: "Delivered on Jan 23",
-  //     message: "Your item has been delivered successfully",
-  //   },
-  //   {
-  //     id: 2,
-  //     image: Cars,
-  //     title: "BMW X5",
-  //     category: "SUV",
-  //     price: "₹95,00,000.00",
-  //     status: "Delivered",
-  //     date: "Delivered on Feb 10",
-  //     message: "Your item has been delivered successfully",
-  //   },
-  //   {
-  //     id: 3,
-  //     image: Cars,
-  //     title: "Mercedes C-Class",
-  //     category: "Premium Sedan",
-  //     price: "₹70,00,000.00",
-  //     status: "Pending",
-  //     date: "Expected on Mar 02",
-  //     message: "Your item is on the way",
-  //   },
-  // ];
-
   const orderMessage = [{message: "Your item has been delivered successfully"}];
 
   const [orders, setOrders] = useState([]);
   const {token} = useAuth();
 
   useEffect(() => {
-    fetch(`${BASE_URL}/shops/complete-order`, {
+    fetch(`${BASE_URL}/orders/complete-order`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -56,7 +24,7 @@ const Order = () => {
         setOrders(data || []);
       })
       .catch((err) => console.error(err));
-  }, []);
+  }, [token]);
 
   return (
     <div className="flex flex-col justify-center">
@@ -101,6 +69,11 @@ const Order = () => {
                     <p className="text-gray-500 text-sm">{order.message}</p>
                   </div>
 
+                  <div className="text-black w-28 h-10 ml-9 flex justify-center items-center border">
+                    <Link to="/invoice" state={{order_item_id: order.order_item_id}}>
+                      <button className="text-xs font-medium">Invoice</button>
+                    </Link>
+                  </div>
                 </div>
               </div>
             ))}

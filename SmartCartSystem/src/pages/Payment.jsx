@@ -6,12 +6,14 @@ import {useAuth} from "../context/AuthContext";
 
 const Payment = () => {
   const location = useLocation();
-  const subTotal = location?.state || 0;
+  const navigate = useNavigate();
+
+  const subTotal = Number(location?.state || 0);
 
   const {token} = useAuth();
 
   const deliveryFee = 40;
-  const totalAmount = subTotal + deliveryFee
+  const totalAmount = subTotal + deliveryFee;
 
   const formatNumber = (num) => {
     return Number(num).toLocaleString("en-IN", {
@@ -20,45 +22,45 @@ const Payment = () => {
     });
   };
 
-  const navigate = useNavigate()
-
   const handleOrder = async () => {
-  try {
+    try {
+      console.log({
+        price: Number(subTotal),
+        payment: "COD",
+      });
 
-    console.log("subtotal:", subTotal);
-    console.log("total:", totalAmount);
+      const res = await fetch(`${BASE_URL}/orders/order-payment`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userOrderAmount: Number(totalAmount),
+        }),
+      });
 
-    const res = await fetch(`${BASE_URL}/shops/order-payment`, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        price: Number(totalAmount),
-      }),
-    });
+      const data = await res.json();
 
-    const data = await res.json();
+      console.log(data);
 
-    console.log(data);
-
-    navigate('/orders')
-    if (data.success) {
-      alert("Order placed successfully");
-    } else {
-      alert(data.message);
+      if (data.success) {
+        alert("Order placed successfully");
+        navigate("/orders");
+      } else {
+        alert(data.message);
+      }
+    } catch (error) {
+      console.log(error);
+      alert("Something went wrong");
     }
-  } catch (error) {
-    console.log(error);
-  }
-};
+  };
 
   return (
     <>
       <Navbar />
 
-      <div className="bg-gray-200 text-black min-h-screen flex justify-center py-10">
+      <div className="bg-gray-200 text-black min-h-[76vh] flex justify-center py-10">
         <div className="w-[880px] flex justify-end">
           <div className="w-96 rounded-2xl bg-white p-6 shadow-xl">
             <h1 className="text-2xl font-bold mb-5">Payment Method</h1>
@@ -78,11 +80,13 @@ const Payment = () => {
 
               <div className="flex justify-between">
                 <span>Subtotal</span>
+
                 <span>₹{formatNumber(subTotal)}</span>
               </div>
 
               <div className="flex justify-between mt-2">
                 <span>Delivery Fee</span>
+
                 <span>₹{formatNumber(deliveryFee)}</span>
               </div>
 
@@ -90,6 +94,7 @@ const Payment = () => {
 
               <div className="flex justify-between font-bold text-lg">
                 <span>Total</span>
+
                 <span>₹{formatNumber(totalAmount)}</span>
               </div>
             </div>

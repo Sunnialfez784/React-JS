@@ -1,5 +1,7 @@
 import {TrashIcon} from "@heroicons/react/24/solid";
 import React, {useEffect, useState} from "react";
+import {BASE_URL} from "../apis";
+import {useAuth} from "../context/AuthContext";
 
 const BillingDetails = () => {
   const [fullName, setFullName] = useState("");
@@ -18,30 +20,26 @@ const BillingDetails = () => {
   const [savedAddresses, setSavedAddresses] = useState([]);
   const [selectedAddress, setSelectedAddress] = useState(null);
 
+  const {token} = useAuth();
+
   useEffect(() => {
     const currentUser = JSON.parse(localStorage.getItem("currentUser"));
 
-    const registerUsers =
-      JSON.parse(localStorage.getItem("registeredUsers")) || [];
+    const registerUsers = JSON.parse(localStorage.getItem("registeredUsers")) || [];
 
     if (currentUser) {
       setEmail(currentUser.email || "");
       setFullName(currentUser.name || "");
 
-      const matchedUser = registerUsers.find(
-        (user) => user.email === currentUser.email
-      );
+      const matchedUser = registerUsers.find((user) => user.email === currentUser.email);
 
       if (matchedUser) {
         setPhone(matchedUser.phone || "");
       }
 
-      const allAddresses =
-        JSON.parse(localStorage.getItem("savedAddresses")) || [];
+      const allAddresses = JSON.parse(localStorage.getItem("savedAddresses")) || [];
 
-      const userAddresses = allAddresses.filter(
-        (item) => item.email === currentUser.email
-      );
+      const userAddresses = allAddresses.filter((item) => item.email === currentUser.email);
 
       setSavedAddresses(userAddresses);
 
@@ -54,36 +52,22 @@ const BillingDetails = () => {
   }, []);
 
   const deleteAddress = (deleteItem) => {
-    const allAddresses =
-      JSON.parse(localStorage.getItem("savedAddresses")) || [];
+    const allAddresses = JSON.parse(localStorage.getItem("savedAddresses")) || [];
 
-    const updatedAddresses = allAddresses.filter(
-      (item) =>
-        !(
-          item.email === deleteItem.email &&
-          item.address === deleteItem.address
-        )
-    );
+    const updatedAddresses = allAddresses.filter((item) => !(item.email === deleteItem.email && item.address === deleteItem.address));
 
-    localStorage.setItem(
-      "savedAddresses",
-      JSON.stringify(updatedAddresses)
-    );
+    localStorage.setItem("savedAddresses", JSON.stringify(updatedAddresses));
 
-    const currentUserAddresses = updatedAddresses.filter(
-      (item) => item.email === email
-    );
+    const currentUserAddresses = updatedAddresses.filter((item) => item.email === email);
 
     setSavedAddresses(currentUserAddresses);
 
-    if (
-      selectedAddress?.address === deleteItem.address
-    ) {
+    if (selectedAddress?.address === deleteItem.address) {
       setSelectedAddress(currentUserAddresses[0] || null);
     }
   };
 
-  const addUserDetails = (e) => {
+  const addUserDetails = async (e) => {
     e.preventDefault();
 
     setError({});
@@ -101,6 +85,38 @@ const BillingDetails = () => {
       return;
     }
 
+    try {
+      const res = await fetch(`${BASE_URL}/users/user-address`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          fullName,
+          pincode,
+          state,
+          city,
+          address,
+          country,
+        }),
+      });
+
+      const data = await res.json();
+
+      console.log(data);
+
+      if (data.success) {
+        alert("address add successfully");
+      } else {
+        alert(data.message);
+      }
+    } catch (error) {
+      console.log(error);
+
+      alert("Something went wrong");
+    }
+
     const billingData = {
       fullName,
       country,
@@ -112,19 +128,13 @@ const BillingDetails = () => {
       phone,
     };
 
-    const oldAddresses =
-      JSON.parse(localStorage.getItem("savedAddresses")) || [];
+    const oldAddresses = JSON.parse(localStorage.getItem("savedAddresses")) || [];
 
     oldAddresses.push(billingData);
 
-    localStorage.setItem(
-      "savedAddresses",
-      JSON.stringify(oldAddresses)
-    );
+    localStorage.setItem("savedAddresses", JSON.stringify(oldAddresses));
 
-    const currentUserAddresses = oldAddresses.filter(
-      (item) => item.email === email
-    );
+    const currentUserAddresses = oldAddresses.filter((item) => item.email === email);
 
     setSavedAddresses(currentUserAddresses);
 
@@ -138,31 +148,20 @@ const BillingDetails = () => {
   return (
     <div className="w-full h-36 bg-[#f1f3f6] text-black flex justify-center">
       <div className="w-[800px]">
-
         {selectedAddress && (
           <div className="bg-white p-5 rounded shadow border">
             <div className="flex items-center justify-between">
               <div>
-                <h1 className="font-semibold text-lg">
-                  Deliver To
-                </h1>
+                <h1 className="font-semibold text-lg">Deliver To</h1>
 
                 <p className="text-sm text-gray-600 mt-2">
-                  {selectedAddress.fullName},
-                  {selectedAddress.address},
-                  {selectedAddress.city},
-                  {selectedAddress.state} -
-                  {selectedAddress.pincode}
+                  {selectedAddress.fullName},{selectedAddress.address},{selectedAddress.city},{selectedAddress.state} -{selectedAddress.pincode}
                 </p>
 
-                <p className="text-sm text-gray-600 mt-1">
-                  {selectedAddress.phone}
-                </p>
+                <p className="text-sm text-gray-600 mt-1">{selectedAddress.phone}</p>
               </div>
 
-              <button
-                onClick={() => setShowModal(true)}
-                className="text-blue-600 font-medium">
+              <button onClick={() => setShowModal(true)} className="text-blue-600 font-medium">
                 Change
               </button>
             </div>
@@ -170,151 +169,86 @@ const BillingDetails = () => {
         )}
 
         {showForm && (
-          <div className="bg-white p-6 rounded shadow mt-5">
-            <h1 className="text-3xl font-bold mb-6">
-              Add Address
-            </h1>
+          <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-[9999]">
+            <div className="bg-white w-[700px] max-h-[90vh] overflow-y-auto p-6 rounded-xl shadow-2xl relative">
 
-            <form onSubmit={addUserDetails}>
-              <div className="mb-4">
-                <label className="text-sm text-gray-500">
-                  Full Name
-                </label>
-
-                <input
-                  type="text"
-                  placeholder="Full Name"
-                  className="w-full border px-3 py-2 rounded mt-1"
-                  value={fullName}
-                  onChange={(e) =>
-                    setFullName(e.target.value)
-                  }
-                />
-
-                {error.fullName && (
-                  <p className="text-red-500 text-xs mt-1">
-                    {error.fullName}
-                  </p>
-                )}
-              </div>
-
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="text-sm text-gray-500">
-                    Country
-                  </label>
-
-                  <input
-                    type="text"
-                    value={country}
-                    readOnly
-                    className="w-full border px-3 py-2 rounded mt-1 bg-gray-100"
-                  />
-                </div>
-
-                <div>
-                  <label className="text-sm text-gray-500">
-                    State
-                  </label>
-
-                  <select
-                    className="w-full border px-3 py-2 rounded mt-1"
-                    value={state}
-                    onChange={(e) =>
-                      setState(e.target.value)
-                    }>
-                    <option value="">Select State</option>
-
-                    <option value="Gujarat">
-                      Gujarat
-                    </option>
-
-                    <option value="Goa">Goa</option>
-
-                    <option value="Maharashtra">
-                      Maharashtra
-                    </option>
-                  </select>
-                </div>
-              </div>
-
-              <div className="mt-4">
-                <label className="text-sm text-gray-500">
-                  Address
-                </label>
-
-                <input
-                  type="text"
-                  placeholder="Street Address"
-                  className="w-full border px-3 py-2 rounded mt-1"
-                  value={address}
-                  onChange={(e) =>
-                    setAddress(e.target.value)
-                  }
-                />
-              </div>
-
-              <div className="grid grid-cols-2 gap-4 mt-4">
-                <div>
-                  <label className="text-sm text-gray-500">
-                    Pincode
-                  </label>
-
-                  <input
-                    type="number"
-                    placeholder="Pincode"
-                    className="w-full border px-3 py-2 rounded mt-1"
-                    value={pincode}
-                    onChange={(e) =>
-                      setPincode(e.target.value)
-                    }
-                  />
-                </div>
-
-                <div>
-                  <label className="text-sm text-gray-500">
-                    City
-                  </label>
-
-                  <input
-                    type="text"
-                    placeholder="City"
-                    className="w-full border px-3 py-2 rounded mt-1"
-                    value={city}
-                    onChange={(e) =>
-                      setCity(e.target.value)
-                    }
-                  />
-                </div>
-              </div>
-
-              <button
-                type="submit"
-                className="w-full bg-blue-600 text-white py-3 rounded mt-6 font-medium">
-                Save Address
+              <button onClick={() => setShowForm(false)} className="absolute top-4 right-4 text-2xl font-bold text-gray-500 hover:text-black">
+                ×
               </button>
-            </form>
+
+              <h1 className="text-3xl font-bold mb-6">Add Address</h1>
+
+              <form onSubmit={addUserDetails}>
+                <div className="mb-4">
+                  <label className="text-sm text-gray-500">Full Name</label>
+
+                  <input type="text" placeholder="Full Name" className="w-full border px-3 py-2 rounded mt-1" value={fullName} onChange={(e) => setFullName(e.target.value)} />
+
+                  {error.fullName && <p className="text-red-500 text-xs mt-1">{error.fullName}</p>}
+                </div>
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="text-sm text-gray-500">Country</label>
+
+                    <input type="text" value={country} readOnly className="w-full border px-3 py-2 rounded mt-1 bg-gray-100" />
+                  </div>
+
+                  <div>
+                    <label className="text-sm text-gray-500">State</label>
+
+                    <select className="w-full border px-3 py-2 rounded mt-1" value={state} onChange={(e) => setState(e.target.value)}>
+                      <option value="">Select State</option>
+
+                      <option value="Gujarat">Gujarat</option>
+
+                      <option value="Goa">Goa</option>
+
+                      <option value="Maharashtra">Maharashtra</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div className="mt-4">
+                  <label className="text-sm text-gray-500">Address</label>
+
+                  <input type="text" placeholder="Street Address" className="w-full border px-3 py-2 rounded mt-1" value={address} onChange={(e) => setAddress(e.target.value)} />
+                </div>
+
+                <div className="grid grid-cols-2 gap-4 mt-4">
+                  <div>
+                    <label className="text-sm text-gray-500">Pincode</label>
+
+                    <input type="number" placeholder="Pincode" className="w-full border px-3 py-2 rounded mt-1" value={pincode} onChange={(e) => setPincode(e.target.value)} />
+                  </div>
+
+                  <div>
+                    <label className="text-sm text-gray-500">City</label>
+
+                    <input type="text" placeholder="City" className="w-full border px-3 py-2 rounded mt-1" value={city} onChange={(e) => setCity(e.target.value)} />
+                  </div>
+                </div>
+
+                <button type="submit" className="w-full bg-blue-600 text-white py-3 rounded mt-6 font-medium">
+                  Save Address
+                </button>
+              </form>
+            </div>
           </div>
         )}
       </div>
 
-      {/* Address Modal */}
       {showModal && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
           <div className="bg-white w-[500px] rounded-lg p-6">
             <div className="flex items-center justify-between mb-5">
-              <h1 className="text-xl font-semibold">
-                Select Address
-              </h1>
+              <h1 className="text-xl font-semibold">Select Address</h1>
 
-              <button
-                onClick={() => setShowModal(false)}
-                className="text-2xl">
+              <button onClick={() => setShowModal(false)} className="text-2xl">
                 ×
               </button>
             </div>
 
-            {/* Add Address Button */}
             <button
               onClick={() => {
                 setShowForm(true);
@@ -326,49 +260,23 @@ const BillingDetails = () => {
 
             <div className="space-y-4 max-h-[400px] overflow-y-auto">
               {savedAddresses.map((item, index) => (
-                <div
-                  key={index}
-                  onClick={() => setSelectedAddress(item)}
-                  className={`border p-4 rounded cursor-pointer transition ${
-                    selectedAddress?.address ===
-                    item.address
-                      ? "border-blue-600 bg-blue-50"
-                      : "border-gray-300"
-                  }`}>
+                <div key={index} onClick={() => setSelectedAddress(item)} className={`border p-4 rounded cursor-pointer transition ${selectedAddress?.address === item.address ? "border-blue-600 bg-blue-50" : "border-gray-300"}`}>
                   <div className="flex justify-between">
                     <div className="flex gap-3">
-                      <input
-                        type="radio"
-                        checked={
-                          selectedAddress?.address ===
-                          item.address
-                        }
-                        readOnly
-                        className="mt-1"
-                      />
+                      <input type="radio" checked={selectedAddress?.address === item.address} readOnly className="mt-1" />
 
                       <div>
-                        <h1 className="font-semibold">
-                          {item.fullName}
-                        </h1>
+                        <h1 className="font-semibold">{item.fullName}</h1>
 
                         <p className="text-gray-600 text-sm mt-1">
-                          {item.address},{item.city},
-                          {item.state} -
-                          {item.pincode}
+                          {item.address},{item.city},{item.state} -{item.pincode}
                         </p>
 
-                        <p className="text-gray-600 text-sm">
-                          {item.phone}
-                        </p>
+                        <p className="text-gray-600 text-sm">{item.phone}</p>
                       </div>
                     </div>
 
-                    <button
-                      onClick={() =>
-                        deleteAddress(item)
-                      }
-                      className="h-fit p-2 border rounded">
+                    <button onClick={() => deleteAddress(item)} className="h-fit p-2 border rounded">
                       <TrashIcon className="w-5 text-red-500" />
                     </button>
                   </div>
@@ -376,9 +284,7 @@ const BillingDetails = () => {
               ))}
             </div>
 
-            <button
-              onClick={() => setShowModal(false)}
-              className="w-full bg-blue-600 text-white py-2 rounded mt-5">
+            <button onClick={() => setShowModal(false)} className="w-full bg-blue-600 text-white py-2 rounded mt-5">
               Deliver Here
             </button>
           </div>

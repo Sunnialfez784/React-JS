@@ -63,7 +63,7 @@ const Header = () => {
           Authorization: `Bearer ${token}`,
         };
 
-        const [product] = await Promise.all([fetch(`${BASE_URL}/shops/all-products`, {headers}).then((res) => res.json())]);
+        const [product] = await Promise.all([fetch(`${BASE_URL}/products/all-products`, {headers}).then((res) => res.json())]);
 
         setAllProducts([...(product?.data || [])]);
       } catch (error) {
@@ -84,7 +84,7 @@ const Header = () => {
         return;
       }
 
-      const res = await fetch(`${BASE_URL}/shops/logout-user`, {
+      const res = await fetch(`${BASE_URL}/users/logout-user`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -17,7 +17,7 @@ const Toys = () => {
   useEffect(() => {
     setLoading(true);
 
-    fetch(`${BASE_URL}/shops/all-products-by-name?productType=toys`, {
+    fetch(`${BASE_URL}/products/all-products-by-name?productType=toys`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,

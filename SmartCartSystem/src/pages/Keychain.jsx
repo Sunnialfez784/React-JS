@@ -17,7 +17,7 @@ const Keychain = () => {
   useEffect(() => {
       setLoading(true);
   
-      fetch(`${BASE_URL}/shops/all-products-by-name?productType=keyChain`, {
+      fetch(`${BASE_URL}/products/all-products-by-name?productType=keyChain`, {
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,
